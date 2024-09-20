@@ -1,22 +1,11 @@
-module.exports = {
+export default {
   extends: ['@commitlint/config-conventional'],
   rules: {
-    'type-enum': [
-      2,
-      'always',
-      [
-        'feat',
-        'fix',
-        'docs',
-        'chore',
-        'style',
-        'refactor',
-        'ci',
-        'test',
-        'revert',
-        'perf',
-        'vercel',
+      'type-enum': [
+          2,
+          'always',
+          ['feat', 'fixbug', 'setup', 'release', 'fix', 'refactor', 'doc'],
       ],
-    ],
+      'type-case': [2, 'always', 'lower-case'],
   },
 }
