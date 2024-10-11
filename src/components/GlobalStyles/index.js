@@ -1,4 +1,4 @@
-import "./Globalstyle.css"
+import './Globalstyle.css'
 
 function GlobalStyles({ children }) {
   return children

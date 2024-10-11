@@ -1,10 +1,8 @@
-import Home from "~/pages/Home";
-import { routes } from "~/configs";
+import Home from '~/pages/Home'
+import { routes } from '~/configs'
 
-const publicRoutes = [
-  { path: routes.HOME, component: Home },
-];
+const publicRoutes = [{ path: routes.HOME, component: Home }]
 
-const privateRoutes = [];
+const privateRoutes = []
 
-export { publicRoutes, privateRoutes };
+export { publicRoutes, privateRoutes }

@@ -6,7 +6,7 @@ export default function DefaultLayout({ children }) {
     <div>
       <div className='flex-col items-center w-full'>
         <Header />
-          <div>{children}</div>
+        <div>{children}</div>
         <Footer />
       </div>
     </div>
