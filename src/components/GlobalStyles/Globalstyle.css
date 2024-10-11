@@ -1,0 +1,35 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary-color: rgba(237, 85, 59, 1);
+  --gray-text: rgb(125, 135, 156);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* html {
+
+} */
+
+body {
+  text-rendering: optimizeSpeed;
+}
+/* 
+@layer components {
+    * {
+        @apply 
+    }
+} */
+
+.half-underline {
+  display: inline-block;
+  background-image: linear-gradient(to right, currentColor, currentColor);
+  background-repeat: no-repeat;
+  background-position: left bottom;
+  background-size: 50% 2px;
+  padding-bottom: 0.25rem; /* 4px */
+}

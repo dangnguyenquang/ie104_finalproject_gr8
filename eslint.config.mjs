@@ -51,7 +51,7 @@ export default [
     },
 
     rules: {
-        'react/jsx-no-target-blank': 'off'
+      'react/jsx-no-target-blank': 'off',
     },
   },
 ]
