@@ -9,6 +9,9 @@ export default {
         secondary: '#F3BE12',
         accent: '#FFF9F9',
       },
+      fontFamily: {
+        sans: ['Roboto', 'sans-serif'],
+      },
     },
   },
   plugins: [],
