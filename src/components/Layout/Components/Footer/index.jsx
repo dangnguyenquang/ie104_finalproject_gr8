@@ -12,7 +12,7 @@ import { routes } from '~/configs'
 const Footer = () => {
   return (
     <div
-      className='min-w-screen h-[500px] py-[50px] px-28'
+      className='min-w-screen h-[500px] py-[50px] px-20'
       style={{
         backgroundImage: `url(${footerImage})`,
         backgroundSize: '100% auto',
