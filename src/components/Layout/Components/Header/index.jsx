@@ -31,7 +31,7 @@ const Header = () => {
             Món ăn
           </NavLink>
           <NavLink
-            to={routes.MENU}
+            to={routes.ABOUTUS}
             className={({ isActive }) =>
               isActive
                 ? 'font-medium half-underline text-yellow-200'
