@@ -60,7 +60,7 @@ const AboutUs = () => {
                 </p>
                 <p className={`${styleTextDesc}`}>
                   <strong className='font-bold text-[40px] text-secondary'>Yummy</strong>
-                  là cộng đồng tin cậy cho mọi người có thể tìm kiếm, đánh giá và đặt món ăn từ các
+                  {' '}là cộng đồng tin cậy cho mọi người có thể tìm kiếm, đánh giá và đặt món ăn từ các
                   địa điểm ăn uống: nhà hàng, quán ăn,..... tại thành phố Hồ Chí Minh. Từ đó kết nối
                   những thực khách đến với các địa điểm ăn uống lớn nhỏ cả đất nước.
                 </p>
@@ -141,7 +141,7 @@ const AboutUs = () => {
             <div className=' items-center justify-between w-[800px]'>
               <p className={`text-center font-medium ${styleTextDesc}`}>
                 <strong className='font-bold text-[40px] text-secondary'>Yummy</strong>
-                cam kết mang đến cho khách hàng trải nghiệm ẩm thực đa dạng và tiện lợi thông qua
+                {' '}cam kết mang đến cho khách hàng trải nghiệm ẩm thực đa dạng và tiện lợi thông qua
                 nền tảng đặt món ăn trực tuyến hiện đại.
               </p>
               <p className={`mt-[20px] text-center font-medium ${styleTextDesc} xl:text-[-5px]`}>
