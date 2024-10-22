@@ -10,6 +10,7 @@ export default {
         accent: '#FFF9F9',
       },
       fontFamily: {
+        oswald: ['Oswald', 'sans-serif'],
         sans: ['Roboto', 'sans-serif'],
       },
     },
