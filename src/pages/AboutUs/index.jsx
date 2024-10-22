@@ -28,11 +28,11 @@ const AboutUs = () => {
   ]
   // Mảng các thẻ cho Member
   const MemberList = [
-    { img: '../src/assets/images/aboutUs/about_us_member2.png', name: 'Pham Van Duy' },
-    { img: '../src/assets/images/aboutUs/about_us_member2.png', name: 'Nguyen Cong Ba' },
-    { img: '../src/assets/images/aboutUs/about_us_member3.png', name: 'Nguyen Quang Dang' },
-    { img: '../src/assets/images/aboutUs/about_us_member2.png', name: 'Le Hoang Duc' },
-    { img: '../src/assets/images/aboutUs/about_us_member5.png', name: 'Le Minh Khoi' },
+    { img: '../src/assets/images/aboutUs/about_us_member2.png', name: 'Pham Duy' },
+    { img: '../src/assets/images/aboutUs/about_us_member2.png', name: 'Nguyen Ba' },
+    { img: '../src/assets/images/aboutUs/about_us_member3.png', name: 'Quang Dang' },
+    { img: '../src/assets/images/aboutUs/about_us_member2.png', name: 'Hoang Duc' },
+    { img: '../src/assets/images/aboutUs/about_us_member5.png', name: 'Le Khoi' },
   ]
   return (
     <div className='w-full' style={{ minWidth: '786px' }}>
@@ -44,7 +44,7 @@ const AboutUs = () => {
             alt='Image about_us_intro'
             className='max-w-[41.5%] h-auto'
           />
-          <div className='flex justify-center p-[50px] bg-white rounded-[20px] lg:absolute lg:left-[445px] lg:right-[90px]'>
+          <div className='flex justify-center p-[50px] bg-accent rounded-[20px] lg:absolute lg:left-[445px] lg:right-[90px]'>
             <div className='w-[94.5%]'>
               <div
                 className={`text-primary font-bold text-center uppercase ${styleTextHeading} mt-[18px]`}
@@ -107,7 +107,7 @@ const AboutUs = () => {
                 >
                   <div
                     style={{ textShadow: '2px 2px 0 #000' }}
-                    className={`text-white font-bold text-center mt-auto leading-[30px] ${styleTextDesc}`}
+                    className={`text-accent font-bold text-center mt-auto  leading-[30px] ${styleTextDesc}`}
                   >
                     {member.name}
                   </div>
@@ -127,7 +127,7 @@ const AboutUs = () => {
           <div className='relative'>
             <div
               dir='rtl'
-              className={`inline bg-primary p-[2vw] rounded-s-[20px] text-white uppercase font-bold ${styleTextHeading} pl-[100px]`}
+              className={`inline bg-primary p-[2vw] rounded-s-[20px] text-accent uppercase font-bold ${styleTextHeading} pl-[100px]`}
             >
               Sứ mệnh của chúng tôi
             </div>
@@ -169,7 +169,7 @@ const AboutUs = () => {
           backgroundPosition: 'center',
         }}
       >
-        <div className={`mb-[3vw] text-white uppercase font-bold text-center ${styleTextHeading}`}>
+        <div className={`mb-[3vw] text-accent uppercase font-bold text-center ${styleTextHeading}`}>
           Giá trị Yummy mang lại
         </div>
         {/* Map các thẻ giá trị mà Yummy mang lại */}
@@ -177,7 +177,7 @@ const AboutUs = () => {
           {Items.map((item, index) => (
             <div
               key={index}
-              className='relative w-[90%] sm:w-[293px] h-auto p-[3vw] mt-[2vw] bg-[#FFFFFF] bg-opacity-70 rounded-[20px]'
+              className='relative w-[90%] sm:w-[293px] h-auto p-[3vw] mt-[2vw] bg-accent bg-opacity-70 rounded-[20px]'
             >
               <img
                 src={item.icon}
