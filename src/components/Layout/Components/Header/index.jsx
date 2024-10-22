@@ -6,7 +6,7 @@ import { routes } from '~/configs'
 
 const Header = () => {
   return (
-    <div className='w-full py-4 px-[60px] flex justify-between items-center bg-primary shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px]'>
+    <div className='z-10 w-full py-4 px-[60px] flex justify-between items-center bg-primary shadow-[0_2.8px_2.2px_rgba(0,_0,_0,_0.034),_0_6.7px_5.3px_rgba(0,_0,_0,_0.048),_0_12.5px_10px_rgba(0,_0,_0,_0.06),_0_22.3px_17.9px_rgba(0,_0,_0,_0.072),_0_41.8px_33.4px_rgba(0,_0,_0,_0.086),_0_100px_80px_rgba(0,_0,_0,_0.12)]'>
       <div className='gap-[70px] flex items-center'>
         <img src={Logo} alt='Yummy logo' style={{ maxWidth: '125px', height: 'auto' }} />
         <div className='flex gap-10'>
