@@ -9,6 +9,10 @@ export default {
         secondary: '#F3BE12',
         accent: '#FFF9F9',
       },
+      fontFamily: {
+        oswald: ['Oswald', 'sans-serif'],
+        sans: ['Roboto', 'sans-serif'],
+      },
     },
   },
   plugins: [],
