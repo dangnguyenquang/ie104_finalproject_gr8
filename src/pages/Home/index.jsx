@@ -3,7 +3,11 @@ import homeBackground from '~/assets/images/home/home-bg.png'
 
 import { SearchBar, FoodCard } from '~/components/ui'
 import SpecialityCarousel from './components/SpecialityCarousel'
+import FoodCategory from './components/FoodCategory'
 import foodCardImg from '~/assets/images/home/food-card.png'
+import vector from '~/assets/images/home/vector-3.png'
+import recommend from '~/assets/images/home/recommend.png'
+import RecommendCarousel from './components/RecommendCarousel'
 
 // Data Sample
 const data = {
@@ -21,29 +25,29 @@ const data = {
       __v: 0,
     },
   ],
-  restaurants: [
-    {
-      address: {
-        street: 'phương hữu ngọt',
-        city: 'Hồ Chí Minh',
-        borough: 'quân thủ đức',
-        zip: '22520341',
-      },
-      _id: '670a3767202dc1c1e16411a9',
-      ownerId: '670a335b202dc1c1e1641198',
-      name: 'Nhà hàng đại phát',
-      profit: 125,
-      quantitySolded: 15,
-      phone: '036327097999',
-      time_open: '2h sáng',
-      time_close: '10h tối',
-      starMedium: 5,
-      status: 'active',
-      imageUrl: [],
-      createdAt: '2024-10-12T08:58:21.640Z',
-      updatedAt: '2024-10-12T08:58:21.640Z',
-    },
-  ],
+  // restaurants: [
+  //   {
+  //     address: {
+  //       street: 'phương hữu ngọt',
+  //       city: 'Hồ Chí Minh',
+  //       borough: 'quân thủ đức',
+  //       zip: '22520341',
+  //     },
+  //     _id: '670a3767202dc1c1e16411a9',
+  //     ownerId: '670a335b202dc1c1e1641198',
+  //     name: 'Nhà hàng đại phát',
+  //     profit: 125,
+  //     quantitySolded: 15,
+  //     phone: '036327097999',
+  //     time_open: '2h sáng',
+  //     time_close: '10h tối',
+  //     starMedium: 5,
+  //     status: 'active',
+  //     imageUrl: [],
+  //     createdAt: '2024-10-12T08:58:21.640Z',
+  //     updatedAt: '2024-10-12T08:58:21.640Z',
+  //   },
+  // ],
   foods: [
     {
       image: foodCardImg,
@@ -118,13 +122,71 @@ const data = {
       id: 1,
     },
   ],
+  restaurants: [
+    {
+      image: foodCardImg,
+      rating: '4.5',
+      restaurant: 'Quán Cô Bảy Chọ',
+      address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
+      id: 1,
+    },
+    {
+      image: foodCardImg,
+      rating: '4.5',
+      restaurant: 'Quán Cô Bảy Chọ',
+      address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
+      id: 1,
+    },
+    {
+      image: foodCardImg,
+      rating: '4.5',
+      restaurant: 'Quán Cô Bảy Chọ',
+      address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
+      id: 1,
+    },
+    {
+      image: foodCardImg,
+      rating: '4.5',
+      restaurant: 'Quán Cô Bảy Chọ',
+      address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
+      id: 1,
+    },
+    {
+      image: foodCardImg,
+      rating: '4.5',
+      restaurant: 'Quán Cô Bảy Chọ',
+      address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
+      id: 1,
+    },
+    {
+      image: foodCardImg,
+      rating: '4.5',
+      restaurant: 'Quán Cô Bảy Chọ',
+      address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
+      id: 1,
+    },
+    {
+      image: foodCardImg,
+      rating: '4.5',
+      restaurant: 'Quán Cô Bảy Chọ',
+      address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
+      id: 1,
+    },
+    {
+      image: foodCardImg,
+      rating: '4.5',
+      restaurant: 'Quán Cô Bảy Chọ',
+      address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
+      id: 1,
+    },
+  ],
 }
 
 const Home = () => {
   return (
     <main className='w-full'>
       <section
-        className='relative w-full h-auto items-center py-32 px-64 '
+        className='relative w-full min-h-[90vh] items-center py-32 px-64 '
         style={{
           backgroundImage: `url(${searchBackground})`,
           backgroundSize: '100% auto',
@@ -180,6 +242,36 @@ const Home = () => {
               />
             ))}
           </div>
+        </div>
+
+        <div className='w-full mt-14'>
+          <div className='relative  w-fit ml-auto pl-16'>
+            <img src={vector} alt='vector' className='absolute z-10 bottom-0' />
+            <h2 className='text-[65px] font-semibold font-oswald text-primaryText text-right'>
+              Bộ sưu tập món ăn
+            </h2>
+          </div>
+          <FoodCategory />
+        </div>
+      </section>
+
+      <section
+        className='relative w-full h-auto items-center py-20 px-16 mt-20'
+        style={{
+          backgroundImage: `url(${recommend})`,
+          backgroundSize: '100% auto',
+          backgroundRepeat: 'no-repeat',
+        }}
+      >
+        <div className='flex items-center h-full'>
+          <div className='rounded-full bg-primary text-[25px] font-oswald px-10 py-2 text-white'>
+            Một số quán bạn nên thử
+          </div>
+          <div className='flex-1 h-1 rounded-e-md bg-primary mb-14 mt-14'></div>
+        </div>
+
+        <div className='mx-auto max-w-[1100px]'>
+          <RecommendCarousel restaurants={data.restaurants} />
         </div>
       </section>
     </main>

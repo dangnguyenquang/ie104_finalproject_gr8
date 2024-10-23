@@ -42,3 +42,12 @@ body {
   background-size: 50% 2px;
   padding-bottom: 0.25rem; /* 4px */
 }
+
+.slick-prev:before,
+.slick-next:before {
+  display: none !important;
+}
+/* 
+.slick-prev .slick-next{
+  padding: 30px;
+} */

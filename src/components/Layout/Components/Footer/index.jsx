@@ -61,7 +61,7 @@ const Footer = () => {
         </div>
       </div>
 
-      <div class='border-t border-white w-full my-12'></div>
+      <div className='border-t border-white w-full my-12'></div>
 
       <div className='pl-10 flex flex-col gap-2 max-w-[470px] text-white'>
         <div className='flex gap-4 items-center'>
@@ -74,12 +74,12 @@ const Footer = () => {
             Số 16, đường Hoàng Diệu 2, phường Linh Trung, TP.Thủ Đức, TP. Hồ Chí Minh
           </p>
         </div>
-        <div className='flex gap-4 items-center'>
+        {/* <div className='flex gap-4 items-center'>
           <VerifiedIcon />
           <p className='text-sm'>
             Giấy CN DKDN số: 8386365078 do Sở Kế hoạch và Đầu tư TP.HCM cấp 12/10/2024
           </p>
-        </div>
+        </div> */}
         <div className='flex gap-4 items-center'>
           <EmailIcon />
           <p className='text-sm'>Email: nhomnaylanhom8@gmail.com</p>
