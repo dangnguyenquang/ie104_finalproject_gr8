@@ -1,6 +1,5 @@
 import Home from '~/pages/Home'
 import SellerRegisterForm from '~/pages/SellerRegisterForm'
-import CustomerRegisterForm from '~/pages/CustomerRegisterForm'
 import { routes } from '~/configs'
 
 const publicRoutes = [
