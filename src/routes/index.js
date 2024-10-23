@@ -5,7 +5,7 @@ import { routes } from '~/configs'
 
 const publicRoutes = [
   { path: routes.HOME, component: Home },
-  { path: routes.SELLER_REGISTER, component: CustomerRegisterForm},
+  { path: routes.SELLER_REGISTER, component: SellerRegisterForm},
 ]
 
 const privateRoutes = []
