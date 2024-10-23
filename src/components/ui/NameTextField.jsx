@@ -1,22 +1,23 @@
-import React, { useState } from 'react';
-import TextField from '@mui/material/TextField';
+import React, { useState } from 'react'
+import TextField from '@mui/material/TextField'
 
 function NameTextField({ label }) {
-  const [value, setValue] = useState('');
-  const [error, setError] = useState(false);
+  const [value, setValue] = useState('')
+  const [error, setError] = useState(false)
 
   const handleChange = (event) => {
-    const newValue = event.target.value;
-    setValue(newValue);
-    if (error) setError(false);
-  };
+    const newValue = event.target.value
+    setValue(newValue)
+    if (error) setError(false)
+  }
 
   const handleBlur = () => {
-    const nameRegex = /^([A-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚ]{1}[a-zàáâãèéêìíòóôõùú]*)(\s[A-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚ]{1}[a-zàáâãèéêìíòóôõùú]*)*$/;
+    const nameRegex =
+      /^([A-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚ]{1}[a-zàáâãèéêìíòóôõùú]*)(\s[A-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚ]{1}[a-zàáâãèéêìíòóôõùú]*)*$/
     if (!nameRegex.test(value.trim())) {
-      setError(true);
+      setError(true)
     }
-  };
+  }
 
   return (
     <div className='mx-auto w-[500px] my-5'>
@@ -43,11 +44,15 @@ function NameTextField({ label }) {
         onBlur={handleBlur}
         required
         error={error}
-        helperText={error ? 'This field is required and must be a valid name (each word starts with a capital letter)' : ''}
+        helperText={
+          error
+            ? 'This field is required and must be a valid name (each word starts with a capital letter)'
+            : ''
+        }
         inputProps={{ inputMode: 'text' }}
       />
     </div>
-  );
+  )
 }
 
-export default NameTextField;
+export default NameTextField

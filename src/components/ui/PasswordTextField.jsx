@@ -1,56 +1,56 @@
-import React, { useState } from 'react';
-import TextField from '@mui/material/TextField';
+import React, { useState } from 'react'
+import TextField from '@mui/material/TextField'
 
 function PasswordTextField({ label, confirm = false }) {
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [errorPassword, setErrorPassword] = useState(false);
-  const [errorConfirmPassword, setErrorConfirmPassword] = useState(false);
-  const [matchError, setMatchError] = useState(false);
+  const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
+  const [errorPassword, setErrorPassword] = useState(false)
+  const [errorConfirmPassword, setErrorConfirmPassword] = useState(false)
+  const [matchError, setMatchError] = useState(false)
 
   const handlePasswordChange = (event) => {
-    setPassword(event.target.value);
+    setPassword(event.target.value)
     if (event.target.value) {
-      setErrorPassword(false);
+      setErrorPassword(false)
     }
 
     if (event.target.value.length < 6) {
-      setErrorPassword(true);
+      setErrorPassword(true)
     } else {
-      setErrorPassword(false);
+      setErrorPassword(false)
     }
-  };
+  }
 
   const handleConfirmPasswordChange = (event) => {
-    setConfirmPassword(event.target.value);
+    setConfirmPassword(event.target.value)
     if (event.target.value) {
-      setErrorConfirmPassword(false);
+      setErrorConfirmPassword(false)
     }
     if (password && event.target.value !== password) {
-      setMatchError(true);
+      setMatchError(true)
     } else {
-      setMatchError(false);
+      setMatchError(false)
     }
-  };
+  }
 
   const handlePasswordBlur = () => {
     if (!password) {
-      setErrorPassword(true);
+      setErrorPassword(true)
     } else if (password.length < 6) {
-      setErrorPassword(true);
+      setErrorPassword(true)
     }
-  };
+  }
 
   const handleConfirmPasswordBlur = () => {
     if (!confirmPassword) {
-      setErrorConfirmPassword(true);
+      setErrorConfirmPassword(true)
     }
     if (password && confirmPassword !== password) {
-      setMatchError(true);
+      setMatchError(true)
     } else {
-      setMatchError(false);
+      setMatchError(false)
     }
-  };
+  }
 
   return (
     <div className='mx-auto w-[500px] my-5'>
@@ -77,11 +77,7 @@ function PasswordTextField({ label, confirm = false }) {
         onBlur={handlePasswordBlur}
         type='password'
         error={errorPassword}
-        helperText={
-          errorPassword 
-            ? 'Password must be at least 6 characters long' 
-            : ''
-        }
+        helperText={errorPassword ? 'Password must be at least 6 characters long' : ''}
       />
 
       {confirm && (
@@ -103,20 +99,23 @@ function PasswordTextField({ label, confirm = false }) {
               color: '#7D0600',
             },
           }}
-          label="Nhập lại mật khẩu"
+          label='Nhập lại mật khẩu'
           value={confirmPassword}
           onChange={handleConfirmPasswordChange}
           onBlur={handleConfirmPasswordBlur}
           type='password'
           error={errorConfirmPassword || matchError}
           helperText={
-            errorConfirmPassword ? 'This field is required' :
-            matchError ? 'Passwords do not match' : ''
+            errorConfirmPassword
+              ? 'This field is required'
+              : matchError
+                ? 'Passwords do not match'
+                : ''
           }
         />
       )}
     </div>
-  );
+  )
 }
 
-export default PasswordTextField;
+export default PasswordTextField

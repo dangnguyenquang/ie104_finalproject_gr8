@@ -12,11 +12,11 @@ function EmailTextField({ label }) {
   }
 
   const handleBlur = () => {
-    const emailPattern = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@gmail\.com$/
     if (!emailPattern.test(value)) {
-      setError(true);
+      setError(true)
     }
-  };
+  }
 
   return (
     <div className='mx-auto w-[500px] my-5'>

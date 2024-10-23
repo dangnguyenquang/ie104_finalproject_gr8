@@ -43,9 +43,7 @@ const CustomerRegisterForm = () => {
 
         <div>
           Bạn đã có tài khoản?
-          <Button
-            variant='none'
-          >Đăng nhập ngay</Button>
+          <Button variant='none'>Đăng nhập ngay</Button>
         </div>
       </div>
     </div>

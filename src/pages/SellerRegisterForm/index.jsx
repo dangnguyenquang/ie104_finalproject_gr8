@@ -11,7 +11,6 @@ import NameTextField from '~/components/ui/NameTextField'
 import ImageUploading from 'react-images-uploading'
 
 const SellerRegisterForm = () => {
-
   const Districts = [
     'Quận 1',
     'Quận 3',
@@ -57,8 +56,8 @@ const SellerRegisterForm = () => {
               borderRadius: '20px',
             },
             '& .MuiInputLabel-root': {
-            color: '#7D0600',
-          },
+              color: '#7D0600',
+            },
           }}
           disabled
           defaultValue='TP. Hồ Chí Minh'
@@ -72,10 +71,10 @@ const SellerRegisterForm = () => {
       {/* Giở mở/đóng cửa */}
       <div className='flex justify-between gap-10 mx-auto w-[500px] my-5'>
         {/* Giờ mở cửa */}
-        <TimeInput label='Giờ mở cửa'/>
+        <TimeInput label='Giờ mở cửa' />
 
         {/* Giờ đóng cửa */}
-        <TimeInput label='Giờ đóng cửa'/>
+        <TimeInput label='Giờ đóng cửa' />
       </div>
 
       {/* Nhập mô tả/lời giới thiệu của quán */}

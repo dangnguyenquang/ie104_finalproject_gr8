@@ -10,7 +10,9 @@ function CustomSelect({ label, options }) {
 
   return (
     <FormControl fullWidth>
-      <InputLabel sx={{color: '#7D0600'}} id={`select-label-${label}`}>{label}</InputLabel>
+      <InputLabel sx={{ color: '#7D0600' }} id={`select-label-${label}`}>
+        {label}
+      </InputLabel>
       <Select
         labelId={`select-label-${label}`}
         id={`select-${label}`}
