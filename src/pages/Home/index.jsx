@@ -3,7 +3,10 @@ import homeBackground from '~/assets/images/home/home-bg.png'
 
 import { SearchBar, FoodCard } from '~/components/ui'
 import SpecialityCarousel from './components/SpecialityCarousel'
+import FoodCategory from './components/FoodCategory'
 import foodCardImg from '~/assets/images/home/food-card.png'
+import vector from '~/assets/images/home/vector-3.png'
+import recommend from '~/assets/images/home/recommend.png'
 
 // Data Sample
 const data = {
@@ -180,6 +183,32 @@ const Home = () => {
               />
             ))}
           </div>
+        </div>
+
+        <div className='w-full mt-14'>
+          <div className='relative  w-fit ml-auto pl-16'>
+            <img src={vector} alt='vector' className='absolute z-10 bottom-0' />
+            <h2 className='text-[65px] font-semibold font-oswald text-primaryText text-right'>
+              Bộ sưu tập món ăn
+            </h2>
+          </div>
+          <FoodCategory />
+        </div>
+      </section>
+
+      <section
+        className='relative w-full h-auto items-center py-20 px-16 mt-20'
+        style={{
+          backgroundImage: `url(${recommend})`,
+          backgroundSize: '100% auto',
+          backgroundRepeat: 'no-repeat',
+        }}
+      >
+        <div className='flex items-center h-full'>
+          <div className='rounded-full bg-primary text-[25px] font-oswald px-10 py-2 text-white'>
+            Một số quán bạn nên thử
+          </div>
+          <div className='flex-1 h-1 rounded-e-md bg-primary mb-14 mt-14'></div>
         </div>
       </section>
     </main>
