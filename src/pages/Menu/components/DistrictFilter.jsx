@@ -27,7 +27,7 @@ const DistrictList = [
 
 const DistrictFilter = () => {
   const [selectedDistricts, setSelectedDistricts] = useState([])
-  
+
   const handleSelectDistricts = (event) => {
     const isChecked = event.target.checked
     setSelectedDistricts((prevSelected) => {
@@ -41,13 +41,13 @@ const DistrictFilter = () => {
   const [showIndex, setShowIndex] = useState(5)
 
   const handleCollapse = () => {
-    if(showIndex == 5) {
+    if (showIndex == 5) {
       setShowIndex(DistrictList.length)
     } else {
       setShowIndex(5)
     }
   }
-console.log(selectedDistricts)
+  console.log(selectedDistricts)
   return (
     <div>
       <div className='text-[20px] text-primaryText font-bold'>Lọc theo khu vực</div>
@@ -67,14 +67,14 @@ console.log(selectedDistricts)
                 />
               }
               key={district.id || district}
-              label={district.name || district} 
+              label={district.name || district}
               className='text-primaryText'
             />
           ) : null,
         )}
       </FormGroup>
       <Button onClick={handleCollapse}>
-        <div className='font-bold  text-primary'>{showIndex == 5 ? 'Xem thêm...':'Thu gọn'}</div>
+        <div className='font-bold  text-primary'>{showIndex == 5 ? 'Xem thêm...' : 'Thu gọn'}</div>
       </Button>
     </div>
   )
