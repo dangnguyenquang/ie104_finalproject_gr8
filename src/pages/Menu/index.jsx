@@ -299,7 +299,7 @@ const Menu = () => {
                     backgroundColor: '#7D0600',
                     color: 'white',
                     '&:hover': {
-                      backgroundColor: '#a40b0b', 
+                      backgroundColor: '#a40b0b',
                     },
                   },
                   '& .MuiPaginationItem-ellipsis': {
