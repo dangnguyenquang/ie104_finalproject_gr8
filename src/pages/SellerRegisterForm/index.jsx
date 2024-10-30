@@ -1,14 +1,15 @@
 import * as React from 'react'
+import ImageUploading from 'react-images-uploading'
 import { Button } from '~/components/ui/Button'
-import { MultiImageUploader } from '~/components/ui/MultiImageUploader'
-import { SingleImageUploader } from '~/components/ui/SingleImageUploader'
+import { ImageUploader } from '~/components/ui/ImageUploader'
 import RequiredTextField from '~/components/ui/RequiredTextField'
 import NumericTextField from '~/components/ui/NumericTextField'
 import CustomSelect from '~/components/ui/CustomSelect'
 import TimeInput from '~/components/ui/TimeInput'
 import TextField from '@mui/material/TextField'
 import NameTextField from '~/components/ui/NameTextField'
-import ImageUploading from 'react-images-uploading'
+import EmailTextField from '~/components/ui/EmailTextField'
+import PasswordTextField from '~/components/ui/PasswordTextField'
 
 const SellerRegisterForm = () => {
   const Districts = [
@@ -41,6 +42,24 @@ const SellerRegisterForm = () => {
       <div className="block text-center text-primary text-6xl font-medium font-['Oswald'] uppercase leading-[100px] my-10">
         Đăng kí bán hàng
       </div>
+
+      {/* Họ và tên */}
+      <NameTextField label='Họ và tên' />
+
+      {/* Email */}
+      <EmailTextField label='Email' />
+
+      {/* Số điện thoại */}
+      <NumericTextField label='Số điện thoại' />
+
+      {/* Địa chỉ */}
+      <RequiredTextField label='Địa chỉ' />
+
+      {/* Tên tài khoản */}
+      <RequiredTextField label='Tên tài khoản' />
+
+      {/* Mật khẩu */}
+      <PasswordTextField label='Mật khẩu' confirm='true' />
 
       {/* Tên quán */}
       <NameTextField label='Tên quán' />
@@ -81,28 +100,34 @@ const SellerRegisterForm = () => {
       <RequiredTextField label='Nhập mô tả/ lời giới thiệu của quán' />
 
       <div className='flex justify-between items-center mx-auto w-[500px] my-5'>
-        <label htmlFor='cover-photo' className='block text-sm font-medium leading-6 text-primary'>
+        <label
+          htmlFor='cover-photo'
+          className='block text-sm font-medium leading-6 text-primaryText'
+        >
           Đính kèm ảnh của quán
         </label>
         <div className='flex w-[300px] justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10'>
-          <SingleImageUploader />
+          <ImageUploader maxImages={1} />
         </div>
       </div>
 
       {/* Đính kèm 4 ảnh nổi bật */}
       <div className='flex justify-between items-center mx-auto w-[500px] my-5'>
-        <label htmlFor='cover-photo' className='block text-sm font-medium leading-6 text-primary'>
+        <label
+          htmlFor='cover-photo'
+          className='block text-sm font-medium leading-6 text-primaryText'
+        >
           Đính kèm 4 ảnh nổi bật
         </label>
         <div className='flex w-[300px] justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10'>
-          <MultiImageUploader />
+          <ImageUploader maxImages={4} />
         </div>
       </div>
 
       <div className='flex justify-center my-5'>
         <Button
           variant='outline'
-          className="bg-primary hover:bg-primary/80 text-base font-normal font-['Roboto'] leading-[30px]"
+          className="w-36 h-12 rounded-full bg-primary hover:bg-primary/80 text-center text-white text-xl font-bold font-['Roboto'] leading-[30px]"
         >
           Đăng ký
         </Button>

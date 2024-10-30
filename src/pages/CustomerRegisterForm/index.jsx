@@ -15,6 +15,11 @@ const CustomerRegisterForm = () => {
         Đăng kí tài khoản
       </div>
 
+      <div className='text-center text-primaryText my-5'>
+        Bạn muốn trở thành đối tác của chúng tôi?
+        <Button variant='none'>Đăng ký trở thành người bán hàng ngay</Button>
+      </div>
+
       {/* Họ và tên */}
       <NameTextField label='Họ và tên' />
 
@@ -33,15 +38,15 @@ const CustomerRegisterForm = () => {
       {/* Mật khẩu */}
       <PasswordTextField label='Mật khẩu' confirm='true' />
 
-      <div className='flex items-center justify-center gap-24 my-5'>
+      <div className='flex items-center justify-center gap-[54px] my-5'>
         <Button
           variant='outline'
-          className="bg-primary hover:bg-primary/80 text-base font-normal font-['Roboto'] leading-[30px]"
+          className="w-36 h-12 rounded-full bg-primary hover:bg-primary/80 text-center text-white text-xl font-bold font-['Roboto'] leading-[30px]"
         >
           Đăng ký
         </Button>
 
-        <div>
+        <div className='text-primaryText'>
           Bạn đã có tài khoản?
           <Button variant='none'>Đăng nhập ngay</Button>
         </div>

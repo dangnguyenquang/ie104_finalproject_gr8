@@ -53,22 +53,13 @@ function PasswordTextField({ label, confirm = false }) {
   }
 
   return (
-    <div className='mx-auto w-[500px] my-5'>
+    <div className='mx-auto max-w-[500px] my-5'>
       <TextField
         sx={{
           margin: 'auto',
           width: '100%',
           '& .MuiOutlinedInput-root': {
             borderRadius: '20px',
-            '&:hover fieldset': {
-              borderColor: '#7D0600',
-            },
-            '&.Mui-focused fieldset': {
-              borderColor: '#7D0600',
-            },
-          },
-          '& .MuiInputLabel-root': {
-            color: '#7D0600',
           },
         }}
         label={label}
@@ -88,15 +79,6 @@ function PasswordTextField({ label, confirm = false }) {
             marginTop: '20px',
             '& .MuiOutlinedInput-root': {
               borderRadius: '20px',
-              '&:hover fieldset': {
-                borderColor: '#7D0600',
-              },
-              '&.Mui-focused fieldset': {
-                borderColor: '#7D0600',
-              },
-            },
-            '& .MuiInputLabel-root': {
-              color: '#7D0600',
             },
           }}
           label='Nhập lại mật khẩu'

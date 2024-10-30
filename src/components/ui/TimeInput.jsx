@@ -38,15 +38,6 @@ function TimeInput({ label }) {
         width: '100%',
         '& .MuiOutlinedInput-root': {
           borderRadius: '20px',
-          '&:hover fieldset': {
-            borderColor: '#7D0600',
-          },
-          '&.Mui-focused fieldset': {
-            borderColor: '#7D0600',
-          },
-        },
-        '& .MuiInputLabel-root': {
-          color: '#7D0600',
         },
       }}
     />

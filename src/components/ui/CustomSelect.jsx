@@ -10,9 +10,7 @@ function CustomSelect({ label, options }) {
 
   return (
     <FormControl fullWidth>
-      <InputLabel sx={{ color: '#7D0600' }} id={`select-label-${label}`}>
-        {label}
-      </InputLabel>
+      <InputLabel id={`select-label-${label}`}>{label}</InputLabel>
       <Select
         labelId={`select-label-${label}`}
         id={`select-${label}`}
@@ -21,12 +19,6 @@ function CustomSelect({ label, options }) {
         label={label}
         sx={{
           borderRadius: '20px',
-          '& .MuiSelect-icon': {
-            color: '#7D0600',
-          },
-          '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-            borderColor: '#7D0600',
-          },
         }}
       >
         {options.map((option) => (
