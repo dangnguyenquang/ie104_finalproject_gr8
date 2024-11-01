@@ -1,19 +1,21 @@
 import React, { useState } from 'react'
 import TextField from '@mui/material/TextField'
+import InputAdornment from '@mui/material/InputAdornment'
+import IconButton from '@mui/material/IconButton'
+import Visibility from '@mui/icons-material/Visibility'
+import VisibilityOff from '@mui/icons-material/VisibilityOff'
 
 function PasswordTextField({ label, confirm = false }) {
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
+  const [showPassword, setShowPassword] = useState(false)
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [errorPassword, setErrorPassword] = useState(false)
   const [errorConfirmPassword, setErrorConfirmPassword] = useState(false)
   const [matchError, setMatchError] = useState(false)
 
   const handlePasswordChange = (event) => {
     setPassword(event.target.value)
-    if (event.target.value) {
-      setErrorPassword(false)
-    }
-
     if (event.target.value.length < 6) {
       setErrorPassword(true)
     } else {
@@ -23,9 +25,6 @@ function PasswordTextField({ label, confirm = false }) {
 
   const handleConfirmPasswordChange = (event) => {
     setConfirmPassword(event.target.value)
-    if (event.target.value) {
-      setErrorConfirmPassword(false)
-    }
     if (password && event.target.value !== password) {
       setMatchError(true)
     } else {
@@ -34,9 +33,7 @@ function PasswordTextField({ label, confirm = false }) {
   }
 
   const handlePasswordBlur = () => {
-    if (!password) {
-      setErrorPassword(true)
-    } else if (password.length < 6) {
+    if (!password || password.length < 6) {
       setErrorPassword(true)
     }
   }
@@ -47,10 +44,11 @@ function PasswordTextField({ label, confirm = false }) {
     }
     if (password && confirmPassword !== password) {
       setMatchError(true)
-    } else {
-      setMatchError(false)
     }
   }
+
+  const toggleShowPassword = () => setShowPassword((prev) => !prev)
+  const toggleShowConfirmPassword = () => setShowConfirmPassword((prev) => !prev)
 
   return (
     <div className='mx-auto max-w-[500px] my-5'>
@@ -61,14 +59,26 @@ function PasswordTextField({ label, confirm = false }) {
           '& .MuiOutlinedInput-root': {
             borderRadius: '20px',
           },
+          '& fieldset': {
+            borderWidth: '2px',
+          },
         }}
         label={label}
         value={password}
         onChange={handlePasswordChange}
         onBlur={handlePasswordBlur}
-        type='password'
+        type={showPassword ? 'text' : 'password'}
         error={errorPassword}
         helperText={errorPassword ? 'Password must be at least 6 characters long' : ''}
+        InputProps={{
+          endAdornment: (
+            <InputAdornment position='end'>
+              <IconButton onClick={toggleShowPassword} edge='end'>
+                {showPassword ? <VisibilityOff /> : <Visibility />}
+              </IconButton>
+            </InputAdornment>
+          ),
+        }}
       />
 
       {confirm && (
@@ -80,12 +90,15 @@ function PasswordTextField({ label, confirm = false }) {
             '& .MuiOutlinedInput-root': {
               borderRadius: '20px',
             },
+            '& fieldset': {
+              borderWidth: '2px',
+            },
           }}
           label='Nhập lại mật khẩu'
           value={confirmPassword}
           onChange={handleConfirmPasswordChange}
           onBlur={handleConfirmPasswordBlur}
-          type='password'
+          type={showConfirmPassword ? 'text' : 'password'}
           error={errorConfirmPassword || matchError}
           helperText={
             errorConfirmPassword
@@ -94,6 +107,15 @@ function PasswordTextField({ label, confirm = false }) {
                 ? 'Passwords do not match'
                 : ''
           }
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position='end'>
+                <IconButton onClick={toggleShowConfirmPassword} edge='end'>
+                  {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
         />
       )}
     </div>

@@ -73,9 +73,14 @@ const SellerRegisterForm = () => {
           sx={{
             '& .MuiOutlinedInput-root': {
               borderRadius: '20px',
+              '&.Mui-disabled': {
+                '& input': {
+                  WebkitTextFillColor: 'rgba(0, 0, 0, 0.87)',
+                },
+              },
             },
-            '& .MuiInputLabel-root': {
-              color: '#7D0600',
+            '& fieldset': {
+              borderWidth: '2px',
             },
           }}
           disabled
