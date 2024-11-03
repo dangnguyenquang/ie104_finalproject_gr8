@@ -1,11 +1,11 @@
 import axios from 'axios'
-import createAuthRefreshInterceptor from 'axios-auth-refresh'
+// import createAuthRefreshInterceptor from 'axios-auth-refresh'
 import { authApi } from '../apis'
-import { AxiosAuthRefreshRequestConfig } from 'axios-auth-refresh'
+// import { AxiosAuthRefreshRequestConfig } from 'axios-auth-refresh'
 import _createAuthRefreshInterceptor from 'axios-auth-refresh'
 class HttpClient {
   constructor() {
-    this.baseUrl = 'http://localhost:3000' || ''
+    this.baseUrl = 'http://localhost:3000'
     this.instance = axios.create({
       baseURL: this.baseUrl,
       withCredentials: true,
