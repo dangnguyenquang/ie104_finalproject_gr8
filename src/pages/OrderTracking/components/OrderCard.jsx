@@ -1,17 +1,17 @@
-import React, { useState } from 'react';
-import { Button } from '~/components/ui/Button';
-import OrderItem from './OrderItem';
-import ReviewModal from '~/components/Layout/Components/_components/ReviewModal';
+import React, { useState } from 'react'
+import { Button } from '~/components/ui/Button'
+import OrderItem from './OrderItem'
+import ReviewModal from '~/components/Layout/Components/_components/ReviewModal'
 
 const formatNumber = (number) => {
-  return new Intl.NumberFormat().format(number);
-};
+  return new Intl.NumberFormat().format(number)
+}
 
 const OrderCard = ({ order }) => {
-  const [isReviewOpen, setReviewOpen] = useState(false);
+  const [isReviewOpen, setReviewOpen] = useState(false)
 
-  const handleReviewOpen = () => setReviewOpen(true);
-  const handleReviewClose = () => setReviewOpen(false);
+  const handleReviewOpen = () => setReviewOpen(true)
+  const handleReviewClose = () => setReviewOpen(false)
 
   return (
     <div className='p-4 border rounded-lg w-[600px] my-3 relative bg-white'>
@@ -66,7 +66,7 @@ const OrderCard = ({ order }) => {
         starMedium={4.5}
       />
     </div>
-  );
-};
+  )
+}
 
-export default OrderCard;
+export default OrderCard
