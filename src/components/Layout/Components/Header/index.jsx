@@ -1,5 +1,6 @@
 import { NavLink } from 'react-router-dom'
 import { Button } from '~/components/ui/Button'
+import LoginModal from '../_components/LoginModal'
 
 import Logo from '~/assets/icons/logo.svg'
 import { routes } from '~/configs'
@@ -44,7 +45,9 @@ const Header = () => {
       </div>
       <div className='flex gap-6'>
         <Button variant='outline'>Đăng ký</Button>
-        <Button className='bg-secondary hover:bg-secondary'>Đăng nhập</Button>
+        <LoginModal>
+          <Button className='bg-secondary hover:bg-secondary'>Đăng nhập</Button>
+        </LoginModal>
       </div>
     </div>
   )
