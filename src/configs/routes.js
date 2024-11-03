@@ -3,4 +3,5 @@ export const routes = {
   ABOUTUS: '/about-us',
   MENU: '/menu',
   SELLER_REGISTER: '/register/seller',
+  CUSTOMER_REGISTER: '/register',
 }

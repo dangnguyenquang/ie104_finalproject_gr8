@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import TextField from '@mui/material/TextField'
 
-function RequiredTextField({ label }) {
+function RequiredTextField({ label, className, placeholder, whiteBg }) {
   const [value, setValue] = useState('')
   const [error, setError] = useState(false)
 
@@ -19,13 +19,14 @@ function RequiredTextField({ label }) {
   }
 
   return (
-    <div className='mx-auto max-w-[500px] my-5'>
+    <div className={`mx-auto max-w-[500px] my-5 ${className}`}>
       <TextField
         sx={{
           margin: 'auto',
           width: '100%',
           '& .MuiOutlinedInput-root': {
             borderRadius: '20px',
+            backgroundColor: whiteBg ? 'white' : 'transparent',
           },
         }}
         label={label}
@@ -34,6 +35,7 @@ function RequiredTextField({ label }) {
         onBlur={handleBlur}
         required
         error={error}
+        placeholder={placeholder}
         helperText={error ? 'This field is required' : ''}
       />
     </div>

@@ -2,12 +2,12 @@ import searchBackground from '~/assets/images/home/search-bg.png'
 import homeBackground from '~/assets/images/home/home-bg.png'
 
 import { SearchBar, FoodCard } from '~/components/ui'
-import SpecialityCarousel from './components/SpecialityCarousel'
-import FoodCategory from './components/FoodCategory'
+import SpecialityCarousel from './_components/SpecialityCarousel'
+import FoodCategory from './_components/FoodCategory'
 import foodCardImg from '~/assets/images/home/food-card.png'
 import vector from '~/assets/images/home/vector-3.png'
 import recommend from '~/assets/images/home/recommend.png'
-import RecommendCarousel from './components/RecommendCarousel'
+import RecommendCarousel from './_components/RecommendCarousel'
 
 // Data Sample
 const data = {

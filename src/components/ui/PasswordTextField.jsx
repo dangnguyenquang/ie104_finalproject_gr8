@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import TextField from '@mui/material/TextField'
 
-function PasswordTextField({ label, confirm = false }) {
+function PasswordTextField({ label, confirm = false, className, placeholder, whiteBg }) {
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [errorPassword, setErrorPassword] = useState(false)
@@ -53,19 +53,21 @@ function PasswordTextField({ label, confirm = false }) {
   }
 
   return (
-    <div className='mx-auto max-w-[500px] my-5'>
+    <div className={`mx-auto max-w-[500px] my-5 ${className}`}>
       <TextField
         sx={{
           margin: 'auto',
           width: '100%',
           '& .MuiOutlinedInput-root': {
             borderRadius: '20px',
+            backgroundColor: whiteBg ? 'white' : 'transparent',
           },
         }}
         label={label}
         value={password}
         onChange={handlePasswordChange}
         onBlur={handlePasswordBlur}
+        placeholder={placeholder}
         type='password'
         error={errorPassword}
         helperText={errorPassword ? 'Password must be at least 6 characters long' : ''}
@@ -86,6 +88,7 @@ function PasswordTextField({ label, confirm = false }) {
           onChange={handleConfirmPasswordChange}
           onBlur={handleConfirmPasswordBlur}
           type='password'
+          placeholder={placeholder}
           error={errorConfirmPassword || matchError}
           helperText={
             errorConfirmPassword
