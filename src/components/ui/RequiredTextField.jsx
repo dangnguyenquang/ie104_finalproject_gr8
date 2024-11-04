@@ -28,6 +28,9 @@ function RequiredTextField({ label, className, placeholder, whiteBg }) {
             borderRadius: '20px',
             backgroundColor: whiteBg ? 'white' : 'transparent',
           },
+          '& fieldset': {
+            borderWidth: '2px',
+          },
         }}
         label={label}
         value={value}

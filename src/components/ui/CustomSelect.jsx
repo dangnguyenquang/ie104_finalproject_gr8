@@ -19,6 +19,9 @@ function CustomSelect({ label, options }) {
         label={label}
         sx={{
           borderRadius: '20px',
+          '& fieldset': {
+            borderWidth: '2px',
+          },
         }}
       >
         {options.map((option) => (

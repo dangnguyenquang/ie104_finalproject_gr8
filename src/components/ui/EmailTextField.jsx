@@ -27,6 +27,9 @@ function EmailTextField({ label }) {
           '& .MuiOutlinedInput-root': {
             borderRadius: '20px',
           },
+          '& fieldset': {
+            borderWidth: '2px',
+          },
         }}
         label={label}
         value={value}
