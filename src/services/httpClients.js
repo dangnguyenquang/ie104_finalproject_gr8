@@ -1,6 +1,6 @@
 import axios from 'axios'
-import { authApi } from '../apis'
-import _createAuthRefreshInterceptor from 'axios-auth-refresh'
+// import { authApi } from '../apis'
+// import _createAuthRefreshInterceptor from 'axios-auth-refresh'
 
 class HttpClient {
   constructor() {
