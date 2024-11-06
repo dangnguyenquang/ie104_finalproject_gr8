@@ -27,54 +27,48 @@ const DistrictList = [
 
 const DistrictFilter = () => {
   const [selectedDistricts, setSelectedDistricts] = useState([])
+  const [showIndex, setShowIndex] = useState(5)
 
   const handleSelectDistricts = (event) => {
     const isChecked = event.target.checked
-    setSelectedDistricts((prevSelected) => {
-      if (isChecked) {
-        return [...prevSelected, event.target.value]
-      } else {
-        return prevSelected.filter((district) => district !== event.target.value)
-      }
-    })
+    const district = event.target.value
+    setSelectedDistricts((prevSelected) =>
+      isChecked ? [...prevSelected, district] : prevSelected.filter((d) => d !== district)
+    )
   }
-  const [showIndex, setShowIndex] = useState(5)
-
+console.log(selectedDistricts)
   const handleCollapse = () => {
-    if (showIndex == 5) {
-      setShowIndex(DistrictList.length)
-    } else {
-      setShowIndex(5)
-    }
+    setShowIndex(showIndex === 5 ? DistrictList.length : 5)
   }
-  console.log(selectedDistricts)
+
   return (
     <div>
-      <div className='text-[20px] text-primaryText font-bold'>Lọc theo khu vực</div>
+      <div className="text-[20px] text-primaryText font-bold">Lọc theo khu vực</div>
       <FormGroup>
-        {DistrictList.map((district, index) =>
-          index < showIndex ? (
-            <FormControlLabel
-              control={
-                <Checkbox
-                  sx={{
-                    '&.Mui-checked': {
-                      color: '#7D0600',
-                    },
-                  }}
-                  onChange={handleSelectDistricts}
-                  value={district}
-                />
-              }
-              key={district.id || district}
-              label={district.name || district}
-              className='text-primaryText'
-            />
-          ) : null,
-        )}
+        {DistrictList.slice(0, showIndex).map((district) => (
+          <FormControlLabel
+            control={
+              <Checkbox
+                sx={{
+                  '&.Mui-checked': {
+                    color: '#7D0600',
+                  },
+                }}
+                onChange={handleSelectDistricts}
+                value={district}
+                checked={selectedDistricts.includes(district)}
+              />
+            }
+            key={district}
+            label={district}
+            className="text-primaryText"
+          />
+        ))}
       </FormGroup>
       <Button onClick={handleCollapse}>
-        <div className='font-bold  text-primary'>{showIndex == 5 ? 'Xem thêm...' : 'Thu gọn'}</div>
+        <div className="font-bold text-primary">
+          {showIndex === 5 ? 'Xem thêm...' : 'Thu gọn'}
+        </div>
       </Button>
     </div>
   )

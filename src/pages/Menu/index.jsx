@@ -240,10 +240,10 @@ const Menu = () => {
         {/* ================================================= */}
         <div className='flex'>
           {/* Bộ lọc */}
-          <div className='w-[300px] mr-[50px]'>
+          <div className='2xl:w-[300px] mr-[50px] w-[250px]'>
             <div className='bg-primary rounded-t-[20px] h-[95px] justify-center items-center flex gap-1'>
               <img src='../src/assets/icons/menu/filter_icon.svg' alt='' />
-              <div className='text-accent font-bold text-[25px] uppercase'>Bộ lọc tìm kiếm</div>
+              <div className='text-accent font-bold text-[20px] 2xl:text-[25px] uppercase'>Bộ lọc tìm kiếm</div>
             </div>
             <div className='bg-[#f0f1f2] p-5 rounded-b-[20px]'>
               {/*  lọc theo Rating */}
@@ -275,12 +275,6 @@ const Menu = () => {
 
               {/* Lọc theo danh mục món ăn */}
               <CategroryFilter />
-
-              {/* ====================== Chưa biết xử ly =========================== */}
-              {/* nút Xóa hết tất cả
-              <Button className='bg-primary hover:bg-primary w-full' onClick={handleDeleteAll}>
-                Xóa hết tất cả
-              </Button> */}
             </div>
           </div>
 
