@@ -5,7 +5,7 @@ import IconButton from '@mui/material/IconButton'
 import Visibility from '@mui/icons-material/Visibility'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
 
-function PasswordTextField({ label, confirm = false }) {
+function PasswordTextField({ label, confirm = false }, whiteBg) {
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
@@ -58,6 +58,7 @@ function PasswordTextField({ label, confirm = false }) {
           width: '100%',
           '& .MuiOutlinedInput-root': {
             borderRadius: '20px',
+            backgroundColor: whiteBg ? 'white' : 'transparent',
           },
           '& fieldset': {
             borderWidth: '2px',
@@ -89,6 +90,7 @@ function PasswordTextField({ label, confirm = false }) {
             marginTop: '20px',
             '& .MuiOutlinedInput-root': {
               borderRadius: '20px',
+              backgroundColor: whiteBg ? 'white' : 'transparent',
             },
             '& fieldset': {
               borderWidth: '2px',

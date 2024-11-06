@@ -12,7 +12,7 @@ const Navigation = ({ labels, value, onChange }) => {
       sx={{
         backgroundColor: '#fdf8e7', // Màu nền cho navigation
         '& .MuiTab-root': {
-          width: '160px',
+          width: '200px',
           fontSize: { xs: 12, md: 14 },
           fontFamily: 'Roboto, sans-serif',
           fontWeight: 'medium',
