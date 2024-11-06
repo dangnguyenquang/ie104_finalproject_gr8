@@ -2,6 +2,7 @@ import Home from '~/pages/Home'
 import AboutUs from '~/pages/AboutUs'
 import Menu from '~/pages/Menu'
 import SellerRegisterForm from '~/pages/SellerRegisterForm'
+import CustomerRegisterForm from '~/pages/CustomerRegisterForm'
 import { routes } from '~/configs'
 
 const publicRoutes = [
@@ -9,6 +10,7 @@ const publicRoutes = [
   { path: routes.MENU, component: Menu },
   { path: routes.ABOUTUS, component: AboutUs },
   { path: routes.SELLER_REGISTER, component: SellerRegisterForm },
+  { path: routes.CUSTOMER_REGISTER, component: CustomerRegisterForm },
 ]
 const privateRoutes = []
 

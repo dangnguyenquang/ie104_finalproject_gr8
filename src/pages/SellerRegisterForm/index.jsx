@@ -1,207 +1,138 @@
+import * as React from 'react'
+import ImageUploading from 'react-images-uploading'
 import { Button } from '~/components/ui/Button'
-import Add from '~/assets/images/Add.png'
+import { ImageUploader } from '~/components/ui/ImageUploader'
+import RequiredTextField from '~/components/ui/RequiredTextField'
+import NumericTextField from '~/components/ui/NumericTextField'
+import CustomSelect from '~/components/ui/CustomSelect'
+import TimeInput from '~/components/ui/TimeInput'
+import TextField from '@mui/material/TextField'
+import NameTextField from '~/components/ui/NameTextField'
+import EmailTextField from '~/components/ui/EmailTextField'
+import PasswordTextField from '~/components/ui/PasswordTextField'
 
 const SellerRegisterForm = () => {
+  const Districts = [
+    'Quận 1',
+    'Quận 3',
+    'Quận 4',
+    'Quận 5',
+    'Quận 6',
+    'Quận 7',
+    'Quận 8',
+    'Quận 10',
+    'Quận 11',
+    'Quận 12',
+    'Quận Tân Bình',
+    'Quận Bình Tân',
+    'Quận Bình Thạnh',
+    'Quận Tân Phú',
+    'Quận Gò Vấp',
+    'Quận Phú Nhuận',
+  ]
+
+  const districtsOptions = Districts.map((district, index) => ({
+    label: district,
+    value: index + 1,
+  }))
+
   return (
-    <form className='px-[60px]'>
-      <div className="block text-center text-[#7d0600] text-6xl font-medium font-['Oswald'] uppercase leading-[100px] mt-[82px]">
+    <div className='w-full justify-center'>
+      {/* Đăng ký bán hàng */}
+      <div className="block text-center text-primary text-6xl font-medium font-['Oswald'] uppercase leading-[100px] my-10">
         Đăng kí bán hàng
       </div>
 
+      {/* Họ và tên */}
+      <NameTextField label='Họ và tên' />
+
+      {/* Email */}
+      <EmailTextField label='Email' />
+
+      {/* Số điện thoại */}
+      <NumericTextField label='Số điện thoại' />
+
+      {/* Địa chỉ */}
+      <RequiredTextField label='Địa chỉ' />
+
+      {/* Tên tài khoản */}
+      <RequiredTextField label='Tên tài khoản' />
+
+      {/* Mật khẩu */}
+      <PasswordTextField label='Mật khẩu' confirm='true' />
+
       {/* Tên quán */}
-      <div className='flex h-24 items-center w-full mt-[14px]'>
-        <label
-          htmlFor='shop-name'
-          className="flex justify-end pr-[15px] min-w-[300px] text-black text-[25px] font-bold font-['Roboto'] leading-[30px]"
-        >
-          Tên quán
-        </label>
-
-        <input
-          id='shop-name'
-          name='shop-name'
-          className="flex w-[900px] h-[59px] pl-4 bg-[#d9d9d9]/60 rounded-[20px] text-black text-[25px] font-normal font-['Roboto'] leading-[30px] "
-        />
-      </div>
-
-      {/* Email của quán */}
-      <div className='flex h-24 items-center w-full mt-[14px]'>
-        <label
-          htmlFor='shop-email'
-          className="flex justify-end pr-[15px] min-w-[300px] text-black text-[25px] font-bold font-['Roboto'] leading-[30px]"
-        >
-          Email của quán
-        </label>
-
-        <input
-          id='shop-email'
-          name='shop-email'
-          className="flex w-[900px] h-[59px] pl-4 bg-[#d9d9d9]/60 rounded-[20px] text-black text-[25px] font-normal font-['Roboto'] leading-[30px]"
-        />
-      </div>
+      <NameTextField label='Tên quán' />
 
       {/* Số điện thoại của quán */}
-      <div className='flex h-24 items-center w-full mt-[14px]'>
-        <label
-          htmlFor='shop-number'
-          className="flex justify-end pr-[15px] min-w-[300px] text-black text-[25px] font-bold font-['Roboto'] leading-[30px]"
-        >
-          Số điện thoại của quán
-        </label>
-
-        <input
-          id='shop-number'
-          name='shop-number'
-          className="flex w-[900px] h-[59px] pl-4 bg-[#d9d9d9]/60 rounded-[20px] text-black text-[25px] font-normal font-['Roboto'] leading-[30px]"
-        />
-      </div>
+      <NumericTextField label='Số điện thoại của quán' />
 
       {/* Địa chỉ của quán */}
-      <div className='flex h-24 items-center w-full mt-[14px]'>
-        <label
-          htmlFor='shop-district'
-          className="flex justify-end pr-[15px] min-w-[300px] text-black text-[25px] font-bold font-['Roboto'] leading-[30px]"
-        >
-          Địa chỉ của quán
-        </label>
-
-        <span className="flex items-center justify-center w-[250px] h-[59px] mr-[15px] bg-[#d9d9d9]/60 rounded-[20px] text-black text-[25px] font-normal font-['Roboto'] leading-[30px]">
-          Tp. Hồ Chí Minh
-        </span>
-
-        <select
-          id='shop-district'
-          name='shop-district'
-          autoComplete='shop-district'
-          className="flex items-center text-center w-[250px] h-[59px] px-4 bg-[#d9d9d9]/60 rounded-[20px] text-black text-[25px] font-normal font-['Roboto'] leading-[30px]"
-        >
-          <option>Quận 1</option>
-          <option>Quận 3</option>
-          <option>Quận 4</option>
-          <option>Quận 5</option>
-          <option>Quận 6</option>
-          <option>Quận 7</option>
-          <option>Quận 8</option>
-          <option>Quận 10</option>
-          <option>Quận 11</option>
-          <option>Quận 12</option>
-          <option>Quận Tân Bình</option>
-          <option>Quận Tân Phú</option>
-          <option>Quận Bình Tân</option>
-          <option>Quận Bình Thạnh</option>
-          <option>Quận Gò Vấp</option>
-          <option>Quận Phú Nhuận</option>
-          <option>Tp. Thủ Đức</option>
-        </select>
-      </div>
-
-      {/* Nhập địa chỉ chi tiết */}
-      <div className='flex h-24 items-center w-full mt-[14px]'>
-        <label
-          htmlFor='shop-address'
-          className="flex justify-end pr-[15px] min-w-[300px] text-black text-[25px] font-bold font-['Roboto'] leading-[30px]"
-        >
-          Nhập địa chỉ chi tiết
-        </label>
-
-        <input
-          id='shop-address'
-          name='shop-address'
-          className="flex w-[900px] h-[59px] pl-4 bg-[#d9d9d9]/60 rounded-[20px] text-black text-[25px] font-normal font-['Roboto'] leading-[30px]"
+      <div className='flex justify-between gap-4 mx-auto w-[500px] my-5'>
+        <TextField
+          sx={{
+            '& .MuiOutlinedInput-root': {
+              borderRadius: '20px',
+            },
+            '& .MuiInputLabel-root': {
+              color: '#7D0600',
+            },
+          }}
+          disabled
+          defaultValue='TP. Hồ Chí Minh'
         />
+        <CustomSelect label='Quận' options={districtsOptions} />
       </div>
 
-      {/* Giờ mở, đóng cửa */}
-      <div className='flex h-24 items-center w-full mt-[14px]'>
+      {/* Địa chỉ chi tiết của quán */}
+      <RequiredTextField label='Nhập địa chỉ chi tiết' />
+
+      {/* Giở mở/đóng cửa */}
+      <div className='flex justify-between gap-10 mx-auto w-[500px] my-5'>
         {/* Giờ mở cửa */}
-        <label
-          htmlFor='shop-open'
-          className="flex justify-end pr-[15px] min-w-[300px] text-black text-[25px] font-bold font-['Roboto'] leading-[30px]"
-        >
-          Giờ mở cửa
-        </label>
-        <input
-          id='shop-open'
-          name='shop-open'
-          className="flex w-[300px] h-[59px] pl-4 bg-[#d9d9d9]/60 rounded-[20px] text-black text-[25px] font-normal font-['Roboto'] leading-[30px]"
-        />
+        <TimeInput label='Giờ mở cửa' />
 
         {/* Giờ đóng cửa */}
-        <label
-          htmlFor='shop-close'
-          className="flex justify-end pr-[15px] min-w-[300px] text-black text-[25px] font-bold font-['Roboto'] leading-[30px]"
-        >
-          Giờ đóng cửa
-        </label>
-        <input
-          id='shop-close'
-          name='shop-close'
-          className="flex w-[300px] h-[59px] pl-4 bg-[#d9d9d9]/60 rounded-[20px] text-black text-[25px] font-normal font-['Roboto'] leading-[30px]"
-        />
+        <TimeInput label='Giờ đóng cửa' />
       </div>
 
-      {/* Nhập mô tả/ lời giới thiệu của quán */}
-      <div className='flex h-24 items-center w-full mt-[14px]'>
-        <label
-          htmlFor='shop-description'
-          className="flex justify-end pr-[15px] min-w-[300px] text-black text-[25px] font-bold font-['Roboto'] leading-[30px]"
-        >
-          Mô tả/ lời giới thiệu
-        </label>
+      {/* Nhập mô tả/lời giới thiệu của quán */}
+      <RequiredTextField label='Nhập mô tả/ lời giới thiệu của quán' />
 
-        <input
-          id='shop-description'
-          name='shop-description'
-          className="flex w-[900px] h-[59px] pl-4 bg-[#d9d9d9]/60 rounded-[20px] text-black text-[25px] font-normal font-['Roboto'] leading-[30px]"
-        />
-      </div>
-
-      {/* Đính kèm ảnh */}
-      <div className='flex items-center w-full mt-[14px]'>
-        {/* Đính kèm ảnh của quán */}
+      <div className='flex justify-between items-center mx-auto w-[500px] my-5'>
         <label
-          htmlFor='shop-description'
-          className="flex justify-end pr-[15px] min-w-[300px] text-black text-[25px] font-bold font-['Roboto'] leading-[30px]"
+          htmlFor='cover-photo'
+          className='block text-sm font-medium leading-6 text-primaryText'
         >
-          Ảnh của quán
+          Đính kèm ảnh của quán
         </label>
-        <div className='flex items-center justify-center w-[300px] h-[300px] rounded-[10px] border-2 border-black'>
-          <label
-            htmlFor='file-upload'
-            className='relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500'
-          >
-            <span>Upload a file</span>
-            <input id='file-upload' name='file-upload' type='file' className='sr-only' />
-          </label>
-        </div>
-
-        {/* Đính kèm 4 ảnh nối bật */}
-        <label
-          htmlFor='shop-description'
-          className="flex justify-end pr-[15px] min-w-[300px] text-black text-[25px] font-bold font-['Roboto'] leading-[30px]"
-        >
-          4 ảnh nổi bật
-        </label>
-        <div className='flex items-center justify-center w-[300px] h-[300px] rounded-[10px] border-2 border-black'>
-          <label
-            htmlFor='file-upload'
-            className='relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500'
-          >
-            <span>Upload a file</span>
-            <input id='file-upload' name='file-upload' type='file' className='sr-only' />
-          </label>
+        <div className='flex w-[300px] justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10'>
+          <ImageUploader maxImages={1} />
         </div>
       </div>
 
-      <div className='flex justify-center mt-20'>
+      {/* Đính kèm 4 ảnh nổi bật */}
+      <div className='flex justify-between items-center mx-auto w-[500px] my-5'>
+        <label
+          htmlFor='cover-photo'
+          className='block text-sm font-medium leading-6 text-primaryText'
+        >
+          Đính kèm 4 ảnh nổi bật
+        </label>
+        <div className='flex w-[300px] justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10'>
+          <ImageUploader maxImages={4} />
+        </div>
+      </div>
+
+      <div className='flex justify-center my-5'>
         <Button
           variant='outline'
-          className="w-52 h-[75px] bg-primary hover:bg-primary/80 text-3xl font-bold font-['Roboto'] leading-[30px]"
+          className="w-36 h-12 rounded-full bg-primary hover:bg-primary/80 text-center text-white text-xl font-bold font-['Roboto'] leading-[30px]"
         >
           Đăng ký
         </Button>
       </div>
-    </form>
+    </div>
   )
 }
 
