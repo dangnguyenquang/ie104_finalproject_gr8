@@ -73,9 +73,12 @@ const SellerRegisterForm = () => {
           sx={{
             '& .MuiOutlinedInput-root': {
               borderRadius: '20px',
+              '& .MuiInputBase-input.Mui-disabled': {
+                WebkitTextFillColor: '#333333',
+              },
             },
-            '& .MuiInputLabel-root': {
-              color: '#7D0600',
+            '& .MuiOutlinedInput-root.Mui-disabled fieldset.MuiOutlinedInput-notchedOutline': {
+              borderWidth: '2px',
             },
           }}
           disabled
@@ -106,7 +109,7 @@ const SellerRegisterForm = () => {
         >
           Đính kèm ảnh của quán
         </label>
-        <div className='flex w-[300px] justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10'>
+        <div className='flex w-[300px] justify-center rounded-lg border-2 border-dashed border-gray-900/25 px-6 py-10'>
           <ImageUploader maxImages={1} />
         </div>
       </div>
@@ -119,7 +122,7 @@ const SellerRegisterForm = () => {
         >
           Đính kèm 4 ảnh nổi bật
         </label>
-        <div className='flex w-[300px] justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10'>
+        <div className='flex w-[300px] justify-center rounded-lg border-2 border-dashed border-gray-900/25 px-6 py-10'>
           <ImageUploader maxImages={4} />
         </div>
       </div>
