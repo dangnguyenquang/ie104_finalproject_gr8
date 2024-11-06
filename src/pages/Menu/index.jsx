@@ -221,12 +221,13 @@ const Menu = () => {
               <SearchBar />
             </div>
             <div className='absolute right-0'>
-              <FormControl sx={{ m: 1, minWidth: 120 }}>
+              <FormControl sx={{ m: 1, minWidth: 120}}>
                 <Select
                   value={selectedRestaurantFilter}
                   onChange={handleChangeSelect}
                   displayEmpty
                   inputProps={{ 'aria-label': 'Without label' }}
+
                 >
                   <MenuItem value='Best seller'>Quán bán chạy nhất</MenuItem>
                   <MenuItem value='Newest restaurant'>Quán mới nhất</MenuItem>
