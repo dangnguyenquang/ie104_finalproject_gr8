@@ -221,13 +221,12 @@ const Menu = () => {
               <SearchBar />
             </div>
             <div className='absolute right-0'>
-              <FormControl sx={{ m: 1, minWidth: 120}}>
+              <FormControl sx={{ m: 1, minWidth: 120 }}>
                 <Select
                   value={selectedRestaurantFilter}
                   onChange={handleChangeSelect}
                   displayEmpty
                   inputProps={{ 'aria-label': 'Without label' }}
-
                 >
                   <MenuItem value='Best seller'>Quán bán chạy nhất</MenuItem>
                   <MenuItem value='Newest restaurant'>Quán mới nhất</MenuItem>
@@ -243,7 +242,9 @@ const Menu = () => {
           <div className='2xl:w-[300px] mr-[50px] w-[250px]'>
             <div className='bg-primary rounded-t-[20px] h-[95px] justify-center items-center flex gap-1'>
               <img src='../src/assets/icons/menu/filter_icon.svg' alt='' />
-              <div className='text-accent font-bold text-[20px] 2xl:text-[25px] uppercase'>Bộ lọc tìm kiếm</div>
+              <div className='text-accent font-bold text-[20px] 2xl:text-[25px] uppercase'>
+                Bộ lọc tìm kiếm
+              </div>
             </div>
             <div className='bg-[#f0f1f2] p-5 rounded-b-[20px]'>
               {/*  lọc theo Rating */}
