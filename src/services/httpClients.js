@@ -1,8 +1,7 @@
 import axios from 'axios'
-// import createAuthRefreshInterceptor from 'axios-auth-refresh'
 import { authApi } from '../apis'
-// import { AxiosAuthRefreshRequestConfig } from 'axios-auth-refresh'
 import _createAuthRefreshInterceptor from 'axios-auth-refresh'
+
 class HttpClient {
   constructor() {
     this.baseUrl = 'http://localhost:3000'
@@ -42,27 +41,6 @@ class HttpClient {
 
   removeAuthHeader() {
     delete this.instance.defaults.headers.common['Authorization']
-  }
-
-  createAuthRefreshInterceptor(onSuccess, onError) {
-    _createAuthRefreshInterceptor(
-      this.instance,
-      async (failedRequest) => {
-        try {
-          const { accessToken } = await authApi.refreshToken()
-          failedRequest.response.config.headers['Authorization'] = 'Bearer ' + accessToken
-          onSuccess && onSuccess(accessToken)
-          return Promise.resolve()
-        } catch (error) {
-          onError && onError(error)
-          return Promise.reject(error)
-        }
-      },
-      {
-        pauseInstanceWhileRefreshing: true,
-        statusCodes: [401],
-      },
-    )
   }
 }
 
