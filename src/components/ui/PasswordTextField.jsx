@@ -1,7 +1,15 @@
 import React, { useState } from 'react'
 import TextField from '@mui/material/TextField'
 
-function PasswordTextField({ label, confirm = false, className, placeholder, whiteBg }) {
+function PasswordTextField({
+  label,
+  confirm = false,
+  className,
+  placeholder,
+  whiteBg,
+  value,
+  handleChange,
+}) {
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [errorPassword, setErrorPassword] = useState(false)
@@ -64,8 +72,8 @@ function PasswordTextField({ label, confirm = false, className, placeholder, whi
           },
         }}
         label={label}
-        value={password}
-        onChange={handlePasswordChange}
+        value={value}
+        onChange={handleChange}
         onBlur={handlePasswordBlur}
         placeholder={placeholder}
         type='password'

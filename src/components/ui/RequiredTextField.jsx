@@ -1,16 +1,8 @@
 import React, { useState } from 'react'
 import TextField from '@mui/material/TextField'
 
-function RequiredTextField({ label, className, placeholder, whiteBg }) {
-  const [value, setValue] = useState('')
+function RequiredTextField({ label, className, placeholder, whiteBg, value, handleChange }) {
   const [error, setError] = useState(false)
-
-  const handleChange = (event) => {
-    setValue(event.target.value)
-    if (event.target.value) {
-      setError(false)
-    }
-  }
 
   const handleBlur = () => {
     if (!value) {
