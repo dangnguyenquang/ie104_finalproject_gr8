@@ -1,5 +1,3 @@
-import { Search } from '@mui/icons-material'
-
 const authEndpoint = {
   login: '/user/account/signin',
   register: '/user/account/signup',
