@@ -31,6 +31,14 @@ class AuthApi {
       console.log(error)
     }
   }
+  async Search(filterList) {
+    try {
+      const res = await httpClient.post(authEndpoint.Search, filterList)
+      return res
+    } catch (error) {
+      console.log(error)
+    }
+  }
 }
 
 const authApi = new AuthApi()

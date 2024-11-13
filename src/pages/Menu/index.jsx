@@ -3,209 +3,282 @@ import { useState, useEffect } from 'react'
 import RestaurantList from './components/RestaurantList'
 import DistrictFilter from './components/DistrictFilter'
 import CategroryFilter from './components/CategroryFilter'
-import foodCardImg from '~/assets/images/home/food-card.png'
 import { SearchBar } from '~/components/ui'
 import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
 import Select from '@mui/material/Select'
 import Box from '@mui/material/Box'
+import { Pagination } from '@mui/material'
 import Rating from '@mui/material/Rating'
 import Typography from '@mui/material/Typography'
-import { Button } from '~/components/ui/Button'
-import Pagination from '@mui/material/Pagination'
+import authApi from '~/apis/auth'
+// const Restaurants =
+// = [
+//   {
+//     image: foodCardImg,
+//     rating: '4.5',
+//     restaurant: 'Quán Cô Bảy Chọ',
+//     address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
+//     id: 1,
+//   },
+//   {
+//     image: foodCardImg,
+//     rating: '4.5',
+//     restaurant: 'Quán Cô Bảy Chọ',
+//     address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
+//     id: 2,
+//   },
+//   {
+//     image: foodCardImg,
+//     rating: '4.5',
+//     restaurant: 'Quán Cô Bảy Chọ',
+//     address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
+//     id: 3,
+//   },
+//   {
+//     image: foodCardImg,
+//     rating: '4.5',
+//     restaurant: 'Quán Cô Bảy Chọ',
+//     address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
+//     id: 4,
+//   },
+//   {
+//     image: foodCardImg,
+//     rating: '4.5',
+//     restaurant: 'Quán Cô Bảy Chọ',
+//     address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
+//     id: 5,
+//   },
+//   {
+//     image: foodCardImg,
+//     rating: '4.5',
+//     restaurant: 'Quán Cô Bảy Chọ',
+//     address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
+//     id: 6,
+//   },
+//   {
+//     image: foodCardImg,
+//     rating: '4.5',
+//     restaurant: 'Quán Cô Bảy Chọ',
+//     address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
+//     id: 7,
+//   },
+//   {
+//     image: foodCardImg,
+//     rating: '4.5',
+//     restaurant: 'Quán Cô Bảy Chọ',
+//     address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
+//     id: 8,
+//   },
+//   {
+//     image: foodCardImg,
+//     rating: '4.5',
+//     restaurant: 'Quán Cô Bảy Chọ',
+//     address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
+//     id: 9,
+//   },
+//   {
+//     image: foodCardImg,
+//     rating: '4.5',
+//     restaurant: 'Quán Cô Bảy Chọ',
+//     address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
+//     id: 10,
+//   },
+//   {
+//     image: foodCardImg,
+//     rating: '4.5',
+//     restaurant: 'Quán Cô Bảy Chọ',
+//     address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
+//     id: 11,
+//   },
+//   {
+//     image: foodCardImg,
+//     rating: '4.5',
+//     restaurant: 'Quán Cô Bảy Chọ',
+//     address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
+//     id: 12,
+//   },
+//   {
+//     image: foodCardImg,
+//     rating: '4.5',
+//     restaurant: 'Quán Cô Bảy Chọ',
+//     address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
+//     id: 13,
+//   },
+//   {
+//     image: foodCardImg,
+//     rating: '4.5',
+//     restaurant: 'Quán Cô Bảy Chọ',
+//     address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
+//     id: 14,
+//   },
+//   {
+//     image: foodCardImg,
+//     rating: '4.5',
+//     restaurant: 'Quán Cô Bảy Chọ',
+//     address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
+//     id: 15,
+//   },
+//   {
+//     image: foodCardImg,
+//     rating: '4.5',
+//     restaurant: 'Quán Cô Bảy Chọ',
+//     address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
+//     id: 16,
+//   },
+//   {
+//     image: foodCardImg,
+//     rating: '4.5',
+//     restaurant: 'Quán Cô Bảy Chọ',
+//     address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
+//     id: 17,
+//   },
+//   {
+//     image: foodCardImg,
+//     rating: '4.5',
+//     restaurant: 'Quán Cô Bảy Chọ',
+//     address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
+//     id: 18,
+//   },
+//   {
+//     image: foodCardImg,
+//     rating: '4.5',
+//     restaurant: 'Quán Cô Bảy Chọ',
+//     address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
+//     id: 19,
+//   },
+//   {
+//     image: foodCardImg,
+//     rating: '4.5',
+//     restaurant: 'Quán Cô Bảy Chọ',
+//     address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
+//     id: 20,
+//   },
+//   {
+//     image: foodCardImg,
+//     rating: '4.5',
+//     restaurant: 'Cô Ba',
+//     address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
+//     id: 21,
+//   },
+//   {
+//     image: foodCardImg,
+//     rating: '4.5',
+//     restaurant: 'Cô Ba',
+//     address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
+//     id: 22,
+//   },
+//   {
+//     image: foodCardImg,
+//     rating: '4.5',
+//     restaurant: 'Cô Ba',
+//     address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
+//     id: 23,
+//   },
+// ]
 
-const Restaurants = [
-  {
-    image: foodCardImg,
-    rating: '4.5',
-    restaurant: 'Quán Cô Bảy Chọ',
-    address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
-    id: 1,
-  },
-  {
-    image: foodCardImg,
-    rating: '4.5',
-    restaurant: 'Quán Cô Bảy Chọ',
-    address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
-    id: 2,
-  },
-  {
-    image: foodCardImg,
-    rating: '4.5',
-    restaurant: 'Quán Cô Bảy Chọ',
-    address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
-    id: 3,
-  },
-  {
-    image: foodCardImg,
-    rating: '4.5',
-    restaurant: 'Quán Cô Bảy Chọ',
-    address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
-    id: 4,
-  },
-  {
-    image: foodCardImg,
-    rating: '4.5',
-    restaurant: 'Quán Cô Bảy Chọ',
-    address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
-    id: 5,
-  },
-  {
-    image: foodCardImg,
-    rating: '4.5',
-    restaurant: 'Quán Cô Bảy Chọ',
-    address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
-    id: 6,
-  },
-  {
-    image: foodCardImg,
-    rating: '4.5',
-    restaurant: 'Quán Cô Bảy Chọ',
-    address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
-    id: 7,
-  },
-  {
-    image: foodCardImg,
-    rating: '4.5',
-    restaurant: 'Quán Cô Bảy Chọ',
-    address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
-    id: 8,
-  },
-  {
-    image: foodCardImg,
-    rating: '4.5',
-    restaurant: 'Quán Cô Bảy Chọ',
-    address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
-    id: 9,
-  },
-  {
-    image: foodCardImg,
-    rating: '4.5',
-    restaurant: 'Quán Cô Bảy Chọ',
-    address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
-    id: 10,
-  },
-  {
-    image: foodCardImg,
-    rating: '4.5',
-    restaurant: 'Quán Cô Bảy Chọ',
-    address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
-    id: 11,
-  },
-  {
-    image: foodCardImg,
-    rating: '4.5',
-    restaurant: 'Quán Cô Bảy Chọ',
-    address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
-    id: 12,
-  },
-  {
-    image: foodCardImg,
-    rating: '4.5',
-    restaurant: 'Quán Cô Bảy Chọ',
-    address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
-    id: 13,
-  },
-  {
-    image: foodCardImg,
-    rating: '4.5',
-    restaurant: 'Quán Cô Bảy Chọ',
-    address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
-    id: 14,
-  },
-  {
-    image: foodCardImg,
-    rating: '4.5',
-    restaurant: 'Quán Cô Bảy Chọ',
-    address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
-    id: 15,
-  },
-  {
-    image: foodCardImg,
-    rating: '4.5',
-    restaurant: 'Quán Cô Bảy Chọ',
-    address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
-    id: 16,
-  },
-  {
-    image: foodCardImg,
-    rating: '4.5',
-    restaurant: 'Quán Cô Bảy Chọ',
-    address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
-    id: 17,
-  },
-  {
-    image: foodCardImg,
-    rating: '4.5',
-    restaurant: 'Quán Cô Bảy Chọ',
-    address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
-    id: 18,
-  },
-  {
-    image: foodCardImg,
-    rating: '4.5',
-    restaurant: 'Quán Cô Bảy Chọ',
-    address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
-    id: 19,
-  },
-  {
-    image: foodCardImg,
-    rating: '4.5',
-    restaurant: 'Quán Cô Bảy Chọ',
-    address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
-    id: 20,
-  },
-  {
-    image: foodCardImg,
-    rating: '4.5',
-    restaurant: 'Cô Ba',
-    address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
-    id: 21,
-  },
-  {
-    image: foodCardImg,
-    rating: '4.5',
-    restaurant: 'Cô Ba',
-    address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
-    id: 22,
-  },
-  {
-    image: foodCardImg,
-    rating: '4.5',
-    restaurant: 'Cô Ba',
-    address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
-    id: 23,
-  },
-]
 const itemsPerPage = 20
 const Menu = () => {
+  const [Restaurants, setRestaurants] = useState([])
+
+  const [numberPages, setNumberPages] = useState(1)
+
+  const [filterList, setFilterList] = useState({
+    boroughRestaurant: '',
+    nameRestaurant: '',
+    categrories: '',
+    starMedium: '5',
+    typeSort: 'Best seller',
+  })
+
+  const handleSearch = async () => {
+    try {
+      const res = await authApi.Search(filterList)
+      setRestaurants(res.restaurants)
+      setNumberPages(res.objectPagination)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    handleSearch()
+    scrollToTop()
+  }, [filterList])
+
+  // District
+  const [selectedDistricts, setSelectedDistricts] = useState([])
+  const handleSelectDistricts = (event) => {
+    const isChecked = event.target.checked
+    const district = event.target.value
+
+    setSelectedDistricts((prevSelected) =>
+      isChecked ? [...prevSelected, district] : prevSelected.filter((d) => d !== district),
+    )
+    setFilterList((prevFilterList) => ({
+      ...prevFilterList,
+      boroughRestaurant: isChecked
+        ? [...selectedDistricts, district]
+        : selectedDistricts.filter((d) => d !== district),
+    }))
+  }
+
+  // categrory
+  const [selectedCategories, setSelectedCategories] = useState([])
+  const handleSelectCategories = (event) => {
+    const isChecked = event.target.checked
+    const category = event.target.value
+    setSelectedCategories((prevSelected) => {
+      if (isChecked) {
+        return [...prevSelected, event.target.value]
+      } else {
+        return prevSelected.filter((category) => category !== event.target.value)
+      }
+    })
+    setFilterList((prevFilterList) => ({
+      ...prevFilterList,
+      categrories: isChecked
+        ? [...selectedCategories, category]
+        : selectedCategories.filter((d) => d !== categories),
+    }))
+  }
+
   // hook xử lý select filter quán bán chạy nhất/ quán mới nhất
   const [selectedRestaurantFilter, setSelectedRestaurantFilter] = useState('Best seller')
   const handleChangeSelect = (event) => {
     setSelectedRestaurantFilter(event.target.value)
+    setFilterList((prevFilterList) => ({
+      ...prevFilterList,
+      typeSort: event.target.value,
+    }))
   }
 
   // hook xử lý filter lọc theo số sao
-  const [countStar, setCountStart] = useState(5)
+  const [countStar, setCountStar] = useState(5)
+  const handleRating = (event) => {
+    setCountStar(Number(event.target.value))
+    setFilterList((prevFilterList) => ({
+      ...prevFilterList,
+      starMedium: event.target.value,
+    }))
+  }
 
-  // Hàm xử lý btn delete all
-  const handleDeleteAll = () => {
-    setCountStart(0), selectedDistricts.map((district) => (district.isChecked = false))
-    setSelectedDistricts([])
-    // selectedCategories.map((category) => (category.isChecked) = )
-    setSelectedCategories([])
+  // Hàm cuộn lên đầu trang
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    })
   }
 
   // xử lý pagination
   const [currentPage, setCurrentPage] = useState(1)
   const [currentPageData, setCurrentPageData] = useState([])
-
   useEffect(() => {
     const firstItemIndex = (currentPage - 1) * itemsPerPage
     const lastItemIndex = firstItemIndex + itemsPerPage
     setCurrentPageData(Restaurants.slice(firstItemIndex, lastItemIndex))
   }, [currentPage, Restaurants])
-
   const handlePageChange = (event, page) => {
     setCurrentPage(page)
   }
@@ -254,13 +327,7 @@ const Menu = () => {
                     <div className='text-[20px] text-primaryText font-bold'>Quán có số sao từ</div>
                   </Typography>
                   <div className='flex items-end'>
-                    <Rating
-                      name='simple-controlled'
-                      value={countStar}
-                      onChange={(event, newCountStar) => {
-                        setCountStart(newCountStar)
-                      }}
-                    />
+                    <Rating name='simple-controlled' value={countStar} onChange={handleRating} />
                     <div className='ml-2 text-primaryText'>trở lên</div>
                   </div>
                 </Box>
@@ -269,24 +336,30 @@ const Menu = () => {
               <div className='bg-primaryText w-full h-0.5 mt-[16px] mb-[16px]'></div>
 
               {/* lọc theo khu vực */}
-              <DistrictFilter />
+              <DistrictFilter
+                selectedDistricts={selectedDistricts}
+                handleSelectDistricts={handleSelectDistricts}
+              />
 
               {/* đường line */}
               <div className='bg-primaryText w-full h-0.5 mt-[16px] mb-[16px]'></div>
 
               {/* Lọc theo danh mục món ăn */}
-              <CategroryFilter />
+              <CategroryFilter
+                selectedCategories={selectedCategories}
+                handleSelectCategories={handleSelectCategories}
+              />
             </div>
           </div>
 
           {/* Kết quả tìm kiếm */}
           <div className='justify-center'>
-            <RestaurantList Restaurants={currentPageData} />
+            <RestaurantList Restaurants={Restaurants} />
             <div className='flex justify-center mt-10'>
               <Pagination
-                count={Math.ceil(Restaurants.length / itemsPerPage)}
-                page={currentPage}
-                onChange={handlePageChange}
+                count={numberPages.numberPages}
+                page={numberPages.currentPage}
+                // onChange={handlePageChange}
                 sx={{
                   '& .MuiPaginationItem-root': {
                     color: '#7D0600',
