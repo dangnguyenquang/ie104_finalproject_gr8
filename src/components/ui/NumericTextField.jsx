@@ -1,32 +1,24 @@
 import React, { useState } from 'react'
 import TextField from '@mui/material/TextField'
 
-function NumericTextField({ label }) {
-  const [value, setValue] = useState('')
+function NumericTextField({ label, className, whiteBg, value, handleChange }) {
   const [error, setError] = useState(false)
 
-  const handleChange = (event) => {
-    const newValue = event.target.value
-    if (/^\d*$/.test(newValue)) {
-      setValue(newValue)
-      if (error) setError(false)
-    }
-  }
-
   const handleBlur = () => {
-    if (value.trim() === '') {
+    if (!value) {
       setError(true)
     }
   }
 
   return (
-    <div className='mx-auto max-w-[500px] my-5'>
+    <div className={`mx-auto max-w-[500px] my-5 ${className}`}>
       <TextField
         sx={{
           margin: 'auto',
           width: '100%',
           '& .MuiOutlinedInput-root': {
             borderRadius: '20px',
+            backgroundColor: whiteBg ? 'white' : 'transparent',
           },
           '& fieldset': {
             borderWidth: '2px',
@@ -34,11 +26,17 @@ function NumericTextField({ label }) {
         }}
         label={label}
         value={value}
-        onChange={handleChange}
+        onChange={(e) => {
+          const newValue = e.target.value
+          if (/^\d*$/.test(newValue)) {
+            handleChange(e)
+            if (error) setError(false)
+          }
+        }}
         onBlur={handleBlur}
         required
         error={error}
-        helperText={error ? 'This field is required' : ''}
+        helperText={error ? 'Trường này là bắt buộc' : ''}
         inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
       />
     </div>

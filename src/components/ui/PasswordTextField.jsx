@@ -1,35 +1,58 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import TextField from '@mui/material/TextField'
 import InputAdornment from '@mui/material/InputAdornment'
 import IconButton from '@mui/material/IconButton'
 import Visibility from '@mui/icons-material/Visibility'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
 
-function PasswordTextField({ label, confirm = false }, whiteBg) {
-  const [password, setPassword] = useState('')
+function PasswordTextField({
+  label,
+  confirm = false,
+  className,
+  placeholder,
+  whiteBg,
+  value,
+  handleChange,
+}) {
+  const [password, setPassword] = useState(value || '')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [errorPassword, setErrorPassword] = useState(false)
   const [errorConfirmPassword, setErrorConfirmPassword] = useState(false)
   const [matchError, setMatchError] = useState(false)
+  const [touchedConfirmPassword, setTouchedConfirmPassword] = useState(false)
 
-  const handlePasswordChange = (event) => {
-    setPassword(event.target.value)
-    if (event.target.value.length < 6) {
+  useEffect(() => {
+    if (password.length < 6 && password !== '') {
       setErrorPassword(true)
     } else {
       setErrorPassword(false)
     }
+
+    if (touchedConfirmPassword) {
+      if (confirmPassword === '') {
+        setErrorConfirmPassword(true)
+      } else {
+        setErrorConfirmPassword(false)
+      }
+
+      if (password !== confirmPassword) {
+        setMatchError(true)
+      } else {
+        setMatchError(false)
+      }
+    }
+  }, [password, confirmPassword, touchedConfirmPassword])
+
+  const handlePasswordChange = (event) => {
+    setPassword(event.target.value)
+    handleChange(event)
   }
 
   const handleConfirmPasswordChange = (event) => {
     setConfirmPassword(event.target.value)
-    if (password && event.target.value !== password) {
-      setMatchError(true)
-    } else {
-      setMatchError(false)
-    }
+    setTouchedConfirmPassword(true)
   }
 
   const handlePasswordBlur = () => {
@@ -39,11 +62,14 @@ function PasswordTextField({ label, confirm = false }, whiteBg) {
   }
 
   const handleConfirmPasswordBlur = () => {
+    setTouchedConfirmPassword(true)
     if (!confirmPassword) {
       setErrorConfirmPassword(true)
     }
     if (password && confirmPassword !== password) {
       setMatchError(true)
+    } else {
+      setMatchError(false)
     }
   }
 
@@ -51,7 +77,7 @@ function PasswordTextField({ label, confirm = false }, whiteBg) {
   const toggleShowConfirmPassword = () => setShowConfirmPassword((prev) => !prev)
 
   return (
-    <div className='mx-auto max-w-[500px] my-5'>
+    <div className={`mx-auto max-w-[500px] my-5 ${className}`}>
       <TextField
         sx={{
           margin: 'auto',
@@ -70,7 +96,7 @@ function PasswordTextField({ label, confirm = false }, whiteBg) {
         onBlur={handlePasswordBlur}
         type={showPassword ? 'text' : 'password'}
         error={errorPassword}
-        helperText={errorPassword ? 'Password must be at least 6 characters long' : ''}
+        helperText={errorPassword ? 'Mật khẩu phải có ít nhất 6 kí tự' : ''}
         InputProps={{
           endAdornment: (
             <InputAdornment position='end'>
@@ -101,12 +127,12 @@ function PasswordTextField({ label, confirm = false }, whiteBg) {
           onChange={handleConfirmPasswordChange}
           onBlur={handleConfirmPasswordBlur}
           type={showConfirmPassword ? 'text' : 'password'}
-          error={errorConfirmPassword || matchError}
+          error={touchedConfirmPassword && (errorConfirmPassword || matchError)}
           helperText={
-            errorConfirmPassword
-              ? 'This field is required'
+            touchedConfirmPassword && errorConfirmPassword
+              ? 'Đây là trường bắt buộc'
               : matchError
-                ? 'Passwords do not match'
+                ? 'Mật khẩu không trùng khớp'
                 : ''
           }
           InputProps={{
