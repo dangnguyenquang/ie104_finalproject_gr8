@@ -232,6 +232,7 @@ const Home = () => {
           <div className='grid grid-cols-4 max-w-[1190px] gap-8 mx-auto'>
             {data.foods.map((food, index) => (
               <FoodCard
+                key={index}
                 image={food.image}
                 name={food.name}
                 rating={food.rating}
