@@ -4,11 +4,19 @@ import TextField from '@mui/material/TextField'
 function NameTextField({ label, className, whiteBg, value, handleChange }) {
   const [error, setError] = useState(false)
 
+  const validateName = (name) => {
+    const nameRegex =
+      /^[A-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝĂĐĨŨƠƯa-zàáâãèéêìíòóôõùúýăđĩũơư]+(?:[\s][A-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝĂĐĨŨƠƯa-zàáâãèéêìíòóôõùúýăđĩũơư]+)*$/u
+    return nameRegex.test(name.trim())
+  }
+
   const handleBlur = () => {
-    const nameRegex = /^([A-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚ][a-zàáâãèéêìíòóôõùú]*\s?)+$/
-    if (!nameRegex.test(value.trim())) {
-      setError(true)
-    }
+    setError(!validateName(value))
+  }
+
+  const handleInputChange = (e) => {
+    handleChange(e)
+    if (error) setError(false)
   }
 
   return (
@@ -27,10 +35,7 @@ function NameTextField({ label, className, whiteBg, value, handleChange }) {
         }}
         label={label}
         value={value}
-        onChange={(e) => {
-          handleChange(e)
-          if (error) setError(false)
-        }}
+        onChange={handleInputChange}
         onBlur={handleBlur}
         required
         error={error}

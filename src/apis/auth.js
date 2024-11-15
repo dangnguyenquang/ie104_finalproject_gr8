@@ -44,16 +44,13 @@ class AuthApi {
 
   async sellerRegister(formData) {
     try {
-      // Gửi formData qua POST request
-      const res = await httpClient.post(authEndpoint.register, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
+      const res = await fetch('http://localhost:3000/user/account/signup', {
+        method: 'POST',
+        body: formData, // Không cần đặt Content-Type
       })
-
-      return { msg: res.data.msg }
+      const result = await res.json()
+      return { msg: result.msg }
     } catch (error) {
-      // Trả về lỗi để xử lý sau này
       return { error: error.message || 'Đã xảy ra lỗi trong quá trình đăng ký' }
     }
   }

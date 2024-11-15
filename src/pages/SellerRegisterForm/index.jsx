@@ -63,12 +63,12 @@ const SellerRegisterForm = () => {
   }
 
   const handleSellerRegister = async () => {
-    const completeAddress = `${detailedAddress}, ${district}, TP. Hồ Chí Minh`
+    const formData = new FormData()
 
     const infoAccount = {
       name,
       role: 'seller',
-      address: completeAddress,
+      address: `${detailedAddress}, ${district}, TP. Hồ Chí Minh`,
       password_account: password,
       name_account: username,
       email,
@@ -89,16 +89,16 @@ const SellerRegisterForm = () => {
       description,
     }
 
-    // Sử dụng FormData để gửi tệp
-    const formData = new FormData()
     formData.append('infoAccount', JSON.stringify(infoAccount))
     formData.append('infoRestaurant', JSON.stringify(infoRestaurant))
+
     if (avatar) formData.append('avatar', avatar)
     images.forEach((image) => formData.append('images', image))
 
     try {
       const res = await authApi.sellerRegister(formData)
-      console.log(res) // Log phản hồi từ backend để kiểm tra
+      console.log(res)
+      alert('Đăng ký thành công!')
     } catch (error) {
       console.error(error)
       alert(error.message || 'Đã xảy ra lỗi trong quá trình đăng ký')
@@ -148,7 +148,7 @@ const SellerRegisterForm = () => {
         value={password}
         handleChange={(e) => setPassword(e.target.value)}
       />
-      <NameTextField
+      <RequiredTextField
         id='restaurantName'
         label='Tên quán'
         value={restaurantName}
