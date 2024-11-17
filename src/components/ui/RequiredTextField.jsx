@@ -20,15 +20,21 @@ function RequiredTextField({ label, className, placeholder, whiteBg, value, hand
             borderRadius: '20px',
             backgroundColor: whiteBg ? 'white' : 'transparent',
           },
+          '& fieldset': {
+            borderWidth: '2px',
+          },
         }}
         label={label}
         value={value}
-        onChange={handleChange}
+        onChange={(e) => {
+          handleChange(e)
+          if (error) setError(false)
+        }}
         onBlur={handleBlur}
         required
         error={error}
         placeholder={placeholder}
-        helperText={error ? 'This field is required' : ''}
+        helperText={error ? 'Đây là trường bắt buộc' : ''}
       />
     </div>
   )

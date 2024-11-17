@@ -1,12 +1,17 @@
-import * as React from 'react'
+import React, { useState } from 'react'
 import ImageUploading from 'react-images-uploading'
 
-export function ImageUploader({ maxImages }) {
-  const [images, setImages] = React.useState([])
+export function ImageUploader({ maxImages, handleAvatarChange, handleImagesChange }) {
+  const [images, setImages] = useState([])
 
   const onChange = (imageList) => {
-    console.log(imageList)
     setImages(imageList)
+
+    if (maxImages === 1) {
+      handleAvatarChange(imageList[0].file)
+    } else {
+      handleImagesChange(imageList.map((image) => image.file))
+    }
   }
 
   return (
@@ -20,7 +25,10 @@ export function ImageUploader({ maxImages }) {
       {({ imageList, onImageUpload, onImageUpdate, onImageRemove, isDragging, dragProps }) => (
         <div className='text-center'>
           <button
-            className='relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2 hover:text-indigo-500'
+            id='upload-button'
+            className={`relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2 hover:text-indigo-500 ${
+              isDragging ? 'border-dashed border-4 border-indigo-600' : ''
+            }`}
             onClick={onImageUpload}
             {...dragProps}
           >
@@ -30,7 +38,7 @@ export function ImageUploader({ maxImages }) {
           {imageList.map((image, index) => (
             <div key={index} className='my-5'>
               <img src={image['data_url']} alt='' width='100%' />
-              <div className='flex justify-around'>
+              <div className='flex justify-around mt-2'>
                 <button
                   className='relative my-1 cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2 hover:text-indigo-500'
                   onClick={() => onImageUpdate(index)}
@@ -51,3 +59,5 @@ export function ImageUploader({ maxImages }) {
     </ImageUploading>
   )
 }
+
+export default ImageUploader
