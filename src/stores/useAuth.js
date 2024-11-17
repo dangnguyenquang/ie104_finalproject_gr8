@@ -23,7 +23,8 @@ const useAuth = create((set) => {
         const res = await userAction.getMe()
         set({ user: res })
       } catch (error) {
-        this.logoutC()
+        console.log(error)
+        this.logout()
       }
     },
   }

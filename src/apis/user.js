@@ -33,6 +33,4 @@ class UserApi {
   }
 }
 
-const UserApi = new UserApi()
-
-export default UserApi
+export default new UserApi()
