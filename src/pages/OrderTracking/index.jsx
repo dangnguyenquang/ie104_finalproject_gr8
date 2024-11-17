@@ -5,7 +5,7 @@ import OrdersList from './components/OrdersList'
 import { BorderOuter } from '@mui/icons-material'
 
 const OrderTrackingPage = () => {
-  const tabLabels = ['Tất cả', 'Chờ xác nhận', 'Chờ vận chuyển', 'Hoàn thành', 'Đã hủy']
+  const tabLabels = ['Chờ xác nhận', 'Chờ vận chuyển', 'Hoàn thành', 'Đã hủy']
 
   const getInitialTab = () => {
     const savedTab = localStorage.getItem('selectedTab')
@@ -87,7 +87,7 @@ const OrderTrackingPage = () => {
           },
         ],
         totalPrice: 225000,
-        status: 'shipping',
+        status: 'in-progress',
       },
       {
         _id: 'order3',
@@ -161,26 +161,23 @@ const OrderTrackingPage = () => {
   }
 
   const getOrdersByStatus = (status) => {
-    if (status === 'all') {
-      return data.orders
-    }
     return data.orders.filter((order) => order.status === status)
   }
 
   const ordersToDisplay = React.useMemo(() => {
-    const statusMap = ['all', 'pending', 'shipping', 'completed', 'canceled']
+    const statusMap = ['pending', 'in-progress', 'completed', 'canceled']
     return getOrdersByStatus(statusMap[selectedTab])
   }, [selectedTab, data.orders])
 
   return (
-    <div className='w-full flex flex-col items-center mt-10 space-y-4'>
+    <div className='w-full flex flex-col items-center mt-10 space-y-2'>
       {/* Navigation */}
       <div>
         <Navigation labels={tabLabels} value={selectedTab} onChange={handleTabChange} />
       </div>
 
       {/* Orders List */}
-      <div className='bg-[#fdf8e7] w-[800px]'>
+      <div className='bg-[#fdf8e7] w-[800px] rounded-lg'>
         <OrdersList orders={ordersToDisplay} />
       </div>
     </div>

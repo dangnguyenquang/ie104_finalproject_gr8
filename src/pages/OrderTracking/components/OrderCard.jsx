@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Button } from '~/components/ui/Button'
+import { Chip } from '@mui/material'
 import OrderItem from './OrderItem'
 import ReviewModal from '~/components/Layout/Components/_components/ReviewModal'
 
@@ -13,15 +14,27 @@ const OrderCard = ({ order }) => {
   const handleReviewOpen = () => setReviewOpen(true)
   const handleReviewClose = () => setReviewOpen(false)
 
+  const statusMap = {
+    pending: { label: 'Chờ xác nhận', bgColor: '#ff9800', actions: ['Huỷ đơn'] },
+    'in-progress': { label: 'Chờ vận chuyển', bgColor: '#4caf50', actions: [] },
+    completed: { label: 'Hoàn thành', bgColor: '#2196f3', actions: ['Đánh giá'] },
+    canceled: { label: 'Đã hủy', bgColor: '#f44336', actions: [] },
+  }
+
+  const chipData = statusMap[order.status] || {
+    label: 'Không xác định',
+    bgColor: '#000000',
+    actions: [],
+  } // Default (black)
+
   return (
     <div className='p-4 border rounded-lg w-[600px] my-3 relative bg-white'>
-      <div className='absolute top-2 right-4'>
-        <Button
-          variant='outline'
-          className='w-32 h-10 bg-primary hover:bg-primary/80 text-center text-sm font-bold leading-[28px]'
-        >
-          Thanh toán
-        </Button>
+      <div className='absolute top-4 right-4'>
+        <Chip
+          label={chipData.label}
+          style={{ backgroundColor: chipData.bgColor, color: '#fff' }}
+          className='w-32 h-10 text-center text-sm font-bold leading-[28px]'
+        />
       </div>
 
       <h2 className='text-xl font-semibold mb-4'>{order.name}</h2>
@@ -41,13 +54,23 @@ const OrderCard = ({ order }) => {
         <p className='text-lg font-semibold'>Tổng tiền: {formatNumber(order.totalPrice)} VND</p>
       </div>
       <div className='flex justify-end space-x-3 mt-3'>
-        <Button
-          variant='outline'
-          className='w-32 h-10 bg-primary hover:bg-primary/80 text-center text-sm font-bold leading-[28px]'
-          onClick={handleReviewOpen}
-        >
-          Đánh giá
-        </Button>
+        {chipData.actions.includes('Đánh giá') && (
+          <Button
+            variant='outline'
+            className='w-32 h-10 bg-primary hover:bg-primary/80 text-center text-sm font-bold leading-[28px]'
+            onClick={handleReviewOpen}
+          >
+            Đánh giá
+          </Button>
+        )}
+        {chipData.actions.includes('Huỷ đơn') && (
+          <Button
+            variant='outline'
+            className='w-32 h-10 bg-[#ff0000] hover:bg-[#ff0000]/80 text-center text-white text-sm font-bold leading-[28px]'
+          >
+            Huỷ đơn
+          </Button>
+        )}
         <Button
           variant='outline'
           className='w-32 h-10 bg-[#c8c8c8] hover:bg-[#c8c8c8]/80 text-center text-primaryText text-sm font-bold leading-[28px]'
@@ -60,10 +83,7 @@ const OrderCard = ({ order }) => {
       <ReviewModal
         open={isReviewOpen}
         onClose={handleReviewClose}
-        imageUrl={order.items[0].imageUrl.url}
-        title={order.name}
-        address={`${order.address.street}, ${order.address.borough}, ${order.address.city}`}
-        starMedium={4.5}
+        items={order.items} // Truyền danh sách món vào modal
       />
     </div>
   )

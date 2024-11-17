@@ -1,5 +1,5 @@
 import * as React from 'react'
-import ImageUploading from 'react-images-uploading'
+import { useState } from 'react'
 import { Button } from '~/components/ui/Button'
 import { ImageUploader } from '~/components/ui/ImageUploader'
 import RequiredTextField from '~/components/ui/RequiredTextField'
@@ -10,6 +10,7 @@ import TextField from '@mui/material/TextField'
 import NameTextField from '~/components/ui/NameTextField'
 import EmailTextField from '~/components/ui/EmailTextField'
 import PasswordTextField from '~/components/ui/PasswordTextField'
+import authApi from '~/apis/auth'
 
 const SellerRegisterForm = () => {
   const Districts = [
@@ -31,43 +32,135 @@ const SellerRegisterForm = () => {
     'Quận Phú Nhuận',
   ]
 
-  const districtsOptions = Districts.map((district, index) => ({
+  const districtsOptions = Districts.map((district) => ({
     label: district,
-    value: index + 1,
+    value: district,
   }))
+
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [phone, setPhone] = useState('')
+  const [address, setAddress] = useState('')
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
+  const [restaurantName, setRestaurantName] = useState('')
+  const [restaurantPhone, setRestaurantPhone] = useState('')
+  const [district, setDistrict] = useState('')
+  const [detailedAddress, setDetailedAddress] = useState('')
+  const [openTime, setOpenTime] = useState('')
+  const [closeTime, setCloseTime] = useState('')
+  const [description, setDescription] = useState('')
+  const [avatar, setAvatar] = useState(null)
+  const [images, setImages] = useState([])
+
+  const handleAvatarChange = (file) => {
+    setAvatar(file)
+  }
+
+  const handleImagesChange = (files) => {
+    setImages(files)
+  }
+
+  const handleSellerRegister = async () => {
+    const formData = new FormData()
+
+    const infoAccount = {
+      name,
+      role: 'seller',
+      address: `${detailedAddress}, ${district}, TP. Hồ Chí Minh`,
+      password_account: password,
+      name_account: username,
+      email,
+      phone,
+    }
+
+    const infoRestaurant = {
+      name: restaurantName,
+      address: {
+        city: 'TP. Hồ Chí Minh',
+        street: detailedAddress,
+        borough: district,
+        zip: '',
+      },
+      phone: restaurantPhone,
+      time_close: closeTime,
+      time_open: openTime,
+      description,
+    }
+
+    formData.append('infoAccount', JSON.stringify(infoAccount))
+    formData.append('infoRestaurant', JSON.stringify(infoRestaurant))
+
+    if (avatar) formData.append('avatar', avatar)
+    images.forEach((image) => formData.append('images', image))
+
+    try {
+      const res = await authApi.sellerRegister(formData)
+      console.log(res)
+      alert('Đăng ký thành công!')
+    } catch (error) {
+      console.error(error)
+      alert(error.message || 'Đã xảy ra lỗi trong quá trình đăng ký')
+    }
+  }
 
   return (
     <div className='w-full justify-center'>
-      {/* Đăng ký bán hàng */}
       <div className="block text-center text-primary text-6xl font-medium font-['Oswald'] uppercase leading-[100px] my-10">
         Đăng kí bán hàng
       </div>
 
-      {/* Họ và tên */}
-      <NameTextField label='Họ và tên' />
+      <NameTextField
+        id='name'
+        label='Họ và tên'
+        value={name}
+        handleChange={(e) => setName(e.target.value)}
+      />
+      <EmailTextField
+        id='email'
+        label='Email'
+        value={email}
+        handleChange={(e) => setEmail(e.target.value)}
+      />
+      <NumericTextField
+        id='phone'
+        label='Số điện thoại'
+        value={phone}
+        handleChange={(e) => setPhone(e.target.value)}
+      />
+      <RequiredTextField
+        id='address'
+        label='Địa chỉ'
+        value={address}
+        handleChange={(e) => setAddress(e.target.value)}
+      />
+      <RequiredTextField
+        id='username'
+        label='Tên tài khoản'
+        value={username}
+        handleChange={(e) => setUsername(e.target.value)}
+      />
+      <PasswordTextField
+        id='password'
+        label='Mật khẩu'
+        confirm='true'
+        value={password}
+        handleChange={(e) => setPassword(e.target.value)}
+      />
+      <RequiredTextField
+        id='restaurantName'
+        label='Tên quán'
+        value={restaurantName}
+        handleChange={(e) => setRestaurantName(e.target.value)}
+      />
+      <NumericTextField
+        id='restaurantPhone'
+        label='Số điện thoại của quán'
+        value={restaurantPhone}
+        handleChange={(e) => setRestaurantPhone(e.target.value)}
+      />
 
-      {/* Email */}
-      <EmailTextField label='Email' />
-
-      {/* Số điện thoại */}
-      <NumericTextField label='Số điện thoại' />
-
-      {/* Địa chỉ */}
-      <RequiredTextField label='Địa chỉ' />
-
-      {/* Tên tài khoản */}
-      <RequiredTextField label='Tên tài khoản' />
-
-      {/* Mật khẩu */}
-      <PasswordTextField label='Mật khẩu' confirm='true' />
-
-      {/* Tên quán */}
-      <NameTextField label='Tên quán' />
-
-      {/* Số điện thoại của quán */}
-      <NumericTextField label='Số điện thoại của quán' />
-
-      {/* Địa chỉ của quán */}
       <div className='flex justify-between gap-4 mx-auto w-[500px] my-5'>
         <TextField
           sx={{
@@ -82,55 +175,76 @@ const SellerRegisterForm = () => {
             },
           }}
           disabled
-          defaultValue='TP. Hồ Chí Minh'
+          value='TP. Hồ Chí Minh'
         />
-        <CustomSelect label='Quận' options={districtsOptions} />
+        <CustomSelect
+          id='district'
+          label='Quận'
+          options={districtsOptions}
+          value={district}
+          handleChange={setDistrict}
+        />
       </div>
 
-      {/* Địa chỉ chi tiết của quán */}
-      <RequiredTextField label='Nhập địa chỉ chi tiết' />
+      <RequiredTextField
+        id='detailedAddress'
+        label='Nhập địa chỉ chi tiết (không bao gồm quận)'
+        value={detailedAddress}
+        handleChange={(e) => setDetailedAddress(e.target.value)}
+      />
 
-      {/* Giở mở/đóng cửa */}
       <div className='flex justify-between gap-10 mx-auto w-[500px] my-5'>
-        {/* Giờ mở cửa */}
-        <TimeInput label='Giờ mở cửa' />
-
-        {/* Giờ đóng cửa */}
-        <TimeInput label='Giờ đóng cửa' />
+        <TimeInput
+          id='openTime'
+          label='Giờ mở cửa'
+          value={openTime}
+          handleChange={(e) => setOpenTime(e.target.value)}
+        />
+        <TimeInput
+          id='closeTime'
+          label='Giờ đóng cửa'
+          value={closeTime}
+          handleChange={(e) => setCloseTime(e.target.value)}
+        />
       </div>
 
-      {/* Nhập mô tả/lời giới thiệu của quán */}
-      <RequiredTextField label='Nhập mô tả/ lời giới thiệu của quán' />
+      <RequiredTextField
+        id='description'
+        label='Nhập mô tả/ lời giới thiệu của quán'
+        value={description}
+        handleChange={(e) => setDescription(e.target.value)}
+      />
 
       <div className='flex justify-between items-center mx-auto w-[500px] my-5'>
         <label
-          htmlFor='cover-photo'
+          htmlFor='avatar-upload'
           className='block text-sm font-medium leading-6 text-primaryText'
         >
           Đính kèm ảnh của quán
         </label>
         <div className='flex w-[300px] justify-center rounded-lg border-2 border-dashed border-gray-900/25 px-6 py-10'>
-          <ImageUploader maxImages={1} />
+          <ImageUploader maxImages={1} handleAvatarChange={handleAvatarChange} />
         </div>
       </div>
 
-      {/* Đính kèm 4 ảnh nổi bật */}
       <div className='flex justify-between items-center mx-auto w-[500px] my-5'>
         <label
-          htmlFor='cover-photo'
+          htmlFor='images-upload'
           className='block text-sm font-medium leading-6 text-primaryText'
         >
           Đính kèm 4 ảnh nổi bật
         </label>
         <div className='flex w-[300px] justify-center rounded-lg border-2 border-dashed border-gray-900/25 px-6 py-10'>
-          <ImageUploader maxImages={4} />
+          <ImageUploader maxImages={4} handleImagesChange={handleImagesChange} />
         </div>
       </div>
 
       <div className='flex justify-center my-5'>
         <Button
+          id='submit-button'
           variant='outline'
           className="w-36 h-12 rounded-full bg-primary hover:bg-primary/80 text-center text-white text-xl font-bold font-['Roboto'] leading-[30px]"
+          onClick={handleSellerRegister}
         >
           Đăng ký
         </Button>

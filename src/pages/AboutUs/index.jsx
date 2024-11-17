@@ -107,7 +107,7 @@ const AboutUs = () => {
                 >
                   <div
                     style={{ textShadow: '2px 2px 0 #000' }}
-                    className={`text-accent font-bold text-center mt-auto  leading-[30px] ${styleTextDesc}`}
+                    className={`text-accent font-bold text-center mt-auto leading-[30px] ${styleTextDesc}`}
                   >
                     {member.name}
                   </div>

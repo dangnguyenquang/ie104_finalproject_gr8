@@ -1,32 +1,33 @@
 import React, { useState } from 'react'
 import TextField from '@mui/material/TextField'
 
-function NameTextField({ label }) {
-  const [value, setValue] = useState('')
+function NameTextField({ label, className, whiteBg, value, handleChange }) {
   const [error, setError] = useState(false)
 
-  const handleChange = (event) => {
-    const newValue = event.target.value
-    setValue(newValue)
-    if (error) setError(false)
+  const validateName = (name) => {
+    const nameRegex =
+      /^[A-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝĂĐĨŨƠƯa-zàáâãèéêìíòóôõùúýăđĩũơư]+(?:[\s][A-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝĂĐĨŨƠƯa-zàáâãèéêìíòóôõùúýăđĩũơư]+)*$/u
+    return nameRegex.test(name.trim())
   }
 
   const handleBlur = () => {
-    const nameRegex =
-      /^([A-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚ]{1}[a-zàáâãèéêìíòóôõùú]*)(\s[A-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚ]{1}[a-zàáâãèéêìíòóôõùú]*)*$/
-    if (!nameRegex.test(value.trim())) {
-      setError(true)
-    }
+    setError(!validateName(value))
+  }
+
+  const handleInputChange = (e) => {
+    handleChange(e)
+    if (error) setError(false)
   }
 
   return (
-    <div className='mx-auto max-w-[500px] my-5'>
+    <div className={`mx-auto max-w-[500px] my-5 ${className}`}>
       <TextField
         sx={{
           margin: 'auto',
           width: '100%',
           '& .MuiOutlinedInput-root': {
             borderRadius: '20px',
+            backgroundColor: whiteBg ? 'white' : 'transparent',
           },
           '& fieldset': {
             borderWidth: '2px',
@@ -34,13 +35,13 @@ function NameTextField({ label }) {
         }}
         label={label}
         value={value}
-        onChange={handleChange}
+        onChange={handleInputChange}
         onBlur={handleBlur}
         required
         error={error}
         helperText={
           error
-            ? 'This field is required and must be a valid name (each word starts with a capital letter)'
+            ? 'Trường này là bắt buộc và phải là tên hợp lệ (mỗi từ bắt đầu bằng chữ cái hoa)'
             : ''
         }
         inputProps={{ inputMode: 'text' }}
