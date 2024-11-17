@@ -2,13 +2,8 @@ import React from 'react'
 import Slider from 'react-slick'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
-import { ArrowBackIos, ArrowForwardIos } from '@mui/icons-material'
 
-import Speciality1 from '~/assets/images/home/speciality-1.png'
-import Speciality2 from '~/assets/images/home/speciality-2.png'
-import Speciality3 from '~/assets/images/home/speciality-3.png'
-
-const SpecialityCarousel = () => {
+const SpecialityCarousel = ({ SpecialityFoods }) => {
   const settings = {
     dots: true,
     infinite: true,
@@ -46,26 +41,14 @@ const SpecialityCarousel = () => {
     ],
   }
 
-  const images = [
-    Speciality1,
-    Speciality2,
-    Speciality3,
-    Speciality1,
-    Speciality2,
-    Speciality3,
-    Speciality1,
-    Speciality2,
-    Speciality3,
-  ]
-
   return (
     <div className='mx-auto max-w-[1190px] relative'>
       <Slider {...settings}>
-        {images.map((image, index) => (
-          <div key={index}>
+        {SpecialityFoods.map((food, index) => (
+          <div key={food.name}>
             <img
-              src={image}
-              alt={`Image ${index + 1}`}
+              src={food.image}
+              alt={`Image ${food.name}`}
               className='w-[272px] h-[381px] object-cover rounded-xl'
             />
           </div>

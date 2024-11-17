@@ -52,6 +52,7 @@ export default [
 
     rules: {
       'react/jsx-no-target-blank': 'off',
+      'no-unused-vars': 'warn',
     },
   },
 ]
