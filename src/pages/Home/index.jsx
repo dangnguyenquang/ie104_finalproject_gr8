@@ -1,188 +1,64 @@
 import searchBackground from '~/assets/images/home/search-bg.png'
 import homeBackground from '~/assets/images/home/home-bg.png'
+import { useState, useEffect } from 'react'
 
 import { SearchBar, FoodCard } from '~/components/ui'
 import SpecialityCarousel from './_components/SpecialityCarousel'
 import FoodCategory from './_components/FoodCategory'
 import foodCardImg from '~/assets/images/home/food-card.png'
+import Speciality1 from '~/assets/images/home/speciality-1.png'
+import Speciality2 from '~/assets/images/home/speciality-2.png'
+import Speciality3 from '~/assets/images/home/speciality-3.png'
 import vector from '~/assets/images/home/vector-3.png'
 import recommend from '~/assets/images/home/recommend.png'
 import RecommendCarousel from './_components/RecommendCarousel'
+import homeApiInstance from '~/apis/home'
 
-// Data Sample
-const data = {
-  specialtyFoods: [
-    {
-      imageUrl: {
-        url: 'https://res.cloudinary.com/dtjub1t7k/image/upload/v1728704151/vpe1zfukvjyl8uy3v6s8.jpg',
-        public_id: 'vpe1zfukvjyl8uy3v6s8',
-      },
-      _id: '6709eb33fea5c625f751edd9',
-      name: 'Bún chả hà nội',
-      createdAt: '2024-10-12T03:21:23.592Z',
-      updatedAt: '2024-10-12T03:21:23.593Z',
-      slug: 'bun-cha-ha-noi',
-      __v: 0,
-    },
-  ],
-  // restaurants: [
-  //   {
-  //     address: {
-  //       street: 'phương hữu ngọt',
-  //       city: 'Hồ Chí Minh',
-  //       borough: 'quân thủ đức',
-  //       zip: '22520341',
-  //     },
-  //     _id: '670a3767202dc1c1e16411a9',
-  //     ownerId: '670a335b202dc1c1e1641198',
-  //     name: 'Nhà hàng đại phát',
-  //     profit: 125,
-  //     quantitySolded: 15,
-  //     phone: '036327097999',
-  //     time_open: '2h sáng',
-  //     time_close: '10h tối',
-  //     starMedium: 5,
-  //     status: 'active',
-  //     imageUrl: [],
-  //     createdAt: '2024-10-12T08:58:21.640Z',
-  //     updatedAt: '2024-10-12T08:58:21.640Z',
-  //   },
-  // ],
-  foods: [
-    {
-      image: foodCardImg,
-      rating: '4.5',
-      restaurant: 'Quán Cô Bảy Chọ',
-      name: 'Hủ tiếu bò viên',
-      address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
-      price: 100000,
-      id: 1,
-    },
-    {
-      image: foodCardImg,
-      rating: '4.5',
-      restaurant: 'Quán Cô Bảy Chọ',
-      name: 'Hủ tiếu bò viên',
-      address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
-      price: 100000,
-      id: 1,
-    },
-    {
-      image: foodCardImg,
-      rating: '4.5',
-      restaurant: 'Quán Cô Bảy Chọ',
-      name: 'Hủ tiếu bò viên',
-      address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
-      price: 100000,
-      id: 1,
-    },
-    {
-      image: foodCardImg,
-      rating: '4.5',
-      restaurant: 'Quán Cô Bảy Chọ',
-      name: 'Hủ tiếu bò viên',
-      address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
-      price: 100000,
-      id: 1,
-    },
-    {
-      image: foodCardImg,
-      rating: '4.5',
-      restaurant: 'Quán Cô Bảy Chọ',
-      name: 'Hủ tiếu bò viên',
-      address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
-      price: 100000,
-      id: 1,
-    },
-    {
-      image: foodCardImg,
-      rating: '4.5',
-      restaurant: 'Quán Cô Bảy Chọ',
-      name: 'Hủ tiếu bò viên',
-      address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
-      price: 100000,
-      id: 1,
-    },
-    {
-      image: foodCardImg,
-      rating: '4.5',
-      restaurant: 'Quán Cô Bảy Chọ',
-      name: 'Hủ tiếu bò viên',
-      address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
-      price: 100000,
-      id: 1,
-    },
-    {
-      image: foodCardImg,
-      rating: '4.5',
-      restaurant: 'Quán Cô Bảy Chọ',
-      name: 'Hủ tiếu bò viên',
-      address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
-      price: 100000,
-      id: 1,
-    },
-  ],
-  restaurants: [
-    {
-      image: foodCardImg,
-      rating: '4.5',
-      restaurant: 'Quán Cô Bảy Chọ',
-      address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
-      id: 1,
-    },
-    {
-      image: foodCardImg,
-      rating: '4.5',
-      restaurant: 'Quán Cô Bảy Chọ',
-      address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
-      id: 1,
-    },
-    {
-      image: foodCardImg,
-      rating: '4.5',
-      restaurant: 'Quán Cô Bảy Chọ',
-      address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
-      id: 1,
-    },
-    {
-      image: foodCardImg,
-      rating: '4.5',
-      restaurant: 'Quán Cô Bảy Chọ',
-      address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
-      id: 1,
-    },
-    {
-      image: foodCardImg,
-      rating: '4.5',
-      restaurant: 'Quán Cô Bảy Chọ',
-      address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
-      id: 1,
-    },
-    {
-      image: foodCardImg,
-      rating: '4.5',
-      restaurant: 'Quán Cô Bảy Chọ',
-      address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
-      id: 1,
-    },
-    {
-      image: foodCardImg,
-      rating: '4.5',
-      restaurant: 'Quán Cô Bảy Chọ',
-      address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
-      id: 1,
-    },
-    {
-      image: foodCardImg,
-      rating: '4.5',
-      restaurant: 'Quán Cô Bảy Chọ',
-      address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
-      id: 1,
-    },
-  ],
-}
+const SpecialityFood = [
+  {
+    image: Speciality1,
+    name: 'Bánh xèo',
+  },
+  {
+    image: Speciality2,
+    name: 'Bánh xèo',
+  },
+  {
+    image: Speciality3,
+    name: 'Bánh xèo',
+  },
+  {
+    image: Speciality1,
+    name: 'Bánh xèo',
+  },
+  {
+    image: Speciality2,
+    name: 'Bánh xèo',
+  },
+  {
+    image: Speciality3,
+    name: 'Bánh xèo',
+  },
+  {
+    image: Speciality1,
+    name: 'Bánh xèo',
+  },
+]
 
 const Home = () => {
+  const [data, setData] = useState()
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const homeData = await homeApiInstance.getHome()
+        setData(homeData)
+      } catch (error) {}
+    }
+
+    fetchData()
+  }, [])
+
   return (
     <main className='w-full'>
       <section
@@ -221,7 +97,7 @@ const Home = () => {
           <h3 className='text-[25px] font-oswald text-primaryText mb-10'>
             Mang đậm chất ẩm thực Việt Nam
           </h3>
-          <SpecialityCarousel />
+          <SpecialityCarousel SpecialityFoods={SpecialityFood} />
         </div>
 
         <div className='flex flex-col justify-center text-center'>
@@ -230,16 +106,16 @@ const Home = () => {
           </h2>
           <div className='w-1/6 h-1.5 bg-secondary mt-3.5 mx-auto mb-14'></div>
           <div className='grid grid-cols-4 max-w-[1190px] gap-8 mx-auto'>
-            {data.foods.map((food, index) => (
+            {data?.foods.map((food, index) => (
               <FoodCard
                 key={index}
-                image={food.image}
-                name={food.name}
-                rating={food.rating}
-                restaurant={food.restaurant}
-                address={food.address}
+                image={food?.imageUrl[0]?.url || ''}
+                name={food.title}
+                rating={food.starMedium}
+                restaurant={food.restaurantName}
+                address={`${food.restaurantAddress.street} ${food.restaurantAddress.borough} ${food.restaurantAddress.city}`}
                 price={food.price}
-                id={food.id}
+                id={food._id}
               />
             ))}
           </div>
@@ -272,7 +148,7 @@ const Home = () => {
         </div>
 
         <div className='mx-auto max-w-[1100px]'>
-          <RecommendCarousel restaurants={data.restaurants} />
+          <RecommendCarousel restaurants={data?.restaurants || []} />
         </div>
       </section>
     </main>
