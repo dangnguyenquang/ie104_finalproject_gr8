@@ -13,7 +13,7 @@ import PasswordTextField from '~/components/ui/PasswordTextField'
 import authApi from '~/apis/auth'
 
 const SellerRegisterForm = () => {
-  const Districts = [
+  const Areas = [
     'Quận 1',
     'Quận 3',
     'Quận 4',
@@ -24,17 +24,23 @@ const SellerRegisterForm = () => {
     'Quận 10',
     'Quận 11',
     'Quận 12',
-    'Quận Tân Bình',
-    'Quận Bình Tân',
-    'Quận Bình Thạnh',
-    'Quận Tân Phú',
-    'Quận Gò Vấp',
-    'Quận Phú Nhuận',
+    'Tân Bình',
+    'Bình Tân',
+    'Bình Thạnh',
+    'Tân Phú',
+    'Gò Vấp',
+    'Phú Nhuận',
+    'Bình Chánh',
+    'Hóc Môn',
+    'Cần Giờ',
+    'Củ Chi',
+    'Nhà Bè',
+    'Thành phố Thủ Đức',
   ]
 
-  const districtsOptions = Districts.map((district) => ({
-    label: district,
-    value: district,
+  const areasOptions = Areas.map((area) => ({
+    label: area,
+    value: area,
   }))
 
   const [name, setName] = useState('')
@@ -46,7 +52,7 @@ const SellerRegisterForm = () => {
   const [confirmPassword, setConfirmPassword] = useState('')
   const [restaurantName, setRestaurantName] = useState('')
   const [restaurantPhone, setRestaurantPhone] = useState('')
-  const [district, setDistrict] = useState('')
+  const [area, setArea] = useState('')
   const [detailedAddress, setDetailedAddress] = useState('')
   const [openTime, setOpenTime] = useState('')
   const [closeTime, setCloseTime] = useState('')
@@ -62,13 +68,22 @@ const SellerRegisterForm = () => {
     setImages(files)
   }
 
+  const validateDetailedAddress = (address) => {
+    return !Areas.some((area) => address.includes(area))
+  }
+
   const handleSellerRegister = async () => {
+    if (!validateDetailedAddress(detailedAddress)) {
+      alert('Địa chỉ chi tiết không được bao gồm khu vực.')
+      return
+    }
+
     const formData = new FormData()
 
     const infoAccount = {
       name,
       role: 'seller',
-      address: `${detailedAddress}, ${district}, TP. Hồ Chí Minh`,
+      address: address,
       password_account: password,
       name_account: username,
       email,
@@ -80,8 +95,7 @@ const SellerRegisterForm = () => {
       address: {
         city: 'TP. Hồ Chí Minh',
         street: detailedAddress,
-        borough: district,
-        zip: '',
+        borough: area,
       },
       phone: restaurantPhone,
       time_close: closeTime,
@@ -178,11 +192,11 @@ const SellerRegisterForm = () => {
           value='TP. Hồ Chí Minh'
         />
         <CustomSelect
-          id='district'
-          label='Quận'
-          options={districtsOptions}
-          value={district}
-          handleChange={setDistrict}
+          id='area'
+          label='Khu vực'
+          options={areasOptions}
+          value={area}
+          handleChange={setArea}
         />
       </div>
 
