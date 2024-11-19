@@ -3,11 +3,11 @@ import TextField from '@mui/material/TextField'
 
 function TimeInput({ label, name, value, handleChange }) {
   return (
-    <div className='mx-auto max-w-[500px] my-5'>
+    <div className='mx-auto my-5 w-full sm:w-[230px]'>
       <TextField
         sx={{
           margin: 'auto',
-          width: '230px',
+          width: '100%',
           '& .MuiOutlinedInput-root': {
             borderRadius: '20px',
             backgroundColor: 'white',

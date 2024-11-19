@@ -14,28 +14,7 @@ import authApi from '~/apis/auth'
 
 const SellerRegisterForm = () => {
   const Areas = [
-    'Quận 1',
-    'Quận 3',
-    'Quận 4',
-    'Quận 5',
-    'Quận 6',
-    'Quận 7',
-    'Quận 8',
-    'Quận 10',
-    'Quận 11',
-    'Quận 12',
-    'Tân Bình',
-    'Bình Tân',
-    'Bình Thạnh',
-    'Tân Phú',
-    'Gò Vấp',
-    'Phú Nhuận',
-    'Bình Chánh',
-    'Hóc Môn',
-    'Cần Giờ',
-    'Củ Chi',
-    'Nhà Bè',
-    'Thành phố Thủ Đức',
+    // ...
   ]
 
   const areasOptions = Areas.map((area) => ({
@@ -120,8 +99,8 @@ const SellerRegisterForm = () => {
   }
 
   return (
-    <div className='w-full justify-center'>
-      <div className="block text-center text-primary text-6xl font-medium font-['Oswald'] uppercase leading-[100px] my-10">
+    <div className='w-full justify-center p-4'>
+      <div className="block text-center text-primary text-4xl sm:text-6xl font-medium font-['Oswald'] uppercase leading-none sm:leading-[100px] my-10">
         Đăng kí bán hàng
       </div>
 
@@ -158,7 +137,7 @@ const SellerRegisterForm = () => {
       <PasswordTextField
         id='password'
         label='Mật khẩu'
-        confirm='true'
+        confirm
         value={password}
         handleChange={(e) => setPassword(e.target.value)}
       />
@@ -175,7 +154,7 @@ const SellerRegisterForm = () => {
         handleChange={(e) => setRestaurantPhone(e.target.value)}
       />
 
-      <div className='flex justify-between gap-4 mx-auto w-[500px] my-5'>
+      <div className='flex flex-col sm:flex-row justify-between gap-4 mx-auto w-full sm:w-[500px] my-5'>
         <TextField
           sx={{
             '& .MuiOutlinedInput-root': {
@@ -207,7 +186,7 @@ const SellerRegisterForm = () => {
         handleChange={(e) => setDetailedAddress(e.target.value)}
       />
 
-      <div className='flex justify-between gap-10 mx-auto w-[500px] my-5'>
+      <div className='flex flex-col sm:flex-row justify-between sm:gap-10 mx-auto w-full sm:w-[500px] my-5'>
         <TimeInput
           id='openTime'
           label='Giờ mở cửa'
@@ -229,26 +208,26 @@ const SellerRegisterForm = () => {
         handleChange={(e) => setDescription(e.target.value)}
       />
 
-      <div className='flex justify-between items-center mx-auto w-[500px] my-5'>
+      <div className='flex flex-col sm:flex-row justify-between items-center mx-auto w-full sm:w-[500px] my-5'>
         <label
           htmlFor='avatar-upload'
           className='block text-sm font-medium leading-6 text-primaryText'
         >
           Đính kèm ảnh của quán
         </label>
-        <div className='flex w-[300px] justify-center rounded-lg border-2 border-dashed border-gray-900/25 px-6 py-10'>
+        <div className='flex w-full sm:w-[300px] justify-center rounded-lg border-2 border-dashed border-gray-900/25 px-6 py-10'>
           <ImageUploader maxImages={1} handleAvatarChange={handleAvatarChange} />
         </div>
       </div>
 
-      <div className='flex justify-between items-center mx-auto w-[500px] my-5'>
+      <div className='flex flex-col sm:flex-row justify-between items-center mx-auto w-full sm:w-[500px] my-5'>
         <label
           htmlFor='images-upload'
           className='block text-sm font-medium leading-6 text-primaryText'
         >
           Đính kèm 4 ảnh nổi bật
         </label>
-        <div className='flex w-[300px] justify-center rounded-lg border-2 border-dashed border-gray-900/25 px-6 py-10'>
+        <div className='flex w-full sm:w-[300px] justify-center rounded-lg border-2 border-dashed border-gray-900/25 px-6 py-10'>
           <ImageUploader maxImages={4} handleImagesChange={handleImagesChange} />
         </div>
       </div>
