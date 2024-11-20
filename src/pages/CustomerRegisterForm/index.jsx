@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { useState } from 'react'
+import { toast } from 'react-toastify'
 import { Button } from '~/components/ui/Button'
 import RequiredTextField from '~/components/ui/RequiredTextField'
 import NumericTextField from '~/components/ui/NumericTextField'
@@ -18,6 +19,8 @@ const CustomerRegisterForm = () => {
   const [confirmPassword, setConfirmPassword] = useState('')
 
   const handleCustomerRegister = async () => {
+    const formData = new FormData()
+
     const infoCustomer = {
       name,
       role: 'customer',
@@ -28,12 +31,14 @@ const CustomerRegisterForm = () => {
       phone,
     }
 
+    formData.append('infoAccount', JSON.stringify(infoCustomer))
+
     try {
-      const res = await authApi.customerRegister(infoCustomer)
-      alert('Đăng ký thành công!')
+      const res = await authApi.customerRegister(formData)
+      toast.success('Đăng ký thành công!')
     } catch (error) {
       console.error(error)
-      alert('Đã xảy ra lỗi trong quá trình đăng ký')
+      toast.error('Đã xảy ra lỗi trong quá trình đăng ký!')
     }
   }
 

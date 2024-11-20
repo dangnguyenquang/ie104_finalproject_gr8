@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { useState } from 'react'
+import { toast } from 'react-toastify'
 import { Button } from '~/components/ui/Button'
 import { ImageUploader } from '~/components/ui/ImageUploader'
 import RequiredTextField from '~/components/ui/RequiredTextField'
@@ -14,7 +15,28 @@ import authApi from '~/apis/auth'
 
 const SellerRegisterForm = () => {
   const Areas = [
-    // ...
+    'Quận 1',
+    'Quận 3',
+    'Quận 4',
+    'Quận 5',
+    'Quận 6',
+    'Quận 7',
+    'Quận 8',
+    'Quận 10',
+    'Quận 11',
+    'Quận 12',
+    'Tân Bình',
+    'Bình Tân',
+    'Bình Thạnh',
+    'Tân Phú',
+    'Gò Vấp',
+    'Phú Nhuận',
+    'Bình Chánh',
+    'Hóc Môn',
+    'Cần Giờ',
+    'Củ Chi',
+    'Nhà Bè',
+    'Thành phố Thủ Đức',
   ]
 
   const areasOptions = Areas.map((area) => ({
@@ -53,7 +75,7 @@ const SellerRegisterForm = () => {
 
   const handleSellerRegister = async () => {
     if (!validateDetailedAddress(detailedAddress)) {
-      alert('Địa chỉ chi tiết không được bao gồm khu vực.')
+      toast.error('Địa chỉ chi tiết không được bao gồm khu vực!')
       return
     }
 
@@ -91,10 +113,10 @@ const SellerRegisterForm = () => {
     try {
       const res = await authApi.sellerRegister(formData)
       console.log(res)
-      alert('Đăng ký thành công!')
+      toast.success('Đăng ký thành công!')
     } catch (error) {
       console.error(error)
-      alert(error.message || 'Đã xảy ra lỗi trong quá trình đăng ký')
+      toast.error('Đã xảy ra lỗi trong quá trình đăng ký!')
     }
   }
 

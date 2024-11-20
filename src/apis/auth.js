@@ -23,28 +23,22 @@ class AuthApi {
     }
   }
 
-  async customerRegister(infoAccount) {
+  async customerRegister(formData) {
     try {
-      const res = await httpClient.post(authEndpoint.register, {
-        infoAccount: {
-          name: infoAccount.name,
-          role: infoAccount.role,
-          address: infoAccount.address,
-          password_account: infoAccount.password_account,
-          name_account: infoAccount.name_account,
-          email: infoAccount.email,
-          phone: infoAccount.phone,
+      const res = await httpClient.post(authEndpoint.register, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
         },
       })
       return { msg: res.msg }
     } catch (error) {
-      console.log(error)
+      return { error: error.message || 'Đã xảy ra lỗi trong quá trình đăng ký' }
     }
   }
 
   async sellerRegister(formData) {
     try {
-      const res = await httpClient.post('/user/account/signup', formData, {
+      const res = await httpClient.post(authEndpoint.register, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
