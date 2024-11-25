@@ -3,11 +3,14 @@ import AboutUs from '~/pages/AboutUs'
 import Menu from '~/pages/Menu'
 import SellerRegisterForm from '~/pages/SellerRegisterForm'
 import CustomerRegisterForm from '~/pages/CustomerRegisterForm'
+
 import ourCommit from '~/pages/ourCommit'
 import privacyPolicy from '~/pages/privacyPolicy'
 import orderInstructions from '~/pages/OrderInstructions'
 import contactInstructions from '~/pages/ContactInstructions'
 import operatingPolicy from '~/pages/OperatingPolicy'
+import OrderTrackingPage from '~/pages/OrderTracking'
+
 import { routes } from '~/configs'
 
 const publicRoutes = [
@@ -21,6 +24,7 @@ const publicRoutes = [
   { path: routes.OPERATINGPOLICY, component: operatingPolicy },
   { path: routes.SELLER_REGISTER, component: SellerRegisterForm },
   { path: routes.CUSTOMER_REGISTER, component: CustomerRegisterForm },
+  { path: routes.ORDER_TRACKING, component: OrderTrackingPage },
 ]
 const privateRoutes = []
 

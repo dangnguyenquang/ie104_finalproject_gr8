@@ -1,5 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import TextField from '@mui/material/TextField'
+import InputAdornment from '@mui/material/InputAdornment'
+import IconButton from '@mui/material/IconButton'
+import Visibility from '@mui/icons-material/Visibility'
+import VisibilityOff from '@mui/icons-material/VisibilityOff'
 
 function PasswordTextField({
   label,
@@ -10,46 +14,55 @@ function PasswordTextField({
   value,
   handleChange,
 }) {
-  const [password, setPassword] = useState('')
+  const [password, setPassword] = useState(value || '')
   const [confirmPassword, setConfirmPassword] = useState('')
+  const [showPassword, setShowPassword] = useState(false)
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [errorPassword, setErrorPassword] = useState(false)
   const [errorConfirmPassword, setErrorConfirmPassword] = useState(false)
   const [matchError, setMatchError] = useState(false)
+  const [touchedConfirmPassword, setTouchedConfirmPassword] = useState(false)
 
-  const handlePasswordChange = (event) => {
-    setPassword(event.target.value)
-    if (event.target.value) {
-      setErrorPassword(false)
-    }
-
-    if (event.target.value.length < 6) {
+  useEffect(() => {
+    if (password.length < 6 && password !== '') {
       setErrorPassword(true)
     } else {
       setErrorPassword(false)
     }
+
+    if (touchedConfirmPassword) {
+      if (confirmPassword === '') {
+        setErrorConfirmPassword(true)
+      } else {
+        setErrorConfirmPassword(false)
+      }
+
+      if (password !== confirmPassword) {
+        setMatchError(true)
+      } else {
+        setMatchError(false)
+      }
+    }
+  }, [password, confirmPassword, touchedConfirmPassword])
+
+  const handlePasswordChange = (event) => {
+    setPassword(event.target.value)
+    handleChange(event)
   }
 
   const handleConfirmPasswordChange = (event) => {
     setConfirmPassword(event.target.value)
-    if (event.target.value) {
-      setErrorConfirmPassword(false)
-    }
-    if (password && event.target.value !== password) {
-      setMatchError(true)
-    } else {
-      setMatchError(false)
-    }
+    setTouchedConfirmPassword(true)
   }
 
   const handlePasswordBlur = () => {
-    if (!password) {
-      setErrorPassword(true)
-    } else if (password.length < 6) {
+    if (!password || password.length < 6) {
       setErrorPassword(true)
     }
   }
 
   const handleConfirmPasswordBlur = () => {
+    setTouchedConfirmPassword(true)
     if (!confirmPassword) {
       setErrorConfirmPassword(true)
     }
@@ -59,6 +72,9 @@ function PasswordTextField({
       setMatchError(false)
     }
   }
+
+  const toggleShowPassword = () => setShowPassword((prev) => !prev)
+  const toggleShowConfirmPassword = () => setShowConfirmPassword((prev) => !prev)
 
   return (
     <div className={`mx-auto max-w-[500px] my-5 ${className}`}>
@@ -70,15 +86,26 @@ function PasswordTextField({
             borderRadius: '20px',
             backgroundColor: whiteBg ? 'white' : 'transparent',
           },
+          '& fieldset': {
+            borderWidth: '2px',
+          },
         }}
         label={label}
-        value={value}
-        onChange={handleChange}
+        value={password}
+        onChange={handlePasswordChange}
         onBlur={handlePasswordBlur}
-        placeholder={placeholder}
-        type='password'
+        type={showPassword ? 'text' : 'password'}
         error={errorPassword}
-        helperText={errorPassword ? 'Password must be at least 6 characters long' : ''}
+        helperText={errorPassword ? 'Mật khẩu phải có ít nhất 6 kí tự' : ''}
+        InputProps={{
+          endAdornment: (
+            <InputAdornment position='end'>
+              <IconButton onClick={toggleShowPassword} edge='end'>
+                {showPassword ? <VisibilityOff /> : <Visibility />}
+              </IconButton>
+            </InputAdornment>
+          ),
+        }}
       />
 
       {confirm && (
@@ -89,22 +116,34 @@ function PasswordTextField({
             marginTop: '20px',
             '& .MuiOutlinedInput-root': {
               borderRadius: '20px',
+              backgroundColor: whiteBg ? 'white' : 'transparent',
+            },
+            '& fieldset': {
+              borderWidth: '2px',
             },
           }}
           label='Nhập lại mật khẩu'
           value={confirmPassword}
           onChange={handleConfirmPasswordChange}
           onBlur={handleConfirmPasswordBlur}
-          type='password'
-          placeholder={placeholder}
-          error={errorConfirmPassword || matchError}
+          type={showConfirmPassword ? 'text' : 'password'}
+          error={touchedConfirmPassword && (errorConfirmPassword || matchError)}
           helperText={
-            errorConfirmPassword
-              ? 'This field is required'
+            touchedConfirmPassword && errorConfirmPassword
+              ? 'Đây là trường bắt buộc'
               : matchError
-                ? 'Passwords do not match'
+                ? 'Mật khẩu không trùng khớp'
                 : ''
           }
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position='end'>
+                <IconButton onClick={toggleShowConfirmPassword} edge='end'>
+                  {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
         />
       )}
     </div>

@@ -1,24 +1,27 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { FormControl, InputLabel, Select, MenuItem } from '@mui/material'
 
-function CustomSelect({ label, options }) {
-  const [selectedValue, setSelectedValue] = useState('')
-
-  const handleChange = (event) => {
-    setSelectedValue(event.target.value)
+function CustomSelect({ label, options, value, handleChange }) {
+  const handleSelectChange = (event) => {
+    if (handleChange) {
+      handleChange(event.target.value)
+    }
   }
 
   return (
     <FormControl fullWidth>
-      <InputLabel id={`select-label-${label}`}>{label}</InputLabel>
+      <InputLabel id={`select-label-${label.replace(/\s+/g, '-')}`}>{label}</InputLabel>
       <Select
-        labelId={`select-label-${label}`}
-        id={`select-${label}`}
-        value={selectedValue}
-        onChange={handleChange}
+        labelId={`select-label-${label.replace(/\s+/g, '-')}`}
+        id={`select-${label.replace(/\s+/g, '-')}`}
+        value={value}
+        onChange={handleSelectChange}
         label={label}
         sx={{
           borderRadius: '20px',
+          '& fieldset': {
+            borderWidth: '2px',
+          },
         }}
       >
         {options.map((option) => (
@@ -29,6 +32,11 @@ function CustomSelect({ label, options }) {
       </Select>
     </FormControl>
   )
+}
+
+CustomSelect.defaultProps = {
+  value: '',
+  handleChange: () => {},
 }
 
 export default CustomSelect

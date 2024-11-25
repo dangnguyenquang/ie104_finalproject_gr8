@@ -1,8 +1,6 @@
 import React from 'react'
 import StarRateIcon from '@mui/icons-material/StarRate'
 
-import { Button } from './Button'
-
 const formatNumber = (number) => {
   return new Intl.NumberFormat().format(number)
 }

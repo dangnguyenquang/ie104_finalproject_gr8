@@ -35,8 +35,6 @@ export default function LoginModal({ className, children, disabled = false }) {
   }
 
   const handleLogin = async (email, password) => {
-    // console.log(email, password)
-
     try {
       const res = await authApi.signIn(email, password)
     } catch (error) {}
@@ -70,37 +68,47 @@ export default function LoginModal({ className, children, disabled = false }) {
         >
           <CloseIcon onClick={handleClose} className='cursor-pointer text-white' />
         </DialogTitle>
-        <DialogContent className='px-10'>
-          <DialogContentText className='w-full justify-center text-black flex flex-col gap-2'>
+        <DialogContent className='px-10 flex flex-col'>
+          <DialogContentText>
             <img
               src={Logo}
               alt='Yummy logo'
-              style={{ width: '200px', height: 'auto' }}
+              style={{ width: '200px', height: 'auto', marginBottom: '10px' }}
               className='mx-auto'
             />
           </DialogContentText>
-          <DialogContentText className='text-white font-bold mx-auto text-lg mb-8'>
+          <DialogContentText
+            sx={{
+              color: 'white',
+              fontWeight: '700',
+              marginRight: 'auto',
+              marginLeft: 'auto',
+              textAlign: 'center',
+              fontSize: '1.125rem',
+              marginBottom: '32px',
+            }}
+          >
             Xin chào, hãy nhập thông tin bên dưới!
           </DialogContentText>
-          <DialogContentText className='flex flex-col'>
-            <RequiredTextField
-              placeholder='Tên đăng nhập'
-              className='w-[400px]'
-              whiteBg
-              value={email}
-              handleChange={(e) => setEmail(e.target.value)}
-            />
-            <PasswordTextField
-              placeholder='Mật khẩu'
-              className='w-[400px] mt-0'
-              whiteBg
-              value={password}
-              handleChange={(e) => setPassword(e.target.value)}
-            />
-            <Link className='text-end mr-10 mt-[-6px] text-primary font-bold hover:underline'>
-              Quên mật khẩu?
-            </Link>
-          </DialogContentText>
+          {/* <DialogContentText className='flex flex-col'> */}
+          <RequiredTextField
+            placeholder='Tên đăng nhập'
+            className='w-[400px]'
+            whiteBg
+            value={email}
+            handleChange={(e) => setEmail(e.target.value)}
+          />
+          {/* </DialogContentText> */}
+          <PasswordTextField
+            placeholder='Mật khẩu'
+            className='w-[400px] mt-0'
+            whiteBg
+            value={password}
+            handleChange={(e) => setPassword(e.target.value)}
+          />
+          <Link className='text-end mr-10 mt-[-6px] text-primary font-bold hover:underline'>
+            Quên mật khẩu?
+          </Link>
         </DialogContent>
         <DialogActions className='flex flex-col gap-4 px-6 pb-8 mt-8'>
           <Button

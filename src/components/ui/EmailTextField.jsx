@@ -1,40 +1,40 @@
 import React, { useState } from 'react'
 import TextField from '@mui/material/TextField'
 
-function EmailTextField({ label }) {
-  const [value, setValue] = useState('')
+function EmailTextField({ label, className, whiteBg, value, handleChange }) {
   const [error, setError] = useState(false)
 
-  const handleChange = (event) => {
-    const newValue = event.target.value
-    setValue(newValue)
-    if (error) setError(false)
-  }
-
   const handleBlur = () => {
-    const emailPattern = /^[a-zA-Z0-9._%+-]+@gmail\.com$/
+    const emailPattern = /@/
     if (!emailPattern.test(value)) {
       setError(true)
     }
   }
 
   return (
-    <div className='mx-auto max-w-[500px] my-5'>
+    <div className={`mx-auto max-w-[500px] my-5 ${className}`}>
       <TextField
         sx={{
           margin: 'auto',
           width: '100%',
           '& .MuiOutlinedInput-root': {
             borderRadius: '20px',
+            backgroundColor: whiteBg ? 'white' : 'transparent',
+          },
+          '& fieldset': {
+            borderWidth: '2px',
           },
         }}
         label={label}
         value={value}
-        onChange={handleChange}
+        onChange={(e) => {
+          handleChange(e)
+          if (error) setError(false)
+        }}
         onBlur={handleBlur}
         required
         error={error}
-        helperText={error ? 'Please enter a valid email address' : ''}
+        helperText={error ? 'Vui lòng nhập địa chỉ email hợp lệ' : ''}
       />
     </div>
   )
