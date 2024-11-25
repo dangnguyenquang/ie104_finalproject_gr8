@@ -31,9 +31,9 @@ class AuthApi {
       console.log(error)
     }
   }
-  async Search(filterList) {
+  async Search(filterList, page) {
     try {
-      const res = await httpClient.post(authEndpoint.search, filterList)
+      const res = await httpClient.post(`${authEndpoint.search}?page=${page}`, filterList)
       return res
     } catch (error) {
       console.log(error)

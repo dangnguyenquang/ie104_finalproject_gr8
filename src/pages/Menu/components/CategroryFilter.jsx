@@ -15,7 +15,7 @@ const Categrories = [
   'Ăn vặt',
 ]
 
-const CategroryFilter = ({ handleSelectCategories }) => {
+const CategroryFilter = ({ selectedCategories, handleSelectCategories }) => {
   return (
     <div>
       <div className='text-[20px] text-primaryText font-bold'>Danh mục món ăn</div>
@@ -31,6 +31,7 @@ const CategroryFilter = ({ handleSelectCategories }) => {
                 }}
               />
             }
+            checked={selectedCategories.includes(category)}
             onChange={handleSelectCategories}
             value={category}
             key={category}
