@@ -10,6 +10,12 @@ import Logo from '~/assets/icons/logo.svg'
 import { routes } from '~/configs'
 
 const Footer = () => {
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    })
+  }
   return (
     <div
       className='min-w-screen h-[500px] py-[50px] px-20'
@@ -25,10 +31,10 @@ const Footer = () => {
           <div>
             <p className='text-[20px] font-bold'>Về Yummy</p>
             <div className='text-sm flex flex-col mt-3 text-[#C9C9C9] gap-[5px]'>
-              <Link to={routes.ABOUTUS} className='hover:underline'>
+              <Link to={routes.ABOUTUS} className='hover:underline' onClick={scrollToTop}>
                 Giới thiệu
               </Link>
-              <Link to={routes.ABOUTUS} className='hover:underline'>
+              <Link to={routes.OURCOMMIT} className='hover:underline' onClick={scrollToTop}>
                 Cam kết của Yummy
               </Link>
             </div>
@@ -36,13 +42,10 @@ const Footer = () => {
           <div>
             <p className='text-[20px] font-bold'>Chính sách</p>
             <div className='text-sm flex flex-col mt-3 text-[#C9C9C9] gap-[5px]'>
-              <Link to={routes.ABOUTUS} className='hover:underline'>
+              <Link to={routes.OPERATINGPOLICY} className='hover:underline' onClick={scrollToTop}>
                 Chính sách hoạt động
               </Link>
-              <Link to={routes.ABOUTUS} className='hover:underline'>
-                Chính sách và quy trình
-              </Link>
-              <Link to={routes.ABOUTUS} className='hover:underline'>
+              <Link to={routes.PRIVACYPOLICY} className='hover:underline' onClick={scrollToTop}>
                 Chính sách bảo mật thông tin
               </Link>
             </div>
@@ -50,10 +53,14 @@ const Footer = () => {
           <div>
             <p className='text-[20px] font-bold'>Hướng dẫn</p>
             <div className='text-sm flex flex-col mt-3 text-[#C9C9C9] gap-[5px]'>
-              <Link to={routes.ABOUTUS} className='hover:underline'>
+              <Link to={routes.ORDERINSTRUCTIONS} className='hover:underline' onClick={scrollToTop}>
                 Hướng dẫn đặt món
               </Link>
-              <Link to={routes.ABOUTUS} className='hover:underline'>
+              <Link
+                to={routes.CONTACTINSTRUCTIONS}
+                className='hover:underline'
+                onClick={scrollToTop}
+              >
                 Hướng dẫn liên hệ
               </Link>
             </div>
@@ -82,11 +89,11 @@ const Footer = () => {
         </div> */}
         <div className='flex gap-4 items-center'>
           <EmailIcon />
-          <p className='text-sm'>Email: nhomnaylanhom8@gmail.com</p>
+          <p className='text-sm'>Email: yummy2024@gmail.com</p>
         </div>
         <div className='flex gap-4 items-center'>
           <LocalPhoneIcon />
-          <p className='text-sm'>SDT: 0956575859</p>
+          <p className='text-sm'>SDT: 0338963327</p>
         </div>
       </div>
     </div>

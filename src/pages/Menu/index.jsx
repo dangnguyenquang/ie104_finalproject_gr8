@@ -1,311 +1,319 @@
 import * as React from 'react'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import RestaurantList from './components/RestaurantList'
 import DistrictFilter from './components/DistrictFilter'
 import CategroryFilter from './components/CategroryFilter'
-import foodCardImg from '~/assets/images/home/food-card.png'
 import { SearchBar } from '~/components/ui'
 import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
 import Select from '@mui/material/Select'
 import Box from '@mui/material/Box'
+import { Pagination } from '@mui/material'
 import Rating from '@mui/material/Rating'
 import Typography from '@mui/material/Typography'
-import { Button } from '~/components/ui/Button'
-import Pagination from '@mui/material/Pagination'
+import authApi from '~/apis/auth'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 
-const Restaurants = [
-  {
-    image: foodCardImg,
-    rating: '4.5',
-    restaurant: 'Quán Cô Bảy Chọ',
-    address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
-    id: 1,
-  },
-  {
-    image: foodCardImg,
-    rating: '4.5',
-    restaurant: 'Quán Cô Bảy Chọ',
-    address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
-    id: 2,
-  },
-  {
-    image: foodCardImg,
-    rating: '4.5',
-    restaurant: 'Quán Cô Bảy Chọ',
-    address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
-    id: 3,
-  },
-  {
-    image: foodCardImg,
-    rating: '4.5',
-    restaurant: 'Quán Cô Bảy Chọ',
-    address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
-    id: 4,
-  },
-  {
-    image: foodCardImg,
-    rating: '4.5',
-    restaurant: 'Quán Cô Bảy Chọ',
-    address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
-    id: 5,
-  },
-  {
-    image: foodCardImg,
-    rating: '4.5',
-    restaurant: 'Quán Cô Bảy Chọ',
-    address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
-    id: 6,
-  },
-  {
-    image: foodCardImg,
-    rating: '4.5',
-    restaurant: 'Quán Cô Bảy Chọ',
-    address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
-    id: 7,
-  },
-  {
-    image: foodCardImg,
-    rating: '4.5',
-    restaurant: 'Quán Cô Bảy Chọ',
-    address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
-    id: 8,
-  },
-  {
-    image: foodCardImg,
-    rating: '4.5',
-    restaurant: 'Quán Cô Bảy Chọ',
-    address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
-    id: 9,
-  },
-  {
-    image: foodCardImg,
-    rating: '4.5',
-    restaurant: 'Quán Cô Bảy Chọ',
-    address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
-    id: 10,
-  },
-  {
-    image: foodCardImg,
-    rating: '4.5',
-    restaurant: 'Quán Cô Bảy Chọ',
-    address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
-    id: 11,
-  },
-  {
-    image: foodCardImg,
-    rating: '4.5',
-    restaurant: 'Quán Cô Bảy Chọ',
-    address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
-    id: 12,
-  },
-  {
-    image: foodCardImg,
-    rating: '4.5',
-    restaurant: 'Quán Cô Bảy Chọ',
-    address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
-    id: 13,
-  },
-  {
-    image: foodCardImg,
-    rating: '4.5',
-    restaurant: 'Quán Cô Bảy Chọ',
-    address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
-    id: 14,
-  },
-  {
-    image: foodCardImg,
-    rating: '4.5',
-    restaurant: 'Quán Cô Bảy Chọ',
-    address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
-    id: 15,
-  },
-  {
-    image: foodCardImg,
-    rating: '4.5',
-    restaurant: 'Quán Cô Bảy Chọ',
-    address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
-    id: 16,
-  },
-  {
-    image: foodCardImg,
-    rating: '4.5',
-    restaurant: 'Quán Cô Bảy Chọ',
-    address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
-    id: 17,
-  },
-  {
-    image: foodCardImg,
-    rating: '4.5',
-    restaurant: 'Quán Cô Bảy Chọ',
-    address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
-    id: 18,
-  },
-  {
-    image: foodCardImg,
-    rating: '4.5',
-    restaurant: 'Quán Cô Bảy Chọ',
-    address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
-    id: 19,
-  },
-  {
-    image: foodCardImg,
-    rating: '4.5',
-    restaurant: 'Quán Cô Bảy Chọ',
-    address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
-    id: 20,
-  },
-  {
-    image: foodCardImg,
-    rating: '4.5',
-    restaurant: 'Cô Ba',
-    address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
-    id: 21,
-  },
-  {
-    image: foodCardImg,
-    rating: '4.5',
-    restaurant: 'Cô Ba',
-    address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
-    id: 22,
-  },
-  {
-    image: foodCardImg,
-    rating: '4.5',
-    restaurant: 'Cô Ba',
-    address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
-    id: 23,
-  },
-]
-const itemsPerPage = 20
 const Menu = () => {
+  const debounceRef = useRef(null)
+  const navigate = useNavigate()
+  const [page, setPage] = useState(1)
+
+  // lấy dữ liệu kết quả Restaurant trả về
+  const [Restaurants, setRestaurants] = useState([])
+
+  // Lấy số trang,...
+  const [numberPages, setNumberPages] = useState({
+    currentPage: 1,
+    limit: 1,
+    skip: 0,
+    numberPages: 0,
+  })
+
+  // Filter
+  const [filterList, setFilterList] = useState({
+    boroughRestaurant: '',
+    nameRestaurant: '',
+    nameFood: '',
+    categrories: '',
+    starMedium: '5',
+    typeSort: 'Best seller',
+  })
+
+  const handleSearch = async () => {
+    try {
+      const res = await authApi.Search(filterList, page)
+      setRestaurants(res.restaurants)
+      if (res.objectPagination === null || res.objectPagination === undefined) {
+        setNumberPages({
+          currentPage: 0,
+          limit: 20,
+          skip: 0,
+          numberPages: 0,
+        })
+      } else {
+        setNumberPages(res.objectPagination)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  // render lại web khi thay đổi giá trị của filter hoặc page
+  useEffect(() => {
+    handleSubmitSearch()
+    handleSearch()
+  }, [filterList, page])
+
+  const handlePageChange = (event, value) => {
+    scrollToTop()
+    setPage(value)
+  }
+
+  // Search Bar value
+  const [searchValue, setsearchValue] = useState('')
+  // Kiểu search
+  const [currencyValue, setcurrencyValue] = useState('restaurant')
+  const handleChangeCurrencies = (event) => {
+    const newCurrencyValue = event.target.value
+    setcurrencyValue(newCurrencyValue)
+    setFilterList((prevFilterList) => {
+      let newFilterList = { ...prevFilterList }
+      if (newCurrencyValue === 'restaurant') {
+        newFilterList.nameRestaurant = searchValue
+        newFilterList.nameFood = ''
+      } else {
+        newFilterList.nameFood = searchValue
+        newFilterList.nameRestaurant = ''
+      }
+      return newFilterList
+    })
+  }
+  const handleChangeSearch = (event) => {
+    const newSearchValue = event.target.value
+    setsearchValue(newSearchValue)
+  }
+
+  // xử lý submitSearch và cập nhật Param
+  const handleSubmitSearch = () => {
+    clearTimeout(debounceRef.current)
+
+    debounceRef.current = setTimeout(() => {
+      const queryParams = new URLSearchParams()
+      if (searchValue) {
+        queryParams.append('search', searchValue)
+        queryParams.append('type', currencyValue)
+      }
+
+      const selectedCategoriesString = selectedCategories.join(',')
+      if (selectedCategoriesString) {
+        queryParams.append('categories', selectedCategoriesString)
+      }
+
+      const newUrl = `/menu?${queryParams.toString()}`
+      const currentUrl = `${window.location.pathname}${window.location.search}`
+
+      if (newUrl !== currentUrl) {
+        navigate(newUrl)
+      }
+    }, 500) // 500ms debounce, có thể điều chỉnh
+  }
+
+  // lấy giá trị của search từ param
+  const [searchParams] = useSearchParams()
+  useEffect(() => {
+    const search = searchParams.get('search') || ''
+    const typeSearch = searchParams.get('type') || 'restaurant'
+    const categoriesParam = searchParams.get('categories') || ''
+    const decodedCategories = decodeURIComponent(categoriesParam) //giải mã
+    const categoriesArray = decodedCategories ? decodedCategories.split(',') : [] //tạo thành bảng để lưu cho đúng định dạng
+    setsearchValue(search)
+    setcurrencyValue(typeSearch)
+    setSelectedCategories(categoriesArray)
+    setFilterList((prevFilterList) => ({
+      ...prevFilterList,
+      categrories: categoriesArray,
+      [typeSearch === 'restaurant' ? 'nameRestaurant' : 'nameFood']: search,
+    }))
+  }, [searchParams])
+
+  // District
+  const [selectedDistricts, setSelectedDistricts] = useState('')
+  const handleSelectDistricts = (event) => {
+    const isChecked = event.target.checked
+    const district = event.target.value
+    setSelectedDistricts((prevSelected) =>
+      isChecked ? [...prevSelected, district] : prevSelected.filter((d) => d !== district),
+    )
+
+    setFilterList((prevFilterList) => {
+      const updatedDistricts = isChecked
+        ? [...selectedDistricts, district]
+        : selectedDistricts.filter((d) => d !== district)
+      return {
+        ...prevFilterList,
+        boroughRestaurant: updatedDistricts.length > 0 ? updatedDistricts : '',
+      }
+    })
+  }
+
+  // categrory
+  const [selectedCategories, setSelectedCategories] = useState([])
+  const handleSelectCategories = (event) => {
+    const isChecked = event.target.checked
+    const category = event.target.value
+    setSelectedCategories((prevSelected) =>
+      isChecked ? [...prevSelected, category] : prevSelected.filter((d) => d !== category),
+    )
+    console.log(selectedCategories)
+    setFilterList((prevFilterList) => {
+      const updatedCategrories = isChecked
+        ? [...selectedCategories, category]
+        : selectedCategories.filter((d) => d !== category)
+      return {
+        ...prevFilterList,
+        categrories: updatedCategrories.length > 0 ? updatedCategrories : '',
+      }
+    })
+  }
+
   // hook xử lý select filter quán bán chạy nhất/ quán mới nhất
   const [selectedRestaurantFilter, setSelectedRestaurantFilter] = useState('Best seller')
   const handleChangeSelect = (event) => {
     setSelectedRestaurantFilter(event.target.value)
+    setFilterList((prevFilterList) => ({
+      ...prevFilterList,
+      typeSort: event.target.value,
+    }))
   }
 
   // hook xử lý filter lọc theo số sao
-  const [countStar, setCountStart] = useState(5)
-
-  // Hàm xử lý btn delete all
-  const handleDeleteAll = () => {
-    setCountStart(0), selectedDistricts.map((district) => (district.isChecked = false))
-    setSelectedDistricts([])
-    // selectedCategories.map((category) => (category.isChecked) = )
-    setSelectedCategories([])
+  const [countStar, setCountStar] = useState(5)
+  const handleRating = (event) => {
+    setCountStar(Number(event.target.value))
+    setFilterList((prevFilterList) => ({
+      ...prevFilterList,
+      starMedium: event.target.value,
+    }))
   }
 
-  // xử lý pagination
-  const [currentPage, setCurrentPage] = useState(1)
-  const [currentPageData, setCurrentPageData] = useState([])
-
-  useEffect(() => {
-    const firstItemIndex = (currentPage - 1) * itemsPerPage
-    const lastItemIndex = firstItemIndex + itemsPerPage
-    setCurrentPageData(Restaurants.slice(firstItemIndex, lastItemIndex))
-  }, [currentPage, Restaurants])
-
-  const handlePageChange = (event, page) => {
-    setCurrentPage(page)
+  // Hàm cuộn lên đầu trang
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    })
   }
 
   return (
-    <div className='w-full justify-items-center px-16 py-8'>
+    <div className='w-full justify-items-center px-5 lg:px-10 xl:px-16 py-8'>
       {/* Thanh Search */}
       <div className='w-full'>
         {/* ================================================= */}
-        <div className='w-full '>
-          <div className='relative flex justify-center items-center mb-[40px]'>
-            <div className='w-[50%]'>
-              <SearchBar />
-            </div>
-            <div className='absolute right-0'>
-              <FormControl sx={{ m: 1, minWidth: 120 }}>
-                <Select
-                  value={selectedRestaurantFilter}
-                  onChange={handleChangeSelect}
-                  displayEmpty
-                  inputProps={{ 'aria-label': 'Without label' }}
-                >
-                  <MenuItem value='Best seller'>Quán bán chạy nhất</MenuItem>
-                  <MenuItem value='Newest restaurant'>Quán mới nhất</MenuItem>
-                </Select>
-              </FormControl>
-            </div>
+        <div className=' w-full flex flex-wrap items-center min-w-[355px] justify-end mb-10'>
+          {/* Search Bar */}
+          <div className='w-full md:w-[50%] mb-4 md:mb-0 mr-[100px]'>
+            <SearchBar
+              searchValue={searchValue}
+              handleChangeSearch={handleChangeSearch}
+              currencyValue={currencyValue}
+              handleChangeCurrencies={handleChangeCurrencies}
+              handleSubmit={handleSubmitSearch}
+            />
+          </div>
+
+          {/* Filter Dropdown */}
+          <div className='w-full md:w-auto flex justify-end'>
+            <FormControl sx={{ m: 1 }} className='w-[80px] sm:w-[100px] lg:w-[170px] xl:w-[200px]'>
+              <Select
+                value={selectedRestaurantFilter}
+                onChange={handleChangeSelect}
+                displayEmpty
+                inputProps={{ 'aria-label': 'Without label' }}
+              >
+                <MenuItem value='Best seller'>Quán bán chạy nhất</MenuItem>
+                <MenuItem value='Newest restaurant'>Quán mới nhất</MenuItem>
+              </Select>
+            </FormControl>
           </div>
         </div>
 
         {/* ================================================= */}
-        <div className='flex'>
+        <div className='flex gap-[30px] min-w-[355px]'>
           {/* Bộ lọc */}
-          <div className='2xl:w-[300px] mr-[50px] w-[250px]'>
+          <div className='2xl:min-w-[300px] min-w-[210px] lg:min-w-[230px]'>
             <div className='bg-primary rounded-t-[20px] h-[95px] justify-center items-center flex gap-1'>
               <img src='../src/assets/icons/menu/filter_icon.svg' alt='' />
-              <div className='text-accent font-bold text-[20px] 2xl:text-[25px] uppercase'>
+              <div className='text-accent font-bold text-[20px] 2xl:text-[25px] uppercase text-center'>
                 Bộ lọc tìm kiếm
               </div>
             </div>
             <div className='bg-[#f0f1f2] p-5 rounded-b-[20px]'>
-              {/*  lọc theo Rating */}
               <div className=''>
                 <Box>
                   <Typography component='legend'>
                     <div className='text-[20px] text-primaryText font-bold'>Quán có số sao từ</div>
                   </Typography>
                   <div className='flex items-end'>
-                    <Rating
-                      name='simple-controlled'
-                      value={countStar}
-                      onChange={(event, newCountStar) => {
-                        setCountStart(newCountStar)
-                      }}
-                    />
+                    <Rating name='simple-controlled' value={countStar} onChange={handleRating} />
                     <div className='ml-2 text-primaryText'>trở lên</div>
                   </div>
                 </Box>
               </div>
-              {/* đường line */}
+
               <div className='bg-primaryText w-full h-0.5 mt-[16px] mb-[16px]'></div>
 
-              {/* lọc theo khu vực */}
-              <DistrictFilter />
+              <DistrictFilter
+                selectedDistricts={selectedDistricts}
+                handleSelectDistricts={handleSelectDistricts}
+              />
 
-              {/* đường line */}
               <div className='bg-primaryText w-full h-0.5 mt-[16px] mb-[16px]'></div>
 
-              {/* Lọc theo danh mục món ăn */}
-              <CategroryFilter />
+              <CategroryFilter
+                selectedCategories={selectedCategories}
+                handleSelectCategories={handleSelectCategories}
+              />
             </div>
           </div>
 
           {/* Kết quả tìm kiếm */}
           <div className='justify-center'>
-            <RestaurantList Restaurants={currentPageData} />
+            {Restaurants ? (
+              <RestaurantList Restaurants={Restaurants} />
+            ) : (
+              <div className='flex justify-center'>
+                <Typography variant='h6' color='textprimaryText'>
+                  Không tìm thấy nhà hàng nào phù hợp với tiêu chí của bạn.
+                </Typography>
+              </div>
+            )}
             <div className='flex justify-center mt-10'>
-              <Pagination
-                count={Math.ceil(Restaurants.length / itemsPerPage)}
-                page={currentPage}
-                onChange={handlePageChange}
-                sx={{
-                  '& .MuiPaginationItem-root': {
-                    color: '#7D0600',
-                  },
-                  '& .MuiPaginationItem-page.Mui-selected': {
-                    backgroundColor: '#7D0600',
-                    color: 'white',
-                    '&:hover': {
-                      backgroundColor: '#a40b0b',
+              {numberPages.numberPages > 1 ? (
+                <Pagination
+                  count={numberPages.numberPages}
+                  page={page}
+                  onChange={handlePageChange}
+                  sx={{
+                    '& .MuiPaginationItem-root': {
+                      color: '#7D0600',
                     },
-                  },
-                  '& .MuiPaginationItem-ellipsis': {
-                    color: '#7D0600',
-                  },
-                  '& .MuiPaginationItem-icon': {
-                    color: '#7D0600',
-                  },
-                }}
-              />
+                    '& .MuiPaginationItem-page.Mui-selected': {
+                      backgroundColor: '#7D0600',
+                      color: 'white',
+                      '&:hover': {
+                        backgroundColor: '#a40b0b',
+                      },
+                    },
+                    '& .MuiPaginationItem-ellipsis': {
+                      color: '#7D0600',
+                    },
+                    '& .MuiPaginationItem-icon': {
+                      color: '#7D0600',
+                    },
+                  }}
+                />
+              ) : null}
             </div>
           </div>
         </div>

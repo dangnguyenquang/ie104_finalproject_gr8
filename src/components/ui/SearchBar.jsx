@@ -33,8 +33,8 @@ const SearchBar = ({
         fullWidth
         placeholder={currencyValue === 'food' ? 'Tìm kiếm món ăn' : 'Tìm kiếm quán ăn'}
         className='bg-white rounded-l-full outline-none pl-2'
-        onKeyDown={handleKeyDown}
         autoFocus
+        onKeyDown={handleKeyDown}
         sx={{
           '& .MuiOutlinedInput-root': {
             boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.2)',
