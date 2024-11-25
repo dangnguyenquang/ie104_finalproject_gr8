@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
 import { Button } from '~/components/ui/Button'
 import LoginModal from '../_components/LoginModal'
@@ -6,11 +7,30 @@ import Logo from '~/assets/icons/logo.svg'
 import { routes } from '~/configs'
 
 const Header = () => {
+  const [scrolled, setScrolled] = useState(false)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 0)
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
   return (
-    <div className='z-10 w-full py-4 px-[60px] flex justify-between items-center bg-primary shadow-[0_2.8px_2.2px_rgba(0,_0,_0,_0.034),_0_6.7px_5.3px_rgba(0,_0,_0,_0.048),_0_12.5px_10px_rgba(0,_0,_0,_0.06),_0_22.3px_17.9px_rgba(0,_0,_0,_0.072),_0_41.8px_33.4px_rgba(0,_0,_0,_0.086),_0_100px_80px_rgba(0,_0,_0,_0.12)]'>
+    <div
+      className={`z-50 w-full fixed top-0 left-0 py-[13px] px-[30px] md:px-[40px] lg:px-[60px] flex justify-between items-center bg-primary transition-all duration-300 ${
+        scrolled
+          ? 'shadow-[0_4px_10px_rgba(0,0,0,0.2)] rounded-b-[20px]'
+          : 'shadow-none rounded-b-none'
+      }`}
+    >
       <div className='gap-[70px] flex items-center'>
-        <img src={Logo} alt='Yummy logo' style={{ maxWidth: '125px', height: 'auto' }} />
-        <div className='flex gap-10'>
+        <NavLink to={routes.HOME}>
+          <img src={Logo} alt='Yummy logo' className='max-md:w-[90px] max-lg:w-[100px]' />
+        </NavLink>
+        <div className='flex gap-10 max-custom:hidden'>
           <NavLink
             to={routes.HOME}
             className={({ isActive }) =>
@@ -43,7 +63,7 @@ const Header = () => {
           </NavLink>
         </div>
       </div>
-      <div className='flex gap-6'>
+      <div className='flex gap-6 max-custom:hidden'>
         <Button variant='outline'>Đăng ký</Button>
         <LoginModal>
           <Button className='bg-secondary hover:bg-secondary'>Đăng nhập</Button>

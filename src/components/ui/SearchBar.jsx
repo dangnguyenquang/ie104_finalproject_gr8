@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { TextField } from '@mui/material'
 import MenuItem from '@mui/material/MenuItem'
 
@@ -13,30 +12,44 @@ const currencies = [
   },
 ]
 
-const SearchBar = () => {
-  const [inputValue, setInputValue] = useState('')
-
-  const handleChange = (event) => {
-    setInputValue(event.target.value)
+const SearchBar = ({
+  searchValue,
+  handleChangeSearch,
+  handleChangeCurrencies,
+  currencyValue = 'restaurant',
+  handleSubmit,
+}) => {
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      handleSubmit()
+    }
   }
 
   return (
-    <div className='w-full flex'>
+    <div className='w-full flex max-w-[800px] mx-auto'>
       <TextField
-        value={inputValue}
-        onChange={handleChange}
+        value={searchValue}
+        onChange={handleChangeSearch}
         fullWidth
-        placeholder='Tìm kiếm món ăn hoặc tên quán ăn'
+        placeholder={currencyValue === 'food' ? 'Tìm kiếm món ăn' : 'Tìm kiếm quán ăn'}
         className='bg-white rounded-l-full outline-none pl-2'
+        onKeyDown={handleKeyDown}
+        autoFocus
         sx={{
           '& .MuiOutlinedInput-root': {
             boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.2)',
             borderRadius: '30px 0 0 30px',
             '&.Mui-focused fieldset': {
-              borderColor: '#A64C46',
+              borderColor: '#fff',
             },
             '& .MuiInputBase-input': {
               paddingLeft: '30px',
+            },
+          },
+          '@media (max-width: 768px)': {
+            '& .MuiOutlinedInput-root': {
+              height: '40px',
+              boxShadow: 'none',
             },
           },
         }}
@@ -44,16 +57,35 @@ const SearchBar = () => {
       <TextField
         id='outlined-select-currency'
         select
+        value={currencyValue}
+        onChange={handleChangeCurrencies}
         defaultValue='restaurant'
-        className='bg-secondary'
         sx={{
           '& .MuiOutlinedInput-root': {
             boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.2)',
             borderRadius: '0 30px 30px 0',
             minWidth: '175px',
             backgroundColor: '#F3BE12',
+            borderColor: '#F3BE12',
             '&.Mui-focused fieldset': {
               borderColor: '#A64C46',
+            },
+          },
+          '@media (max-width: 768px)': {
+            '& .MuiOutlinedInput-root': {
+              minWidth: '40px',
+              padding: '0',
+              height: '40px',
+              boxShadow: 'none',
+            },
+            '& .MuiSelect-select': {
+              color: 'transparent',
+              textOverflow: 'ellipsis',
+              overflow: 'hidden',
+              width: '40px',
+            },
+            '& .MuiSelect-icon': {
+              visibility: 'visible',
             },
           },
         }}
