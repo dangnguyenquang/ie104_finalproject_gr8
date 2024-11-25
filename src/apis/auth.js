@@ -54,6 +54,15 @@ class AuthApi {
       return { error: error.message || 'Đã xảy ra lỗi trong quá trình đăng ký' }
     }
   }
+
+  async Search(filterList, page) {
+    try {
+      const res = await httpClient.post(`${authEndpoint.search}?page=${page}`, filterList)
+      return res
+    } catch (error) {
+      console.log(error)
+    }
+  }
 }
 
 const authApi = new AuthApi()
