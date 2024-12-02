@@ -6,7 +6,7 @@ import LoginModal from '../_components/LoginModal'
 import Logo from '~/assets/icons/logo.svg'
 import { routes } from '~/configs'
 
-const Header = () => {
+const Header = ({ toggleSidebar }) => {
   const [scrolled, setScrolled] = useState(false)
 
   useEffect(() => {
@@ -20,7 +20,7 @@ const Header = () => {
 
   return (
     <div
-      className={`z-50 w-full fixed top-0 left-0 py-[13px] px-[30px] md:px-[40px] lg:px-[60px] flex justify-between items-center bg-primary transition-all duration-300 ${
+      className={`z-40 w-full fixed top-0 left-0 py-[13px] px-[30px] md:px-[40px] lg:px-[60px] flex justify-between items-center bg-primary transition-all duration-300 ${
         scrolled
           ? 'shadow-[0_4px_10px_rgba(0,0,0,0.2)] rounded-b-[20px]'
           : 'shadow-none rounded-b-none'
@@ -30,7 +30,7 @@ const Header = () => {
         <NavLink to={routes.HOME}>
           <img src={Logo} alt='Yummy logo' className='max-md:w-[90px] max-lg:w-[100px]' />
         </NavLink>
-        <div className='flex gap-10 max-custom:hidden'>
+        <div className='flex gap-10 max-md:hidden'>
           <NavLink
             to={routes.HOME}
             className={({ isActive }) =>
@@ -63,12 +63,19 @@ const Header = () => {
           </NavLink>
         </div>
       </div>
-      <div className='flex gap-6 max-custom:hidden'>
+      <div className='flex gap-6 max-md:hidden'>
         <Button variant='outline'>Đăng ký</Button>
         <LoginModal>
           <Button className='bg-secondary hover:bg-secondary'>Đăng nhập</Button>
         </LoginModal>
       </div>
+
+      <button
+        className='hidden max-md:block text-white text-2xl focus:outline-none'
+        onClick={toggleSidebar}
+      >
+        ☰
+      </button>
     </div>
   )
 }

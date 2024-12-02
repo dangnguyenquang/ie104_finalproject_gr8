@@ -13,22 +13,26 @@ const SpecialityCarousel = ({ SpecialityFoods }) => {
     autoplay: true,
     autoplaySpeed: 3000,
     pauseOnHover: true,
+    centerMode: true, // Kích hoạt chế độ trung tâm
+    centerPadding: '20px',
     responsive: [
       {
-        breakpoint: 1024,
+        breakpoint: 1200,
         settings: {
           slidesToShow: 3,
           slidesToScroll: 1,
           infinite: true,
           dots: true,
+          centerPadding: '30px',
         },
       },
       {
-        breakpoint: 600,
+        breakpoint: 800,
         settings: {
           slidesToShow: 2,
           slidesToScroll: 1,
           initialSlide: 2,
+          centerPadding: '30px',
         },
       },
       {
@@ -44,15 +48,16 @@ const SpecialityCarousel = ({ SpecialityFoods }) => {
   return (
     <div className='mx-auto max-w-[1190px] relative'>
       <Slider {...settings}>
-        {SpecialityFoods.map((food, index) => (
-          <div key={food.name}>
-            <img
-              src={food.image}
-              alt={`Image ${food.name}`}
-              className='w-[272px] h-[381px] object-cover rounded-xl'
-            />
-          </div>
-        ))}
+        {SpecialityFoods &&
+          SpecialityFoods.map((food, index) => (
+            <div key={food.name}>
+              <img
+                src={food.imageUrl.url}
+                alt={`Image ${food.name}`}
+                className='w-[210px] h-[339px] lg:w-[272px] lg:h-[381px] object-cover rounded-xl'
+              />
+            </div>
+          ))}
       </Slider>
     </div>
   )

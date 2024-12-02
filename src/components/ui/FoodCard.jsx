@@ -22,7 +22,7 @@ function truncateStringToWords(input, wordLimit = 5) {
 
 const FoodCard = ({ image, rating, restaurant, name, address, price, id }) => {
   return (
-    <div className='group rounded-[20px] w-[275px] shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] transition-transform duration-300 ease-in-out transform hover:translate-y-[-5px] cursor-pointer relative hover:shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)]'>
+    <div className='group rounded-[20px] w-[275px] shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] transition-transform duration-300 ease-in-out transform hover:translate-y-[-5px] cursor-pointer relative hover:shadow-[0_30px_30px_-15px_rgba(0,0,0,0.3)]'>
       <div className='rounded-t-[20px] w-full h-[246px] overflow-hidden group relative'>
         <div
           className='w-full h-full bg-cover bg-center transition-transform duration-300 ease-in-out group-hover:scale-110'
