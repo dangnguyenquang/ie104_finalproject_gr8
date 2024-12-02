@@ -6,46 +6,11 @@ import { useNavigate } from 'react-router-dom'
 import { SearchBar, FoodCard } from '~/components/ui'
 import SpecialityCarousel from './_components/SpecialityCarousel'
 import FoodCategory from './_components/FoodCategory'
-import foodCardImg from '~/assets/images/home/food-card.png'
-import Speciality1 from '~/assets/images/home/speciality-1.png'
-import Speciality2 from '~/assets/images/home/speciality-2.png'
-import Speciality3 from '~/assets/images/home/speciality-3.png'
 import vector from '~/assets/images/home/vector-3.png'
 import recommend from '~/assets/images/home/recommend.png'
 import RecommendCarousel from './_components/RecommendCarousel'
 import homeApiInstance from '~/apis/home'
 import { routes } from '~/configs'
-
-const SpecialityFood = [
-  {
-    image: Speciality1,
-    name: 'Bánh xèo',
-  },
-  {
-    image: Speciality2,
-    name: 'Bánh xèo',
-  },
-  {
-    image: Speciality3,
-    name: 'Bánh xèo',
-  },
-  {
-    image: Speciality1,
-    name: 'Bánh xèo',
-  },
-  {
-    image: Speciality2,
-    name: 'Bánh xèo',
-  },
-  {
-    image: Speciality3,
-    name: 'Bánh xèo',
-  },
-  {
-    image: Speciality1,
-    name: 'Bánh xèo',
-  },
-]
 
 const Home = () => {
   const [data, setData] = useState()
@@ -125,7 +90,7 @@ const Home = () => {
           <h3 className='text-[16px] md:text-[25px] font-oswald text-primaryText mb-5 lg:mb-10'>
             Mang đậm chất ẩm thực Việt Nam
           </h3>
-          <SpecialityCarousel SpecialityFoods={SpecialityFood} />
+          <SpecialityCarousel SpecialityFoods={data?.specialtyFoods} />
         </div>
 
         <div className='flex flex-col justify-center text-center'>
