@@ -1,8 +1,9 @@
-import React from 'react'
-import { Button } from '~/components/ui/Button'
+import React, { useEffect, useState } from 'react'
 import Navigation from '~/components/ui/Navigation'
 import OrdersList from './components/OrdersList'
-import { BorderOuter } from '@mui/icons-material'
+import authApi from '~/apis/auth'
+import ordersApi from '~/apis/orders'
+import LoginModal from '~/components/Layout/Components/_components/LoginModal'
 
 const OrderTrackingPage = () => {
   const tabLabels = ['Chờ xác nhận', 'Chờ vận chuyển', 'Hoàn thành', 'Đã hủy']
@@ -12,174 +13,105 @@ const OrderTrackingPage = () => {
     return savedTab ? parseInt(savedTab, 10) : 0
   }
 
-  const [selectedTab, setSelectedTab] = React.useState(getInitialTab)
+  const [selectedTab, setSelectedTab] = useState(getInitialTab)
+  const [orders, setOrders] = useState([])
+  const [currentPage, setCurrentPage] = useState(1)
+  const [totalPages, setTotalPages] = useState(1)
+  const [token, setToken] = useState(localStorage.getItem('token') || '')
+
+  const fetchOrders = async () => {
+    if (!token) return
+
+    try {
+      const statusMap = ['pending', 'in-progress', 'completed', 'canceled']
+      const status = statusMap[selectedTab]
+      const response = await ordersApi.getOrders(status, currentPage, token)
+
+      if (response.orders) {
+        const ordersData = response.orders
+        const pagination = response.pagination
+
+        const ordersWithAddress = ordersData.map((order) => ({
+          ...order,
+          deliveryAddress: order.deliveryAddress,
+        }))
+        setOrders(ordersWithAddress)
+        setTotalPages(pagination.numberPages || 1)
+      } else {
+        setOrders([])
+        setTotalPages(1)
+      }
+    } catch (error) {
+      console.error('Error fetching orders:', error)
+    }
+  }
+
+  useEffect(() => {
+    fetchOrders()
+  }, [selectedTab, currentPage, token])
 
   const handleTabChange = (event, newValue) => {
     setSelectedTab(newValue)
     localStorage.setItem('selectedTab', newValue)
+    setCurrentPage(1)
   }
 
-  const data = {
-    orders: [
-      {
-        _id: 'order1',
-        name: 'McDonalds',
-        address: {
-          street: '123 hồ hải hoàn',
-          city: 'Hồ Chí Minh',
-          borough: 'Thủ Đức',
-          zip: '400',
-        },
-        items: [
-          {
-            _id: 'item1',
-            imageUrl: {
-              url: 'https://res.cloudinary.com/dtyyxogjq/image/upload/v1729829251/Item_images/ypxajgnklpd7ibhaadrs.jpg',
-            },
-            title: 'Burger phô mai',
-            quantity: 1,
-            price: 50000,
-            starMedium: 4,
-          },
-          {
-            _id: 'item2',
-            imageUrl: {
-              url: 'https://res.cloudinary.com/dtyyxogjq/image/upload/v1729829251/Item_images/ypxajgnklpd7ibhaadrs.jpg',
-            },
-            title: 'Khoai tây chiên lớn',
-            quantity: 2,
-            price: 30000,
-            starMedium: 4,
-          },
-        ],
-        totalPrice: 110000,
-        status: 'pending',
-      },
-      {
-        _id: 'order2',
-        name: 'KFC',
-        address: {
-          street: '123 hồ hải hoàn',
-          city: 'Hồ Chí Minh',
-          borough: 'Thủ Đức',
-          zip: '400',
-        },
-        items: [
-          {
-            _id: 'item3',
-            imageUrl: {
-              url: 'https://res.cloudinary.com/dtyyxogjq/image/upload/v1729829251/Item_images/ypxajgnklpd7ibhaadrs.jpg',
-            },
-            title: 'Gà rán',
-            quantity: 3,
-            price: 70000,
-            starMedium: 5,
-          },
-          {
-            _id: 'item4',
-            imageUrl: {
-              url: 'https://res.cloudinary.com/dtyyxogjq/image/upload/v1729829251/Item_images/ypxajgnklpd7ibhaadrs.jpg',
-            },
-            title: 'Nước ngọt',
-            quantity: 1,
-            price: 15000,
-            starMedium: 4,
-          },
-        ],
-        totalPrice: 225000,
-        status: 'in-progress',
-      },
-      {
-        _id: 'order3',
-        name: 'Pizza Hut',
-        address: {
-          street: '123 hồ hải hoàn',
-          city: 'Hồ Chí Minh',
-          borough: 'Thủ Đức',
-          zip: '400',
-        },
-        items: [
-          {
-            _id: 'item5',
-            imageUrl: {
-              url: 'https://res.cloudinary.com/dtyyxogjq/image/upload/v1729829251/Item_images/ypxajgnklpd7ibhaadrs.jpg',
-            },
-            title: 'Pizza Hải sản',
-            quantity: 1,
-            price: 150000,
-            starMedium: 5,
-          },
-          {
-            _id: 'item6',
-            imageUrl: {
-              url: 'https://res.cloudinary.com/dtyyxogjq/image/upload/v1729829251/Item_images/ypxajgnklpd7ibhaadrs.jpg',
-            },
-            title: 'Mỳ Ý Bò',
-            quantity: 1,
-            price: 80000,
-            starMedium: 4,
-          },
-        ],
-        totalPrice: 230000,
-        status: 'completed',
-      },
-      {
-        _id: 'order4',
-        name: 'Starbucks',
-        address: {
-          street: '123 hồ hải hoàn',
-          city: 'Hồ Chí Minh',
-          borough: 'Thủ Đức',
-          zip: '400',
-        },
-        items: [
-          {
-            _id: 'item7',
-            imageUrl: {
-              url: 'https://res.cloudinary.com/dtyyxogjq/image/upload/v1729829251/Item_images/ypxajgnklpd7ibhaadrs.jpg',
-            },
-            title: 'Caramel Macchiato',
-            quantity: 2,
-            price: 60000,
-            starMedium: 5,
-          },
-          {
-            _id: 'item8',
-            imageUrl: {
-              url: 'https://res.cloudinary.com/dtyyxogjq/image/upload/v1729829251/Item_images/ypxajgnklpd7ibhaadrs.jpg',
-            },
-            title: 'Bánh Croissant',
-            quantity: 1,
-            price: 40000,
-            starMedium: 4,
-          },
-        ],
-        totalPrice: 160000,
-        status: 'canceled',
-      },
-    ],
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage)
   }
 
-  const getOrdersByStatus = (status) => {
-    return data.orders.filter((order) => order.status === status)
+  const handleLoginSuccess = async (email, password) => {
+    try {
+      const response = await authApi.signIn(email, password)
+      if (response.msg) {
+        const newToken = response.msg // Thay `msg` bằng token từ server
+        setToken(newToken)
+        localStorage.setItem('token', newToken)
+        fetchOrders()
+      }
+    } catch (error) {
+      console.error('Login failed:', error)
+    }
   }
-
-  const ordersToDisplay = React.useMemo(() => {
-    const statusMap = ['pending', 'in-progress', 'completed', 'canceled']
-    return getOrdersByStatus(statusMap[selectedTab])
-  }, [selectedTab, data.orders])
 
   return (
     <div className='w-full flex flex-col items-center mt-10 space-y-2'>
-      {/* Navigation */}
-      <div>
-        <Navigation labels={tabLabels} value={selectedTab} onChange={handleTabChange} />
-      </div>
+      {!token ? (
+        <LoginModal>
+          <button
+            className='text-primary font-bold'
+            onClick={() => handleLoginSuccess(email, password)}
+          >
+            Đăng nhập để xem đơn hàng
+          </button>
+        </LoginModal>
+      ) : (
+        <>
+          <div className='w-full max-w-[800px]'>
+            {/* Thanh Navigation */}
+            <Navigation labels={tabLabels} value={selectedTab} onChange={handleTabChange} />
+          </div>
 
-      {/* Orders List */}
-      <div className='bg-[#fdf8e7] w-[800px] rounded-lg'>
-        <OrdersList orders={ordersToDisplay} />
-      </div>
+          <div className='bg-[#fdf8e7] w-full max-w-[800px] rounded-lg'>
+            {/* Khung OrdersList */}
+            <OrdersList orders={orders} />
+          </div>
+
+          <div className='flex justify-center mt-4'>
+            {Array.from({ length: totalPages }).map((_, index) => (
+              <button
+                key={index}
+                className={`w-10 h-10 px-1 py-[5px] ${
+                  currentPage === index + 1 ? 'bg-[#7d0600] text-white' : 'bg-white text-[#212b36]'
+                } rounded border border-[#dfe3e8] text-xl font-bold`}
+                onClick={() => handlePageChange(index + 1)}
+              >
+                {index + 1}
+              </button>
+            ))}
+          </div>
+        </>
+      )}
     </div>
   )
 }

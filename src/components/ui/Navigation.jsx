@@ -10,16 +10,23 @@ const Navigation = ({ labels, value, onChange }) => {
       scrollButtons='auto'
       aria-label='navigation tabs'
       sx={{
-        backgroundColor: '#fdf8e7', // Màu nền cho navigation
+        display: 'flex',
+        justifyContent: 'center', // Căn giữa các tab
+        backgroundColor: '#fdf8e7',
+        '& .MuiTabs-flexContainer': {
+          justifyContent: 'center', // Đảm bảo các tab được căn giữa
+        },
         '& .MuiTab-root': {
-          width: '200px',
-          fontSize: { xs: 12, md: 14 },
+          minWidth: '120px',
+          padding: '8px 16px',
+          fontSize: { xs: 12, sm: 14 },
           fontFamily: 'Roboto, sans-serif',
           fontWeight: 'medium',
-          color: '#333333', // Màu chữ mặc định
+          color: '#333333',
         },
         '& .MuiTabs-indicator': {
-          backgroundColor: '#7D0600', // Màu sắc đường gạch dưới
+          backgroundColor: '#7D0600',
+          height: '3px',
         },
       }}
     >
@@ -29,7 +36,8 @@ const Navigation = ({ labels, value, onChange }) => {
           label={label}
           sx={{
             '&.Mui-selected': {
-              color: '#7D0600', // Màu chữ khi tab được chọn
+              color: '#7D0600',
+              fontWeight: 'bold',
             },
           }}
         />

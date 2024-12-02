@@ -25,7 +25,7 @@ const OrderCard = ({ order }) => {
     label: 'Không xác định',
     bgColor: '#000000',
     actions: [],
-  } // Default (black)
+  }
 
   return (
     <div className='p-4 border rounded-lg w-[600px] my-3 relative bg-white'>
@@ -37,16 +37,30 @@ const OrderCard = ({ order }) => {
         />
       </div>
 
-      <h2 className='text-xl font-semibold mb-4'>{order.name}</h2>
+      <h2
+        className='text-xl font-semibold mb-4 truncate max-w-[300px] md:max-w-[400px]'
+        title={order.nameRestaurant.name}
+      >
+        {order.nameRestaurant.name}
+      </h2>
+      <p
+        className='text-lg text-gray-600 mb-4 truncate max-w-[300px] md:max-w-[400px]'
+        title={order.deliveryAddress}
+      >
+        {order.deliveryAddress}
+      </p>
+
       <div className='space-y-3'>
         {order.items.map((item) => (
           <OrderItem
-            key={item._id}
-            imageUrl={item.imageUrl.url}
-            title={item.title}
+            key={item.food._id}
+            idFood={item.food._id}
+            imageUrl={item.food.imageUrl[0] ? item.food.imageUrl[0].url : ''}
+            title={item.food.title}
             quantity={item.quantity}
-            price={item.price}
-            starMedium={item.starMedium}
+            price={item.food.price}
+            starMedium={item.food.starMedium}
+            address={order.deliveryAddress}
           />
         ))}
       </div>
@@ -83,7 +97,8 @@ const OrderCard = ({ order }) => {
       <ReviewModal
         open={isReviewOpen}
         onClose={handleReviewClose}
-        items={order.items} // Truyền danh sách món vào modal
+        items={order.items}
+        idOrder={order._id}
       />
     </div>
   )
