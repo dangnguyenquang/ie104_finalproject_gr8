@@ -7,9 +7,22 @@ const formatNumber = (number) => {
   return new Intl.NumberFormat().format(number)
 }
 
+function truncateStringToWords(input, wordLimit = 5) {
+  if (!input || typeof input !== 'string') {
+    return ''
+  }
+
+  const words = input.split(/\s+/)
+  if (words.length > wordLimit) {
+    return words.slice(0, wordLimit).join(' ') + ' ...'
+  }
+
+  return input
+}
+
 const FoodCard = ({ image, rating, restaurant, name, address, price, id }) => {
   return (
-    <div className='group rounded-[20px] w-[275px] shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] transition-transform duration-300 ease-in-out transform hover:translate-y-[-5px] cursor-pointer relative hover:shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)]'>
+    <div className='group rounded-[20px] w-[275px] shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] transition-transform duration-300 ease-in-out transform hover:translate-y-[-5px] cursor-pointer relative hover:shadow-[0_30px_30px_-15px_rgba(0,0,0,0.3)]'>
       <div className='rounded-t-[20px] w-full h-[246px] overflow-hidden group relative'>
         <div
           className='w-full h-full bg-cover bg-center transition-transform duration-300 ease-in-out group-hover:scale-110'
@@ -23,7 +36,7 @@ const FoodCard = ({ image, rating, restaurant, name, address, price, id }) => {
         </div>
         <div className='absolute inset-0 bottom-2 flex justify-center items-end'>
           <div className='text-center mx-auto text-[15px] font-medium px-[15px] py-[3px] rounded-3xl w-fit max-w-[200px] bg-white bg-opacity-80 shadow-md'>
-            {restaurant}
+            {truncateStringToWords(restaurant)}
           </div>
         </div>
       </div>

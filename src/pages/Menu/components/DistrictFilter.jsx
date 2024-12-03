@@ -25,22 +25,11 @@ const DistrictList = [
   'Thành phố Thủ Đức',
 ]
 
-const DistrictFilter = () => {
-  const [selectedDistricts, setSelectedDistricts] = useState([])
+const DistrictFilter = ({ selectedDistricts, handleSelectDistricts }) => {
   const [showIndex, setShowIndex] = useState(5)
-
-  const handleSelectDistricts = (event) => {
-    const isChecked = event.target.checked
-    const district = event.target.value
-    setSelectedDistricts((prevSelected) =>
-      isChecked ? [...prevSelected, district] : prevSelected.filter((d) => d !== district),
-    )
-  }
-  console.log(selectedDistricts)
   const handleCollapse = () => {
     setShowIndex(showIndex === 5 ? DistrictList.length : 5)
   }
-
   return (
     <div>
       <div className='text-[20px] text-primaryText font-bold'>Lọc theo khu vực</div>

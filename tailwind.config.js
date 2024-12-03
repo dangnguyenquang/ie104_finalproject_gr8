@@ -13,6 +13,9 @@ export default {
         oswald: ['Oswald', 'sans-serif'],
         sans: ['Roboto', 'sans-serif'],
       },
+      screens: {
+        custom: '900px',
+      },
     },
   },
   plugins: [],

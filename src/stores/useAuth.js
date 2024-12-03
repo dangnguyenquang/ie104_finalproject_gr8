@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import userAction from '~/services/axios/actions/user.action'
+import user from '~/apis/user'
 
 const initialState = {
   isAuth: null,
@@ -20,7 +20,7 @@ const useAuth = create((set) => {
     },
     async fetchMe() {
       try {
-        const res = await userAction.getMe()
+        const res = await user.getMe()
         set({ user: res })
       } catch (error) {
         console.log(error)
