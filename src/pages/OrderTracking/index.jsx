@@ -76,42 +76,29 @@ const OrderTrackingPage = () => {
 
   return (
     <div className='w-full flex flex-col items-center mt-10 space-y-2'>
-      {!token ? (
-        <LoginModal>
+      <div className='w-full max-w-[800px]'>
+        {/* Thanh Navigation */}
+        <Navigation labels={tabLabels} value={selectedTab} onChange={handleTabChange} />
+      </div>
+
+      <div className='bg-[#fdf8e7] w-full max-w-[800px] rounded-lg'>
+        {/* Khung OrdersList */}
+        <OrdersList orders={orders} />
+      </div>
+
+      <div className='flex justify-center mt-4'>
+        {Array.from({ length: totalPages }).map((_, index) => (
           <button
-            className='text-primary font-bold'
-            onClick={() => handleLoginSuccess(email, password)}
+            key={index}
+            className={`w-10 h-10 px-1 py-[5px] mb-4 ${
+              currentPage === index + 1 ? 'bg-[#7d0600] text-white' : 'bg-white text-[#212b36]'
+            } rounded border border-[#dfe3e8] text-xl font-bold`}
+            onClick={() => handlePageChange(index + 1)}
           >
-            Đăng nhập để xem đơn hàng
+            {index + 1}
           </button>
-        </LoginModal>
-      ) : (
-        <>
-          <div className='w-full max-w-[800px]'>
-            {/* Thanh Navigation */}
-            <Navigation labels={tabLabels} value={selectedTab} onChange={handleTabChange} />
-          </div>
-
-          <div className='bg-[#fdf8e7] w-full max-w-[800px] rounded-lg'>
-            {/* Khung OrdersList */}
-            <OrdersList orders={orders} />
-          </div>
-
-          <div className='flex justify-center mt-4'>
-            {Array.from({ length: totalPages }).map((_, index) => (
-              <button
-                key={index}
-                className={`w-10 h-10 px-1 py-[5px] mb-4 ${
-                  currentPage === index + 1 ? 'bg-[#7d0600] text-white' : 'bg-white text-[#212b36]'
-                } rounded border border-[#dfe3e8] text-xl font-bold`}
-                onClick={() => handlePageChange(index + 1)}
-              >
-                {index + 1}
-              </button>
-            ))}
-          </div>
-        </>
-      )}
+        ))}
+      </div>
     </div>
   )
 }
