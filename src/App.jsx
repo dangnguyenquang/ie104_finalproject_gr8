@@ -22,6 +22,7 @@ import SellerRegisterForm from '~/pages/SellerRegisterForm'
 import CustomerRegisterForm from '~/pages/CustomerRegisterForm'
 import OrderTrackingPage from '~/pages/OrderTracking'
 import 'react-toastify/dist/ReactToastify.css'
+import DetailAccount from './pages/DetailAccount'
 
 function App() {
   return (
@@ -57,6 +58,7 @@ function App() {
           <Route path='/register/seller' element={<SellerRegisterForm />} />
           <Route path='/register' element={<CustomerRegisterForm />} />
           <Route path='/order_tracking' element={<OrderTrackingPage />} />
+          <Route path='/detail_account' element={<DetailAccount />} />
         </Route>
       </Routes>
 

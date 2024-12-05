@@ -31,13 +31,29 @@ class AccountApi {
       }
       httpClient.setAuthHeader(token)
 
-      const res = await httpClient.post(accountsEndpoint.updateAccount, formData, {
+      const res = await httpClient.patch(accountsEndpoint.updateAccount, formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       })
       return res.data
     } catch (error) {
       console.error('Error updating account:', error)
       throw new Error('Có lỗi xảy ra khi cập nhật tài khoản.')
+    }
+  }
+
+  async changePassword(passwordData) {
+    try {
+      const token = localStorage.getItem('token')
+      if (!token) {
+        throw new Error('Token không tồn tại. Vui lòng đăng nhập lại.')
+      }
+      httpClient.setAuthHeader(token)
+
+      const res = await httpClient.patch(accountsEndpoint.changePassword, passwordData)
+      return res.data
+    } catch (error) {
+      console.error('Error changing password:', error)
+      throw new Error('Có lỗi xảy ra khi đổi mật khẩu.')
     }
   }
 }

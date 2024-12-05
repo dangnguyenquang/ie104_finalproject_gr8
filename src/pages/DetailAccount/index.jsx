@@ -1,33 +1,23 @@
-import React, { useEffect, useState } from 'react'
-import { Button } from '~/components/ui/Button'
-import { Typography } from '@mui/material'
+import React, { useState, useEffect } from 'react'
+import { toast } from 'react-toastify'
+import SideNav from './components/SideNav'
+import AvatarUploader from '~/components/ui/AvatarUploader'
 import DisabledTextField from '~/components/ui/DisabledTextField'
-import ChangePasswordModal from '~/components/Layout/Components/_components/ChangePasswordModal'
-import accountApi from '~/apis/account'
-import ImageUploader from '~/components/ui/ImageUploader'
 import RequiredTextField from '~/components/ui/RequiredTextField'
 import NumericTextField from '~/components/ui/NumericTextField'
+import PasswordTextField from '~/components/ui/PasswordTextField'
+import { Button } from '~/components/ui/Button'
+import accountApi from '~/apis/account'
+import authApi from '~/apis/auth'
 
 const DetailAccount = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [selectedTab, setSelectedTab] = useState('account')
   const [accountInfo, setAccountInfo] = useState(null)
   const [avatar, setAvatar] = useState(null)
   const [isChanged, setIsChanged] = useState(false)
-
-  const handleOpenModal = () => setIsModalOpen(true)
-  const handleCloseModal = () => setIsModalOpen(false)
-
-  // Xử lý thay đổi input
-  const handleInputChange = (field, value) => {
-    setAccountInfo((prev) => ({ ...prev, [field]: value }))
-    setIsChanged(true)
-  }
-
-  // Xử lý thay đổi avatar
-  const handleAvatarChange = (file) => {
-    setAvatar(file)
-    setIsChanged(true)
-  }
+  const [oldPassword, setOldPassword] = useState('')
+  const [newPassword, setNewPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
 
   useEffect(() => {
     const fetchAccountInfo = async () => {
@@ -40,106 +30,149 @@ const DetailAccount = () => {
           name_account: accountData.name_account,
           address: accountData.address,
         })
-        setAvatar(accountData.avatar?.url || null) // Lấy avatar từ API
+        setAvatar(accountData.avatar?.url || null)
       } catch (error) {
-        console.error('Error fetching account data:', error)
+        toast.error('Không thể tải thông tin tài khoản.')
+        console.error('Error fetching account info:', error)
       }
     }
 
     fetchAccountInfo()
   }, [])
 
-  // Lưu thông tin tài khoản
+  const handleInputChange = (field, value) => {
+    setAccountInfo((prev) => ({ ...prev, [field]: value }))
+    setIsChanged(true)
+  }
+
   const handleSave = async () => {
     try {
       const formData = new FormData()
       formData.append('phone', accountInfo.phone)
       formData.append('address', accountInfo.address)
       if (avatar instanceof File) {
-        formData.append('avatar', avatar) // Gửi avatar nếu thay đổi
+        formData.append('avatar', avatar)
       }
-
       await accountApi.updateAccount(formData)
-      alert('Cập nhật thông tin thành công!')
+      toast.success('Cập nhật thông tin thành công!')
       setIsChanged(false)
     } catch (error) {
+      toast.error('Có lỗi xảy ra khi cập nhật tài khoản.')
       console.error('Error updating account:', error)
-      alert('Có lỗi xảy ra khi cập nhật thông tin tài khoản.')
     }
   }
 
-  if (!accountInfo) {
-    return <Typography>Loading...</Typography>
+  const handlePasswordChange = async () => {
+    try {
+      await accountApi.changePassword({ oldPassword, password: newPassword })
+      toast.success('Đổi mật khẩu thành công!')
+      setOldPassword('')
+      setNewPassword('')
+      setConfirmPassword('')
+    } catch (error) {
+      toast.error(error.message || 'Có lỗi xảy ra khi đổi mật khẩu.')
+      console.error('Error changing password:', error)
+    }
+  }
+
+  const handleLogout = async () => {
+    try {
+      const msg = await authApi.signOut()
+      toast.success(msg)
+      window.location.href = '/' // Chuyển hướng về trang đăng nhập
+    } catch (error) {
+      toast.error(error.message || 'Có lỗi xảy ra khi đăng xuất.')
+      console.error('Error signing out:', error)
+    }
   }
 
   return (
-    <div className='w-full justify-center'>
-      <div className="block text-center text-primary text-6xl font-medium font-['Oswald'] uppercase leading-[100px] my-10">
-        Hồ sơ của tôi
+    <div className='flex mt-[79px]'>
+      <div className='w-1/5'>
+        <SideNav selectedTab={selectedTab} onSelectTab={setSelectedTab} />
       </div>
-
-      <div className='flex flex-col md:flex-row items-start gap-6'>
-        <div className='md:w-1/3 w-full flex flex-col items-center'>
-          <div className='mb-4'>
-            {avatar ? (
-              <img
-                src={avatar instanceof File ? URL.createObjectURL(avatar) : avatar}
-                alt='Avatar'
-                className='w-32 h-32 rounded-full object-cover border border-gray-300'
-              />
-            ) : (
-              <div className='w-32 h-32 rounded-full bg-gray-200 flex items-center justify-center'>
-                <span className='text-gray-500'>Chưa có ảnh</span>
+      <div className='flex-1'>
+        {selectedTab === 'account' && accountInfo && (
+          <>
+            <div className="block text-center text-primary text-4xl font-medium font-['Oswald'] uppercase leading-[100px] my-2">
+              Hồ sơ của tôi
+            </div>
+            <div className='grid grid-cols-3 gap-4 min-h-screen'>
+              <div className='flex flex-col items-center'>
+                <AvatarUploader currentAvatar={avatar} onAvatarChange={setAvatar} />
               </div>
-            )}
+              <div className='col-span-2 w-full max-w-[500px] space-y-4'>
+                <DisabledTextField className='w-full' label='Họ và tên' value={accountInfo.name} />
+                <DisabledTextField className='w-full' label='Email' value={accountInfo.email} />
+                <DisabledTextField
+                  className='w-full'
+                  label='Tên tài khoản'
+                  value={accountInfo.name_account}
+                />
+                <NumericTextField
+                  className='w-full'
+                  label='Số điện thoại'
+                  value={accountInfo.phone}
+                  handleChange={(e) => handleInputChange('phone', e.target.value)}
+                />
+                <RequiredTextField
+                  className='w-full'
+                  label='Địa chỉ'
+                  value={accountInfo.address}
+                  handleChange={(e) => handleInputChange('address', e.target.value)}
+                />
+                <div className='flex justify-center'>
+                  <Button
+                    className={`mb-4 ${
+                      isChanged
+                        ? 'bg-primary text-white'
+                        : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                    }`}
+                    disabled={!isChanged}
+                    onClick={handleSave}
+                  >
+                    Lưu
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </>
+        )}
+        {selectedTab === 'change-password' && (
+          <div className='min-h-screen'>
+            <div className="block text-center text-primary text-4xl font-medium font-['Oswald'] uppercase leading-[100px] my-2">
+              Đổi mật khẩu
+            </div>
+            <div className='max-w-[500px] mx-auto space-y-4'>
+              <PasswordTextField
+                className='w-full'
+                label='Mật khẩu cũ'
+                value={oldPassword}
+                handleChange={(e) => setOldPassword(e.target.value)}
+              />
+              <PasswordTextField
+                className='w-full'
+                label='Mật khẩu mới'
+                value={newPassword}
+                handleChange={(e) => setNewPassword(e.target.value)}
+                confirm
+              />
+              <div className='flex justify-center mt-6'>
+                <Button className='bg-primary text-white' onClick={handlePasswordChange}>
+                  Đổi mật khẩu
+                </Button>
+              </div>
+            </div>
           </div>
-          <ImageUploader
-            maxImages={1}
-            handleAvatarChange={(file) => {
-              handleAvatarChange(file)
-              setAvatar(file)
-            }}
-          />
-        </div>
-        <div className='md:w-2/3 w-full'>
-          <RequiredTextField
-            label='Họ và tên'
-            value={accountInfo.name}
-            handleChange={(e) => handleInputChange('name', e.target.value)}
-          />
-          <DisabledTextField label='Email' value={accountInfo.email} />
-          <NumericTextField
-            label='Số điện thoại'
-            value={accountInfo.phone}
-            handleChange={(e) => handleInputChange('phone', e.target.value)}
-          />
-          <DisabledTextField label='Tên tài khoản' value={accountInfo.name_account} />
-          <RequiredTextField
-            label='Địa chỉ'
-            value={accountInfo.address}
-            handleChange={(e) => handleInputChange('address', e.target.value)}
-          />
-        </div>
-      </div>
-
-      <div className='flex items-center justify-center gap-[54px] my-5'>
-        <Button
-          variant='outline'
-          className={`w-36 h-12 rounded-full ${
-            isChanged
-              ? 'bg-primary hover:bg-primary/80 text-white'
-              : 'bg-gray-300 text-gray-500 cursor-not-allowed'
-          }`}
-          onClick={handleSave}
-          disabled={!isChanged}
-        >
-          Lưu
-        </Button>
-
-        <Button variant='none' className='text-primaryText' onClick={handleOpenModal}>
-          Đổi mật khẩu
-        </Button>
-        <ChangePasswordModal open={isModalOpen} onClose={handleCloseModal} />
+        )}
+        {selectedTab === 'logout' && (
+          <div className='min-h-screen text-center mt-20'>
+            <h5 className='text-xl font-bold'>Bạn có muốn đăng xuất?</h5>
+            <Button className='mt-6 bg-red-500 text-white' onClick={handleLogout}>
+              Đăng xuất
+            </Button>
+          </div>
+        )}
       </div>
     </div>
   )
