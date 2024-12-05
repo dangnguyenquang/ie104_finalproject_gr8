@@ -46,11 +46,11 @@ export default function ReviewModal({ open, onClose, items, idOrder }) {
 
   return (
     <Dialog open={open} onClose={onClose} maxWidth='sm'>
-      <div className='w-[600px] p-6 bg-white rounded-[20px]'>
-        <DialogTitle className='text-secondary text-4xl font-bold uppercase text-center'>
+      <div className='w-[600px] bg-white rounded-[20px]'>
+        <DialogTitle className='text-secondary bg-primary text-6xl font-bold uppercase text-center'>
           Đánh giá chất lượng
         </DialogTitle>
-        <DialogContent className='flex flex-col items-center'>
+        <DialogContent className='flex flex-col items-center mt-5'>
           {items.map((item, index) => (
             <div
               key={index}
@@ -80,7 +80,7 @@ export default function ReviewModal({ open, onClose, items, idOrder }) {
             onChange={(e) => setComment(e.target.value)}
           />
         </DialogContent>
-        <DialogActions className='flex justify-end gap-4 mt-4'>
+        <DialogActions className='flex justify-end gap-4 mx-4 mb-4'>
           <Button
             onClick={onClose}
             variant='outline'
