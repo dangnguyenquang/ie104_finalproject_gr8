@@ -1,14 +1,27 @@
+import { useState } from 'react'
 import Header from '../Components/Header'
 import Footer from '../Components/Footer'
+import Sidebar from '../Components/Sidebar'
+import AutoLogin from '~/stores/autoLogin'
+import { Outlet } from 'react-router-dom'
+export default function DefaultLayout() {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false)
 
-export default function DefaultLayout({ children }) {
+  const toggleSidebar = () => {
+    setIsSidebarOpen((prev) => !prev)
+  }
+
   return (
-    <div>
+    <AutoLogin>
       <div className='flex-col items-center w-full'>
-        <Header />
-        <div>{children}</div>
+        <Header toggleSidebar={toggleSidebar} />
+        <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
+        {/* <div className='mt-16'>{children}</div> */}
+        <main className='mt-16'>
+          <Outlet />
+        </main>
         <Footer />
       </div>
-    </div>
+    </AutoLogin>
   )
 }

@@ -104,11 +104,11 @@ const RecommendCarousel = ({ restaurants }) => {
         {restaurants.map((restaurant, index) => (
           <div key={index}>
             <RestaurantCard
-              image={restaurant.image}
-              rating={restaurant.rating}
-              restaurant={restaurant.restaurant}
-              address={restaurant.address}
-              id={restaurant.id}
+              image={restaurant.imageUrl[0].url}
+              rating={restaurant.starMedium}
+              restaurant={restaurant.name}
+              address={`${restaurant.address.street} ${restaurant.address.borough} ${restaurant.address.city}`}
+              id={restaurant._id}
             />
           </div>
         ))}

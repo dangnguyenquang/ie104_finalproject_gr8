@@ -3,20 +3,19 @@ import RestaurantCard from '~/components/ui/RestaurantCard'
 
 const RestaurantList = ({ Restaurants }) => {
   return (
-    <div className=' grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 grid-rows-5 gap-10 '>
-      {Restaurants.map((restaurant) => (
-        <div key={restaurant.id}>
+    <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-5'>
+      {Restaurants.map((restaurant, index) => (
+        <div key={index} className='flex justify-center'>
           <RestaurantCard
-            image={restaurant.image}
-            rating={restaurant.rating}
-            restaurant={restaurant.restaurant}
-            address={restaurant.address}
-            id={restaurant.id}
+            image={restaurant.imageUrl[0].url}
+            rating={restaurant.starMedium}
+            restaurant={restaurant.name}
+            address={`${restaurant.address.street}, ${restaurant.address.borough}, ${restaurant.address.city}`}
+            id={restaurant._id}
           />
         </div>
       ))}
     </div>
   )
 }
-
 export default RestaurantList

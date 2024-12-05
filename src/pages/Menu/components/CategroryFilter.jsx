@@ -15,18 +15,7 @@ const Categrories = [
   'Ăn vặt',
 ]
 
-const CategroryFilter = () => {
-  const [selectedCategories, setSelectedCategories] = useState([])
-  const handleSelectCategories = (event) => {
-    const isChecked = event.target.checked
-    setSelectedCategories((prevSelected) => {
-      if (isChecked) {
-        return [...prevSelected, event.target.value]
-      } else {
-        return prevSelected.filter((category) => category !== event.target.value)
-      }
-    })
-  }
+const CategroryFilter = ({ selectedCategories, handleSelectCategories }) => {
   return (
     <div>
       <div className='text-[20px] text-primaryText font-bold'>Danh mục món ăn</div>
@@ -42,6 +31,7 @@ const CategroryFilter = () => {
                 }}
               />
             }
+            checked={selectedCategories.includes(category)}
             onChange={handleSelectCategories}
             value={category}
             key={category}

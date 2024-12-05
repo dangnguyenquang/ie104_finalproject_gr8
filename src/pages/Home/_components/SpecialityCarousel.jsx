@@ -2,13 +2,8 @@ import React from 'react'
 import Slider from 'react-slick'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
-import { ArrowBackIos, ArrowForwardIos } from '@mui/icons-material'
 
-import Speciality1 from '~/assets/images/home/speciality-1.png'
-import Speciality2 from '~/assets/images/home/speciality-2.png'
-import Speciality3 from '~/assets/images/home/speciality-3.png'
-
-const SpecialityCarousel = () => {
+const SpecialityCarousel = ({ SpecialityFoods }) => {
   const settings = {
     dots: true,
     infinite: true,
@@ -18,22 +13,26 @@ const SpecialityCarousel = () => {
     autoplay: true,
     autoplaySpeed: 3000,
     pauseOnHover: true,
+    centerMode: true, // Kích hoạt chế độ trung tâm
+    centerPadding: '20px',
     responsive: [
       {
-        breakpoint: 1024,
+        breakpoint: 1200,
         settings: {
           slidesToShow: 3,
           slidesToScroll: 1,
           infinite: true,
           dots: true,
+          centerPadding: '30px',
         },
       },
       {
-        breakpoint: 600,
+        breakpoint: 800,
         settings: {
           slidesToShow: 2,
           slidesToScroll: 1,
           initialSlide: 2,
+          centerPadding: '30px',
         },
       },
       {
@@ -46,30 +45,19 @@ const SpecialityCarousel = () => {
     ],
   }
 
-  const images = [
-    Speciality1,
-    Speciality2,
-    Speciality3,
-    Speciality1,
-    Speciality2,
-    Speciality3,
-    Speciality1,
-    Speciality2,
-    Speciality3,
-  ]
-
   return (
     <div className='mx-auto max-w-[1190px] relative'>
       <Slider {...settings}>
-        {images.map((image, index) => (
-          <div key={index}>
-            <img
-              src={image}
-              alt={`Image ${index + 1}`}
-              className='w-[272px] h-[381px] object-cover rounded-xl'
-            />
-          </div>
-        ))}
+        {SpecialityFoods &&
+          SpecialityFoods.map((food, index) => (
+            <div key={food.name}>
+              <img
+                src={food.imageUrl.url}
+                alt={`Image ${food.name}`}
+                className='w-[210px] h-[339px] lg:w-[272px] lg:h-[381px] object-cover rounded-xl'
+              />
+            </div>
+          ))}
       </Slider>
     </div>
   )

@@ -10,50 +10,58 @@ import Logo from '~/assets/icons/logo.svg'
 import { routes } from '~/configs'
 
 const Footer = () => {
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    })
+  }
   return (
     <div
-      className='min-w-screen h-[500px] py-[50px] px-20'
+      className='min-w-screen h-[510px] py-[50px] px-2 md:px-5 lg:px-20'
       style={{
         backgroundImage: `url(${footerImage})`,
-        backgroundSize: '100% auto',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
       }}
     >
-      <div className='flex justify-between w-full items-center text-white pl-10'>
+      <div className='flex flex-col md:flex-row max-md:gap-8 justify-between w-full items-center text-white pl-10'>
         <img src={Logo} alt='Yummy logo' style={{ width: '125px', height: 'auto' }} />
-        <div className='grid grid-cols-3 gap-x-[80px] gap-y-[1px]'>
+        <div className='grid grid-cols-3 gap-x-[30px] md:gap-x-[20px] lg:gap-x-[40px] gap-y-[1px]'>
           <div>
-            <p className='text-[20px] font-bold'>Về Yummy</p>
-            <div className='text-sm flex flex-col mt-3 text-[#C9C9C9] gap-[5px]'>
-              <Link to={routes.ABOUTUS} className='hover:underline'>
+            <p className='text-2xl md:text-[20px] font-bold'>Về Yummy</p>
+            <div className='md:text-sm flex flex-col mt-5 md:mt-3 text-[#C9C9C9] gap-2.5 md:gap-[5px]'>
+              <Link to={routes.ABOUTUS} className='hover:underline' onClick={scrollToTop}>
                 Giới thiệu
               </Link>
-              <Link to={routes.ABOUTUS} className='hover:underline'>
+              <Link to={routes.OURCOMMIT} className='hover:underline' onClick={scrollToTop}>
                 Cam kết của Yummy
               </Link>
             </div>
           </div>
           <div>
-            <p className='text-[20px] font-bold'>Chính sách</p>
-            <div className='text-sm flex flex-col mt-3 text-[#C9C9C9] gap-[5px]'>
-              <Link to={routes.ABOUTUS} className='hover:underline'>
+            <p className='text-2xl md:text-[20px] font-bold'>Chính sách</p>
+            <div className='md:text-sm flex flex-col mt-5 md:mt-3 text-[#C9C9C9] gap-2.5 md:gap-[5px]'>
+              <Link to={routes.OPERATINGPOLICY} className='hover:underline' onClick={scrollToTop}>
                 Chính sách hoạt động
               </Link>
-              <Link to={routes.ABOUTUS} className='hover:underline'>
-                Chính sách và quy trình
-              </Link>
-              <Link to={routes.ABOUTUS} className='hover:underline'>
+              <Link to={routes.PRIVACYPOLICY} className='hover:underline' onClick={scrollToTop}>
                 Chính sách bảo mật thông tin
               </Link>
             </div>
           </div>
           <div>
-            <p className='text-[20px] font-bold'>Hướng dẫn</p>
-            <div className='text-sm flex flex-col mt-3 text-[#C9C9C9] gap-[5px]'>
-              <Link to={routes.ABOUTUS} className='hover:underline'>
+            <p className='text-2xl md:text-[20px] font-bold'>Hướng dẫn</p>
+            <div className='md:text-sm flex flex-col mt-5 md:mt-3 text-[#C9C9C9] gap-2.5 md:gap-[5px]'>
+              <Link to={routes.ORDERINSTRUCTIONS} className='hover:underline' onClick={scrollToTop}>
                 Hướng dẫn đặt món
               </Link>
-              <Link to={routes.ABOUTUS} className='hover:underline'>
+              <Link
+                to={routes.CONTACTINSTRUCTIONS}
+                className='hover:underline'
+                onClick={scrollToTop}
+              >
                 Hướng dẫn liên hệ
               </Link>
             </div>
@@ -61,7 +69,7 @@ const Footer = () => {
         </div>
       </div>
 
-      <div className='border-t border-white w-full my-12'></div>
+      <div className='border-t border-white mx-auto w-[80%] md:w-full my-10 md:my-12'></div>
 
       <div className='pl-10 flex flex-col gap-2 max-w-[470px] text-white'>
         <div className='flex gap-4 items-center'>
@@ -82,11 +90,11 @@ const Footer = () => {
         </div> */}
         <div className='flex gap-4 items-center'>
           <EmailIcon />
-          <p className='text-sm'>Email: nhomnaylanhom8@gmail.com</p>
+          <p className='text-sm'>Email: yummy2024@gmail.com</p>
         </div>
         <div className='flex gap-4 items-center'>
           <LocalPhoneIcon />
-          <p className='text-sm'>SDT: 0956575859</p>
+          <p className='text-sm'>SDT: 0338963327</p>
         </div>
       </div>
     </div>

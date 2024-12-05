@@ -1,245 +1,114 @@
 import searchBackground from '~/assets/images/home/search-bg.png'
 import homeBackground from '~/assets/images/home/home-bg.png'
+import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import { SearchBar, FoodCard } from '~/components/ui'
 import SpecialityCarousel from './_components/SpecialityCarousel'
 import FoodCategory from './_components/FoodCategory'
-import foodCardImg from '~/assets/images/home/food-card.png'
 import vector from '~/assets/images/home/vector-3.png'
 import recommend from '~/assets/images/home/recommend.png'
 import RecommendCarousel from './_components/RecommendCarousel'
-
-// Data Sample
-const data = {
-  specialtyFoods: [
-    {
-      imageUrl: {
-        url: 'https://res.cloudinary.com/dtjub1t7k/image/upload/v1728704151/vpe1zfukvjyl8uy3v6s8.jpg',
-        public_id: 'vpe1zfukvjyl8uy3v6s8',
-      },
-      _id: '6709eb33fea5c625f751edd9',
-      name: 'Bún chả hà nội',
-      createdAt: '2024-10-12T03:21:23.592Z',
-      updatedAt: '2024-10-12T03:21:23.593Z',
-      slug: 'bun-cha-ha-noi',
-      __v: 0,
-    },
-  ],
-  // restaurants: [
-  //   {
-  //     address: {
-  //       street: 'phương hữu ngọt',
-  //       city: 'Hồ Chí Minh',
-  //       borough: 'quân thủ đức',
-  //       zip: '22520341',
-  //     },
-  //     _id: '670a3767202dc1c1e16411a9',
-  //     ownerId: '670a335b202dc1c1e1641198',
-  //     name: 'Nhà hàng đại phát',
-  //     profit: 125,
-  //     quantitySolded: 15,
-  //     phone: '036327097999',
-  //     time_open: '2h sáng',
-  //     time_close: '10h tối',
-  //     starMedium: 5,
-  //     status: 'active',
-  //     imageUrl: [],
-  //     createdAt: '2024-10-12T08:58:21.640Z',
-  //     updatedAt: '2024-10-12T08:58:21.640Z',
-  //   },
-  // ],
-  foods: [
-    {
-      image: foodCardImg,
-      rating: '4.5',
-      restaurant: 'Quán Cô Bảy Chọ',
-      name: 'Hủ tiếu bò viên',
-      address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
-      price: 100000,
-      id: 1,
-    },
-    {
-      image: foodCardImg,
-      rating: '4.5',
-      restaurant: 'Quán Cô Bảy Chọ',
-      name: 'Hủ tiếu bò viên',
-      address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
-      price: 100000,
-      id: 1,
-    },
-    {
-      image: foodCardImg,
-      rating: '4.5',
-      restaurant: 'Quán Cô Bảy Chọ',
-      name: 'Hủ tiếu bò viên',
-      address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
-      price: 100000,
-      id: 1,
-    },
-    {
-      image: foodCardImg,
-      rating: '4.5',
-      restaurant: 'Quán Cô Bảy Chọ',
-      name: 'Hủ tiếu bò viên',
-      address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
-      price: 100000,
-      id: 1,
-    },
-    {
-      image: foodCardImg,
-      rating: '4.5',
-      restaurant: 'Quán Cô Bảy Chọ',
-      name: 'Hủ tiếu bò viên',
-      address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
-      price: 100000,
-      id: 1,
-    },
-    {
-      image: foodCardImg,
-      rating: '4.5',
-      restaurant: 'Quán Cô Bảy Chọ',
-      name: 'Hủ tiếu bò viên',
-      address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
-      price: 100000,
-      id: 1,
-    },
-    {
-      image: foodCardImg,
-      rating: '4.5',
-      restaurant: 'Quán Cô Bảy Chọ',
-      name: 'Hủ tiếu bò viên',
-      address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
-      price: 100000,
-      id: 1,
-    },
-    {
-      image: foodCardImg,
-      rating: '4.5',
-      restaurant: 'Quán Cô Bảy Chọ',
-      name: 'Hủ tiếu bò viên',
-      address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
-      price: 100000,
-      id: 1,
-    },
-  ],
-  restaurants: [
-    {
-      image: foodCardImg,
-      rating: '4.5',
-      restaurant: 'Quán Cô Bảy Chọ',
-      address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
-      id: 1,
-    },
-    {
-      image: foodCardImg,
-      rating: '4.5',
-      restaurant: 'Quán Cô Bảy Chọ',
-      address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
-      id: 1,
-    },
-    {
-      image: foodCardImg,
-      rating: '4.5',
-      restaurant: 'Quán Cô Bảy Chọ',
-      address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
-      id: 1,
-    },
-    {
-      image: foodCardImg,
-      rating: '4.5',
-      restaurant: 'Quán Cô Bảy Chọ',
-      address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
-      id: 1,
-    },
-    {
-      image: foodCardImg,
-      rating: '4.5',
-      restaurant: 'Quán Cô Bảy Chọ',
-      address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
-      id: 1,
-    },
-    {
-      image: foodCardImg,
-      rating: '4.5',
-      restaurant: 'Quán Cô Bảy Chọ',
-      address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
-      id: 1,
-    },
-    {
-      image: foodCardImg,
-      rating: '4.5',
-      restaurant: 'Quán Cô Bảy Chọ',
-      address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
-      id: 1,
-    },
-    {
-      image: foodCardImg,
-      rating: '4.5',
-      restaurant: 'Quán Cô Bảy Chọ',
-      address: '102 Đường Số 8, P. Bình Trị Đông B, Bình Tân, TP. HCM',
-      id: 1,
-    },
-  ],
-}
+import homeApiInstance from '~/apis/home'
+import { routes } from '~/configs'
 
 const Home = () => {
+  const [data, setData] = useState()
+  const [searchValue, setSearchValue] = useState('')
+  const [typeSearch, setTypeSearch] = useState('restaurant')
+
+  const navigate = useNavigate()
+
+  const handleSubmit = () => {
+    navigate(`${routes.MENU}?search=${searchValue}&type=${typeSearch}`)
+  }
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const homeData = await homeApiInstance.getHome()
+        setData(homeData)
+      } catch (error) {}
+    }
+
+    fetchData()
+  }, [])
+
   return (
     <main className='w-full'>
       <section
-        className='relative w-full min-h-[90vh] items-center py-32 px-64 '
+        className='relative w-full lg:h-[100vh] items-center pt-14 pb-5 md:py-16 lg:py-32'
         style={{
           backgroundImage: `url(${searchBackground})`,
           backgroundSize: '100% auto',
           backgroundRepeat: 'no-repeat',
         }}
       >
-        <div className='mx-auto max-w-[1000px] flex flex-col gap-6'>
+        <div className='mx-auto max-w-[350px] md:max-w-[650px] lg:max-w-[950px] flex flex-col gap-6'>
           <div className='absolute inset-0 bg-gradient-to-b from-black via-transparent to-transparent opacity-30 rounded'></div>
-          <h1 className='mx-auto font-oswald text-[90px] text-primaryText text-center leading-[116px]'>
+          <h1 className='mx-auto font-oswald text-[35px] md:text-[60px] lg:text-[90px] text-primaryText text-center lg:leading-[116px]'>
             Ăn ngon sống khỏe tươi trẻ mỗi ngày!
           </h1>
-          <SearchBar />
-          <h2 className='text-[20px] font-oswald text-center mx-auto py-4'>
+          <div className='max-md:hidden'>
+            <SearchBar
+              searchValue={searchValue}
+              handleChangeSearch={(e) => setSearchValue(e.target.value)}
+              handleChangeCurrencies={(e) => setTypeSearch(e.target.value)}
+              currencyValue={typeSearch}
+              handleSubmit={handleSubmit}
+            />
+          </div>
+          <h2 className='text-[16px] lg:text-[20px] font-oswald text-center mx-auto py-4 max-md:hidden'>
             Hãy trải nghiệm dịch vụ đặt món ăn với <strong>Yummy</strong> - Việc đặt món ăn chưa bao
             giờ là dễ dàng đến như vậy!
           </h2>
         </div>
       </section>
 
+      <section className='md:hidden w-[90%] mx-auto mt-2 py-1'>
+        <SearchBar
+          searchValue={searchValue}
+          handleChangeSearch={(e) => setSearchValue(e.target.value)}
+          handleChangeCurrencies={(e) => setTypeSearch(e.target.value)}
+          currencyValue={typeSearch}
+          handleSubmit={handleSubmit}
+        />
+      </section>
+
       <section
-        className='relative w-full h-auto items-center justify-center px-16'
+        className='relative w-full h-auto items-center justify-center px-8 lg:px-16'
         style={{
           backgroundImage: `url(${homeBackground})`,
           backgroundSize: '100% auto',
           backgroundRepeat: 'no-repeat',
         }}
       >
-        <div className='py-8 mx-auto text-center h-screen'>
-          <h2 className='text-[80px] font-semibold font-oswald text-primaryText leading-[110px]'>
+        <div className='py-8 mx-auto text-center h-[90vh] lg:h-screen'>
+          <h2 className='text-[35px] md:text-[60px] lg:text-[80px] font-semibold font-oswald text-primaryText lg:leading-[110px]'>
             Các món ăn đặc sản
           </h2>
-          <h3 className='text-[25px] font-oswald text-primaryText mb-10'>
+          <h3 className='text-[16px] md:text-[25px] font-oswald text-primaryText mb-5 lg:mb-10'>
             Mang đậm chất ẩm thực Việt Nam
           </h3>
-          <SpecialityCarousel />
+          <SpecialityCarousel SpecialityFoods={data?.specialtyFoods} />
         </div>
 
         <div className='flex flex-col justify-center text-center'>
-          <h2 className='text-[80px] font-semibold font-oswald text-primaryText leading-[110px]'>
+          <h2 className='text-[30px] md:text-[60px] lg:text-[80px] font-semibold font-oswald text-primaryText lg:leading-[110px]'>
             Món ăn được yêu thích nhất
           </h2>
-          <div className='w-1/6 h-1.5 bg-secondary mt-3.5 mx-auto mb-14'></div>
-          <div className='grid grid-cols-4 max-w-[1190px] gap-8 mx-auto'>
-            {data.foods.map((food, index) => (
+          <div className='w-2/4 h-1 md:w-1/6 md:h-1.5 bg-secondary mt-3.5 mx-auto mb-8 lg:mb-14'></div>
+          <div className='grid md:grid-cols-3 lg:grid-cols-4 max-w-[1190px] md:gap-2 lg:gap-8 mx-auto'>
+            {data?.foods.map((food, index) => (
               <FoodCard
                 key={index}
-                image={food.image}
-                name={food.name}
-                rating={food.rating}
-                restaurant={food.restaurant}
-                address={food.address}
+                image={food?.imageUrl[0]?.url || ''}
+                name={food.title}
+                rating={food.starMedium}
+                restaurant={food.restaurantName}
+                address={`${food.restaurantAddress.street} ${food.restaurantAddress.borough} ${food.restaurantAddress.city}`}
                 price={food.price}
-                id={food.id}
+                id={food._id}
               />
             ))}
           </div>
@@ -272,7 +141,7 @@ const Home = () => {
         </div>
 
         <div className='mx-auto max-w-[1100px]'>
-          <RecommendCarousel restaurants={data.restaurants} />
+          <RecommendCarousel restaurants={data?.restaurants || []} />
         </div>
       </section>
     </main>
