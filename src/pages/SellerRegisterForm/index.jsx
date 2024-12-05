@@ -10,6 +10,7 @@ import TextField from '@mui/material/TextField'
 import NameTextField from '~/components/ui/NameTextField'
 import EmailTextField from '~/components/ui/EmailTextField'
 import PasswordTextField from '~/components/ui/PasswordTextField'
+import DisabledTextField from '~/components/ui/DisabledTextField'
 import authApi from '~/apis/auth'
 
 const SellerRegisterForm = () => {
@@ -162,21 +163,7 @@ const SellerRegisterForm = () => {
       />
 
       <div className='flex justify-between gap-4 mx-auto w-[500px] my-5'>
-        <TextField
-          sx={{
-            '& .MuiOutlinedInput-root': {
-              borderRadius: '20px',
-              '& .MuiInputBase-input.Mui-disabled': {
-                WebkitTextFillColor: '#333333',
-              },
-            },
-            '& .MuiOutlinedInput-root.Mui-disabled fieldset.MuiOutlinedInput-notchedOutline': {
-              borderWidth: '2px',
-            },
-          }}
-          disabled
-          value='TP. Hồ Chí Minh'
-        />
+        <DisabledTextField value='TP. Hồ Chí Minh' />
         <CustomSelect
           id='district'
           label='Quận'
