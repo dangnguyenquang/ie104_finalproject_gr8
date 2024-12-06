@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import axios from 'axios'
+import api from '../api'
 const initialState = {
   isLoading: false,
   error: null,
@@ -7,7 +7,7 @@ const initialState = {
 }
 
 export const addItem = createAsyncThunk('/restaurant/addItem', async (rawData) => {
-  const result = await axios.post('http://localhost:3000/api/restaurant/upload-items', rawData, {
+  const result = await api.post('http://localhost:3000/api/restaurant/upload-items', rawData, {
     headers: {
       'Content-Type': 'multipart/form-data',
     },
@@ -19,7 +19,7 @@ export const updateItem = createAsyncThunk(
   '/restaurant/updateItem',
   async ({ currentEditedId, formData }) => {
     console.log(formData, 'may nhin')
-    const result = await axios.patch(
+    const result = await api.patch(
       `http://localhost:3000/api/restaurant/update-items/${currentEditedId}`,
       formData,
       {
@@ -34,7 +34,7 @@ export const updateItem = createAsyncThunk(
 )
 
 export const deleteItem = createAsyncThunk('/restaurant/deleteItem', async (id) => {
-  const result = await axios.delete(
+  const result = await api.delete(
     `http://localhost:3000/api/restaurant/delete-items/${id}`,
 
     {
@@ -47,7 +47,7 @@ export const deleteItem = createAsyncThunk('/restaurant/deleteItem', async (id) 
 })
 
 export const fetchAllItem = createAsyncThunk('/restaurant/fetchAllItem', async (restaurantId) => {
-  const result = await axios.get(`http://localhost:3000/api/restaurant/all-items/${restaurantId}`, {
+  const result = await api.get(`http://localhost:3000/api/restaurant/all-items/${restaurantId}`, {
     headers: {
       'Content-Type': 'application/json',
     },

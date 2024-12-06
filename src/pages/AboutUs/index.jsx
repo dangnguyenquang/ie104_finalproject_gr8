@@ -7,7 +7,7 @@ import { useEffect } from 'react'
 const AboutUs = () => {
   useEffect(() => {
     Aos.init({
-      duration: 2000,
+      duration: 1000,
       offset: 50,
       easing: 'ease-in-out',
       mirror: true,
