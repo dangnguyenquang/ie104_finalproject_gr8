@@ -1,14 +1,25 @@
 import React, { useState } from 'react'
+import { toast } from 'react-toastify'
 import { Button } from '~/components/ui/Button'
 import { Chip } from '@mui/material'
 import OrderItem from './OrderItem'
 import ReviewModal from '~/components/Layout/Components/_components/ReviewModal'
+import ordersApi from '~/apis/orders'
 
 const formatNumber = (number) => {
   return new Intl.NumberFormat().format(number)
 }
 
 const OrderCard = ({ order }) => {
+  const handleCancelOrder = async () => {
+    try {
+      const response = await ordersApi.cancelOrder(order._id)
+      toast.success('Hủy đơn thành công!')
+    } catch (error) {
+      toast.error('Có lỗi xảy ra khi hủy đơn!')
+    }
+  }
+
   const [isReviewOpen, setReviewOpen] = useState(false)
 
   const handleReviewOpen = () => setReviewOpen(true)
@@ -37,16 +48,30 @@ const OrderCard = ({ order }) => {
         />
       </div>
 
-      <h2 className='text-xl font-semibold mb-4'>{order.name}</h2>
+      <h2
+        className='text-xl font-semibold mb-4 truncate max-w-[300px] md:max-w-[400px]'
+        title={order.nameRestaurant.name}
+      >
+        {order.nameRestaurant.name}
+      </h2>
+      <p
+        className='text-lg text-gray-600 mb-4 truncate max-w-[300px] md:max-w-[400px]'
+        title={order.deliveryAddress}
+      >
+        {order.deliveryAddress}
+      </p>
+
       <div className='space-y-3'>
         {order.items.map((item) => (
           <OrderItem
-            key={item._id}
-            imageUrl={item.imageUrl.url}
-            title={item.title}
+            key={item.food._id}
+            idFood={item.food._id}
+            imageUrl={item.food.imageUrl[0] ? item.food.imageUrl[0].url : ''}
+            title={item.food.title}
             quantity={item.quantity}
-            price={item.price}
-            starMedium={item.starMedium}
+            price={item.food.price}
+            starMedium={item.food.starMedium}
+            address={order.deliveryAddress}
           />
         ))}
       </div>
@@ -66,11 +91,13 @@ const OrderCard = ({ order }) => {
         {chipData.actions.includes('Huỷ đơn') && (
           <Button
             variant='outline'
-            className='w-full sm:w-32 h-10 bg-[#ff0000] hover:bg-[#ff0000]/80 text-center text-white text-sm font-bold leading-[28px]'
+            className='w-32 h-10 bg-[#ff0000] hover:bg-[#ff0000]/80 text-center text-white text-sm font-bold leading-[28px]'
+            onClick={handleCancelOrder}
           >
             Huỷ đơn
           </Button>
         )}
+
         <Button
           variant='outline'
           className='w-full sm:w-32 h-10 bg-[#c8c8c8] hover:bg-[#c8c8c8]/80 text-center text-primaryText text-sm font-bold leading-[28px]'
@@ -80,7 +107,12 @@ const OrderCard = ({ order }) => {
       </div>
 
       {/* Review Modal */}
-      <ReviewModal open={isReviewOpen} onClose={handleReviewClose} items={order.items} />
+      <ReviewModal
+        open={isReviewOpen}
+        onClose={handleReviewClose}
+        items={order.items}
+        idOrder={order._id}
+      />
     </div>
   )
 }
