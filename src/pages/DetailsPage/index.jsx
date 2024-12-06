@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { Skeleton } from '@mui/material'
 
-import RestaurantImage from './_components/restaurantImage'
+import RestaurantImage from './_components/restaurantImage.jsx'
 import RestaurantInfo from './_components/RestaurantInfo'
 import FoodDetails from './_components/FoodDetails'
 import FoodCart from './_components/FoodCart'

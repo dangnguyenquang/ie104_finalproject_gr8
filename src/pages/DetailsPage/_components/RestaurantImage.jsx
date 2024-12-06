@@ -4,7 +4,7 @@ import { GrFormNext } from 'react-icons/gr'
 
 const RestaurantImage = ({ restaurant }) => {
   const [currentIndex, setCurrentIndex] = useState(0)
-  const [direction, setDirection] = useState(0) // -1 for left, 1 for right
+  const [direction, setDirection] = useState(0)
 
   const handleNext = () => {
     setDirection(1)
