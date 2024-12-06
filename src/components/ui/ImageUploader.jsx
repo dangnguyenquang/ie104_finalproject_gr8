@@ -28,7 +28,7 @@ export function ImageUploader({ maxImages, handleAvatarChange, handleImagesChang
             id='upload-button'
             className={`relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2 hover:text-indigo-500 ${
               isDragging ? 'border-dashed border-4 border-indigo-600' : ''
-            }`}
+            } p-2 m-2 sm:p-4 sm:m-4`}
             onClick={onImageUpload}
             {...dragProps}
           >
@@ -40,13 +40,13 @@ export function ImageUploader({ maxImages, handleAvatarChange, handleImagesChang
               <img src={image['data_url']} alt='' width='100%' />
               <div className='flex justify-around mt-2'>
                 <button
-                  className='relative my-1 cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2 hover:text-indigo-500'
+                  className='relative my-1 cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2 hover:text-indigo-500 p-2 m-2'
                   onClick={() => onImageUpdate(index)}
                 >
                   Update
                 </button>
                 <button
-                  className='relative my-1 cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2 hover:text-indigo-500'
+                  className='relative my-1 cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2 hover:text-indigo-500 p-2 m-2'
                   onClick={() => onImageRemove(index)}
                 >
                   Remove

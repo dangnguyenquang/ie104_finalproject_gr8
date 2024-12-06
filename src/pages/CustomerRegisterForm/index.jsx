@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { useState } from 'react'
+import { toast } from 'react-toastify'
 import { Button } from '~/components/ui/Button'
 import RequiredTextField from '~/components/ui/RequiredTextField'
 import NumericTextField from '~/components/ui/NumericTextField'
@@ -18,6 +19,8 @@ const CustomerRegisterForm = () => {
   const [confirmPassword, setConfirmPassword] = useState('')
 
   const handleCustomerRegister = async () => {
+    const formData = new FormData()
+
     const infoCustomer = {
       name,
       role: 'customer',
@@ -28,15 +31,21 @@ const CustomerRegisterForm = () => {
       phone,
     }
 
+    formData.append('infoAccount', JSON.stringify(infoCustomer))
+
     try {
-      const res = await authApi.customerRegister(infoCustomer)
-    } catch (error) {}
+      const res = await authApi.customerRegister(formData)
+      toast.success('Đăng ký thành công!')
+    } catch (error) {
+      console.error(error)
+      toast.error('Đã xảy ra lỗi trong quá trình đăng ký!')
+    }
   }
 
   return (
-    <div className='w-full justify-center'>
+    <div className='w-full justify-center p-4'>
       {/* Đăng kí tài khoản */}
-      <div className="block text-center text-primary text-6xl font-medium font-['Oswald'] uppercase leading-[100px] my-10">
+      <div className="block text-center text-primary text-4xl sm:text-6xl font-medium font-['Oswald'] uppercase leading-none sm:leading-[100px] my-10">
         Đăng kí tài khoản
       </div>
 
@@ -75,21 +84,21 @@ const CustomerRegisterForm = () => {
       {/* Mật khẩu */}
       <PasswordTextField
         label='Mật khẩu'
-        confirm='true'
+        confirm
         value={password}
         handleChange={(e) => setPassword(e.target.value)}
       />
 
-      <div className='flex items-center justify-center gap-[54px] my-5'>
+      <div className='flex flex-col sm:flex-row items-center justify-center gap-4 my-5'>
         <Button
           variant='outline'
-          className="w-36 h-12 rounded-full bg-primary hover:bg-primary/80 text-center text-white text-xl font-bold font-['Roboto'] leading-[30px]"
+          className="w-full sm:w-36 h-12 rounded-full bg-primary hover:bg-primary/80 text-center text-white text-xl font-bold font-['Roboto'] leading-[30px]"
           onClick={handleCustomerRegister}
         >
           Đăng ký
         </Button>
 
-        <div className='text-primaryText'>
+        <div className='text-primaryText text-center sm:text-left'>
           Bạn đã có tài khoản?
           <Button variant='none'>Đăng nhập ngay</Button>
         </div>
