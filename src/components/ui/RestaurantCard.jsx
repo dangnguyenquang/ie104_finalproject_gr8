@@ -1,5 +1,7 @@
 import React from 'react'
 import StarRateIcon from '@mui/icons-material/StarRate'
+import { Link } from 'react-router-dom'
+import { routes } from '~/configs'
 
 const formatNumber = (number) => {
   return new Intl.NumberFormat().format(number)
@@ -7,7 +9,10 @@ const formatNumber = (number) => {
 
 const RestaurantCard = ({ image, rating, restaurant, address, id }) => {
   return (
-    <div className='rounded-[20px] h-[400px] w-full min-w-[80px] max-w-[260px] shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] cursor-pointer flex flex-col transition-transform duration-300 hover:scale-105'>
+    <Link
+      to={`${routes.DETAILS}/${id}`}
+      className='rounded-[20px] h-[400px] w-full min-w-[80px] max-w-[260px] shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] cursor-pointer flex flex-col transition-transform duration-300 hover:scale-105'
+    >
       <div
         className='rounded-t-[20px] w-full h-[200px] sm:h-[246px] flex flex-col justify-between'
         style={{
@@ -28,7 +33,7 @@ const RestaurantCard = ({ image, rating, restaurant, address, id }) => {
         </p>
         <p className='text-[12px]  font-light mx-auto max-w-[200px] text-center mb-5'>{address}</p>
       </div>
-    </div>
+    </Link>
   )
 }
 

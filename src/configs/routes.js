@@ -10,6 +10,7 @@ export const routes = {
   SELLER_REGISTER: '/register/seller',
   CUSTOMER_REGISTER: '/register',
   ORDER_TRACKING: '/order_tracking',
+  DETAILS: '/details',
 
   RESTAURANT_DASHBOARD: '/restaurant/dashboard',
 }
