@@ -13,8 +13,12 @@ const OrderItem = ({ imageUrl, title, quantity, price, starMedium }) => {
   }
 
   return (
-    <div className='flex p-2 space-x-4 items-center mb-4 rounded-lg border'>
-      <img src={imageUrl} alt={title} className='flex-none w-48 h-36 rounded-[20px] object-cover' />
+    <div className='flex flex-col sm:flex-row p-2 space-x-4 items-center mb-4 rounded-lg border'>
+      <img
+        src={imageUrl}
+        alt={title}
+        className='flex-none w-full sm:w-48 h-36 rounded-[20px] object-cover'
+      />
       <div className='flex-grow'>
         <div className='text-xl font-bold mb-1'>{title}</div>
         <div className='text-lg text-primaryText mb-1'>Giá: {formatNumber(price)} VND</div>

@@ -2,7 +2,6 @@ import React from 'react'
 import { Button } from '~/components/ui/Button'
 import Navigation from '~/components/ui/Navigation'
 import OrdersList from './components/OrdersList'
-import { BorderOuter } from '@mui/icons-material'
 
 const OrderTrackingPage = () => {
   const tabLabels = ['Chờ xác nhận', 'Chờ vận chuyển', 'Hoàn thành', 'Đã hủy']
@@ -172,12 +171,12 @@ const OrderTrackingPage = () => {
   return (
     <div className='w-full flex flex-col items-center mt-10 space-y-2'>
       {/* Navigation */}
-      <div>
+      <div className='w-full'>
         <Navigation labels={tabLabels} value={selectedTab} onChange={handleTabChange} />
       </div>
 
       {/* Orders List */}
-      <div className='bg-[#fdf8e7] w-[800px] rounded-lg'>
+      <div className='bg-[#fdf8e7] w-full sm:w-[800px] rounded-lg'>
         <OrdersList orders={ordersToDisplay} />
       </div>
     </div>

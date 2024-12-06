@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { useState } from 'react'
+import { toast } from 'react-toastify'
 import { Button } from '~/components/ui/Button'
 import { ImageUploader } from '~/components/ui/ImageUploader'
 import RequiredTextField from '~/components/ui/RequiredTextField'
@@ -13,7 +14,7 @@ import PasswordTextField from '~/components/ui/PasswordTextField'
 import authApi from '~/apis/auth'
 
 const SellerRegisterForm = () => {
-  const Districts = [
+  const Areas = [
     'Quận 1',
     'Quận 3',
     'Quận 4',
@@ -24,17 +25,23 @@ const SellerRegisterForm = () => {
     'Quận 10',
     'Quận 11',
     'Quận 12',
-    'Quận Tân Bình',
-    'Quận Bình Tân',
-    'Quận Bình Thạnh',
-    'Quận Tân Phú',
-    'Quận Gò Vấp',
-    'Quận Phú Nhuận',
+    'Tân Bình',
+    'Bình Tân',
+    'Bình Thạnh',
+    'Tân Phú',
+    'Gò Vấp',
+    'Phú Nhuận',
+    'Bình Chánh',
+    'Hóc Môn',
+    'Cần Giờ',
+    'Củ Chi',
+    'Nhà Bè',
+    'Thành phố Thủ Đức',
   ]
 
-  const districtsOptions = Districts.map((district) => ({
-    label: district,
-    value: district,
+  const areasOptions = Areas.map((area) => ({
+    label: area,
+    value: area,
   }))
 
   const [name, setName] = useState('')
@@ -46,7 +53,7 @@ const SellerRegisterForm = () => {
   const [confirmPassword, setConfirmPassword] = useState('')
   const [restaurantName, setRestaurantName] = useState('')
   const [restaurantPhone, setRestaurantPhone] = useState('')
-  const [district, setDistrict] = useState('')
+  const [area, setArea] = useState('')
   const [detailedAddress, setDetailedAddress] = useState('')
   const [openTime, setOpenTime] = useState('')
   const [closeTime, setCloseTime] = useState('')
@@ -62,13 +69,22 @@ const SellerRegisterForm = () => {
     setImages(files)
   }
 
+  const validateDetailedAddress = (address) => {
+    return !Areas.some((area) => address.includes(area))
+  }
+
   const handleSellerRegister = async () => {
+    if (!validateDetailedAddress(detailedAddress)) {
+      toast.error('Địa chỉ chi tiết không được bao gồm khu vực!')
+      return
+    }
+
     const formData = new FormData()
 
     const infoAccount = {
       name,
       role: 'seller',
-      address: `${detailedAddress}, ${district}, TP. Hồ Chí Minh`,
+      address: address,
       password_account: password,
       name_account: username,
       email,
@@ -80,8 +96,7 @@ const SellerRegisterForm = () => {
       address: {
         city: 'TP. Hồ Chí Minh',
         street: detailedAddress,
-        borough: district,
-        zip: '',
+        borough: area,
       },
       phone: restaurantPhone,
       time_close: closeTime,
@@ -98,16 +113,16 @@ const SellerRegisterForm = () => {
     try {
       const res = await authApi.sellerRegister(formData)
       console.log(res)
-      alert('Đăng ký thành công!')
+      toast.success('Đăng ký thành công!')
     } catch (error) {
       console.error(error)
-      alert(error.message || 'Đã xảy ra lỗi trong quá trình đăng ký')
+      toast.error('Đã xảy ra lỗi trong quá trình đăng ký!')
     }
   }
 
   return (
-    <div className='w-full justify-center'>
-      <div className="block text-center text-primary text-6xl font-medium font-['Oswald'] uppercase leading-[100px] my-10">
+    <div className='w-full justify-center p-4'>
+      <div className="block text-center text-primary text-4xl sm:text-6xl font-medium font-['Oswald'] uppercase leading-none sm:leading-[100px] my-10">
         Đăng kí bán hàng
       </div>
 
@@ -144,7 +159,7 @@ const SellerRegisterForm = () => {
       <PasswordTextField
         id='password'
         label='Mật khẩu'
-        confirm='true'
+        confirm
         value={password}
         handleChange={(e) => setPassword(e.target.value)}
       />
@@ -161,7 +176,7 @@ const SellerRegisterForm = () => {
         handleChange={(e) => setRestaurantPhone(e.target.value)}
       />
 
-      <div className='flex justify-between gap-4 mx-auto w-[500px] my-5'>
+      <div className='flex flex-col sm:flex-row justify-between gap-4 mx-auto w-full sm:w-[500px] my-5'>
         <TextField
           sx={{
             '& .MuiOutlinedInput-root': {
@@ -178,11 +193,11 @@ const SellerRegisterForm = () => {
           value='TP. Hồ Chí Minh'
         />
         <CustomSelect
-          id='district'
-          label='Quận'
-          options={districtsOptions}
-          value={district}
-          handleChange={setDistrict}
+          id='area'
+          label='Khu vực'
+          options={areasOptions}
+          value={area}
+          handleChange={setArea}
         />
       </div>
 
@@ -193,7 +208,7 @@ const SellerRegisterForm = () => {
         handleChange={(e) => setDetailedAddress(e.target.value)}
       />
 
-      <div className='flex justify-between gap-10 mx-auto w-[500px] my-5'>
+      <div className='flex flex-col sm:flex-row justify-between sm:gap-10 mx-auto w-full sm:w-[500px] my-5'>
         <TimeInput
           id='openTime'
           label='Giờ mở cửa'
@@ -215,26 +230,26 @@ const SellerRegisterForm = () => {
         handleChange={(e) => setDescription(e.target.value)}
       />
 
-      <div className='flex justify-between items-center mx-auto w-[500px] my-5'>
+      <div className='flex flex-col sm:flex-row justify-between items-center mx-auto w-full sm:w-[500px] my-5'>
         <label
           htmlFor='avatar-upload'
           className='block text-sm font-medium leading-6 text-primaryText'
         >
           Đính kèm ảnh của quán
         </label>
-        <div className='flex w-[300px] justify-center rounded-lg border-2 border-dashed border-gray-900/25 px-6 py-10'>
+        <div className='flex w-full sm:w-[300px] justify-center rounded-lg border-2 border-dashed border-gray-900/25 px-6 py-10'>
           <ImageUploader maxImages={1} handleAvatarChange={handleAvatarChange} />
         </div>
       </div>
 
-      <div className='flex justify-between items-center mx-auto w-[500px] my-5'>
+      <div className='flex flex-col sm:flex-row justify-between items-center mx-auto w-full sm:w-[500px] my-5'>
         <label
           htmlFor='images-upload'
           className='block text-sm font-medium leading-6 text-primaryText'
         >
           Đính kèm 4 ảnh nổi bật
         </label>
-        <div className='flex w-[300px] justify-center rounded-lg border-2 border-dashed border-gray-900/25 px-6 py-10'>
+        <div className='flex w-full sm:w-[300px] justify-center rounded-lg border-2 border-dashed border-gray-900/25 px-6 py-10'>
           <ImageUploader maxImages={4} handleImagesChange={handleImagesChange} />
         </div>
       </div>
