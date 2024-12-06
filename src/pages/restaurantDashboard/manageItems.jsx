@@ -14,7 +14,7 @@ import ShowDeleteConfirmation from '../../components/common/showDeleteConfirmati
 import 'react-toastify/dist/ReactToastify.css'
 const initRawData = {
   images: null,
-  restaurantId: '673c1d00f64dfc1b0692d1f5',
+  restaurantId: '673c0399f64dfc1b0692d12a',
   title: '',
   description: '',
   price: '1000',

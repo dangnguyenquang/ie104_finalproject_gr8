@@ -12,16 +12,21 @@ import { useState } from 'react'
 import { Typography } from '@mui/material'
 
 import { Button } from '~/components/ui/Button'
-import Logo from '~/assets/icons/logo.svg'
 import RequiredTextField from '~/components/ui/RequiredTextField'
-import PasswordTextField from '~/components/ui/PasswordTextField'
 import { routes } from '~/configs'
-import authApi from '~/apis/auth'
+import BookingApiInstance from '~/apis/booking'
 
-export default function LoginModal({ className, children, disabled = false }) {
+export default function BookingModal({
+  className,
+  children,
+  disabled = false,
+  user,
+  restaurantId,
+  items,
+}) {
   const [open, setOpen] = useState(false)
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const [phone, setPhone] = useState('')
+  const [address, setAddress] = useState('')
 
   const theme = useTheme()
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'))
@@ -34,9 +39,14 @@ export default function LoginModal({ className, children, disabled = false }) {
     setOpen(false)
   }
 
-  const handleLogin = async (email, password) => {
+  const handleLogin = async (restaurantId, items, deliveryAddress, phone) => {
     try {
-      const res = await authApi.signIn(email, password)
+      const res = await BookingApiInstance.bookingFood({
+        restaurantId,
+        items,
+        deliveryAddress,
+        phone,
+      })
     } catch (error) {}
   }
 
@@ -69,14 +79,6 @@ export default function LoginModal({ className, children, disabled = false }) {
           <CloseIcon onClick={handleClose} className='cursor-pointer text-white' />
         </DialogTitle>
         <DialogContent className='px-10 flex flex-col'>
-          <DialogContentText>
-            <img
-              src={Logo}
-              alt='Yummy logo'
-              style={{ width: '200px', height: 'auto', marginBottom: '10px' }}
-              className='mx-auto'
-            />
-          </DialogContentText>
           <DialogContentText
             sx={{
               color: 'white',
@@ -88,50 +90,37 @@ export default function LoginModal({ className, children, disabled = false }) {
               marginBottom: '32px',
             }}
           >
-            Xin chào, hãy nhập thông tin bên dưới!
+            Hãy nhập thông tin bên dưới để tiến hành đặt món!
           </DialogContentText>
           {/* <DialogContentText className='flex flex-col'> */}
           <RequiredTextField
-            placeholder='Tên đăng nhập'
+            placeholder='Số điện thoại đặt món'
             className='w-[400px]'
             whiteBg
-            value={email}
-            handleChange={(e) => setEmail(e.target.value)}
+            value={phone}
+            handleChange={(e) => setPhone(e.target.value)}
           />
           {/* </DialogContentText> */}
-          <PasswordTextField
-            placeholder='Mật khẩu'
+          <RequiredTextField
+            placeholder='Địa chỉ giao hàng'
             className='w-[400px] mt-0'
             whiteBg
-            value={password}
-            handleChange={(e) => setPassword(e.target.value)}
+            value={address}
+            handleChange={(e) => setAddress(e.target.value)}
           />
-          <Link className='text-end mr-10 mt-[-6px] text-primary font-bold hover:underline'>
-            Quên mật khẩu?
-          </Link>
         </DialogContent>
         <DialogActions className='flex flex-col gap-4 px-6 pb-8 mt-8'>
           <Button
             onClick={() => {
-              handleLogin(email, password)
+              handleLogin(restaurantId, items, address, phone)
               handleClose()
             }}
             autoFocus
             disabled={disabled}
             className='text-xl px-12 py-6'
           >
-            Đăng nhập
+            Đặt món
           </Button>
-          <span className='text-primary'>
-            Bạn chưa có tài khoản?{' '}
-            <Link
-              onClick={handleClose}
-              className='font-bold hover:underline'
-              to={routes.CUSTOMER_REGISTER}
-            >
-              Đăng ký ngay
-            </Link>
-          </span>
         </DialogActions>
       </Dialog>
     </React.Fragment>

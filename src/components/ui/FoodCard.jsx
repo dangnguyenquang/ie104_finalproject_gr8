@@ -1,24 +1,8 @@
 import React from 'react'
 import StarRateIcon from '@mui/icons-material/StarRate'
+import { formatNumber, truncateStringToWords } from '~/helpers/wordHelpper'
 
 import { Button } from './Button'
-
-const formatNumber = (number) => {
-  return new Intl.NumberFormat().format(number)
-}
-
-function truncateStringToWords(input, wordLimit = 5) {
-  if (!input || typeof input !== 'string') {
-    return ''
-  }
-
-  const words = input.split(/\s+/)
-  if (words.length > wordLimit) {
-    return words.slice(0, wordLimit).join(' ') + ' ...'
-  }
-
-  return input
-}
 
 const FoodCard = ({ image, rating, restaurant, name, address, price, id }) => {
   return (

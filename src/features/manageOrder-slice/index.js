@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import axios from 'axios'
+import api from '../api'
 const initialState = {
   isLoading: false,
   error: null,
@@ -8,7 +8,7 @@ const initialState = {
 export const getOrder = createAsyncThunk(
   'restaurant/order/get',
   async ({ restaurantId, status, skipPage = 0 }) => {
-    const result = await axios.get(`http://localhost:3000/api/restaurant/order/${restaurantId}`, {
+    const result = await api.get(`http://localhost:3000/api/restaurant/order/${restaurantId}`, {
       params: {
         status,
         skip: skipPage,
@@ -22,7 +22,7 @@ export const updateStatusOrder = createAsyncThunk(
   'restaurant/order/updateStatus',
   async ({ restaurantId, orderId, status }) => {
     console.log(restaurantId, orderId, status)
-    const result = await axios.patch(`http://localhost:3000/api/restaurant/order/${restaurantId}`, {
+    const result = await api.patch(`http://localhost:3000/api/restaurant/order/${restaurantId}`, {
       orderId,
       status,
     })
