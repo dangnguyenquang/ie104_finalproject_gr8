@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { useState } from 'react'
+import { toast } from 'react-toastify'
 import { Button } from '~/components/ui/Button'
 import RequiredTextField from '~/components/ui/RequiredTextField'
 import NumericTextField from '~/components/ui/NumericTextField'
@@ -30,7 +31,10 @@ const CustomerRegisterForm = () => {
 
     try {
       const res = await authApi.customerRegister(infoCustomer)
-    } catch (error) {}
+      toast.success('Đăng ký thành công!')
+    } catch (error) {
+      toast.error('Đã xảy ra lỗi trong quá trình đăng ký!')
+    }
   }
 
   return (

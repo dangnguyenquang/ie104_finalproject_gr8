@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { useState } from 'react'
+import { toast } from 'react-toastify'
 import { Button } from '~/components/ui/Button'
 import { ImageUploader } from '~/components/ui/ImageUploader'
 import RequiredTextField from '~/components/ui/RequiredTextField'
@@ -98,10 +99,10 @@ const SellerRegisterForm = () => {
     try {
       const res = await authApi.sellerRegister(formData)
       console.log(res)
-      alert('Đăng ký thành công!')
+      toast.success('Đăng ký thành công!')
     } catch (error) {
       console.error(error)
-      alert(error.message || 'Đã xảy ra lỗi trong quá trình đăng ký')
+      toast.error('Đã xảy ra lỗi trong quá trình đăng ký!')
     }
   }
 

@@ -87,17 +87,18 @@ const OrderTrackingPage = () => {
       </div>
 
       <div className='flex justify-center mt-4'>
-        {Array.from({ length: totalPages }).map((_, index) => (
-          <button
-            key={index}
-            className={`w-10 h-10 px-1 py-[5px] mb-4 ${
-              currentPage === index + 1 ? 'bg-[#7d0600] text-white' : 'bg-white text-[#212b36]'
-            } rounded border border-[#dfe3e8] text-xl font-bold`}
-            onClick={() => handlePageChange(index + 1)}
-          >
-            {index + 1}
-          </button>
-        ))}
+        {totalPages > 1 &&
+          Array.from({ length: totalPages }).map((_, index) => (
+            <button
+              key={index}
+              className={`w-10 h-10 px-1 py-[5px] mb-4 ${
+                currentPage === index + 1 ? 'bg-[#7d0600] text-white' : 'bg-white text-[#212b36]'
+              } rounded border border-[#dfe3e8] text-xl font-bold`}
+              onClick={() => handlePageChange(index + 1)}
+            >
+              {index + 1}
+            </button>
+          ))}
       </div>
     </div>
   )

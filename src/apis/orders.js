@@ -43,13 +43,11 @@ class OrdersApi {
         throw new Error('Token không tồn tại. Vui lòng đăng nhập lại.')
       }
       httpClient.setAuthHeader(token)
-      const res = await httpClient.delete(ordersEndpoint.cancelOrder, {
-        data: { idOrder },
-      })
-      return { msg: res.message }
+      const res = await httpClient.patch(ordersEndpoint.cancelOrder, { idOrder })
+      return res
     } catch (error) {
-      console.error(error)
-      throw new Error('Có lỗi xảy ra khi hủy đơn hàng')
+      console.error('Error in cancelOrder: ', error)
+      throw new Error('Có lỗi xảy ra khi hủy đơn')
     }
   }
 }

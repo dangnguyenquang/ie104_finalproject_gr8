@@ -1,14 +1,25 @@
 import React, { useState } from 'react'
+import { toast } from 'react-toastify'
 import { Button } from '~/components/ui/Button'
 import { Chip } from '@mui/material'
 import OrderItem from './OrderItem'
 import ReviewModal from '~/components/Layout/Components/_components/ReviewModal'
+import ordersApi from '~/apis/orders'
 
 const formatNumber = (number) => {
   return new Intl.NumberFormat().format(number)
 }
 
 const OrderCard = ({ order }) => {
+  const handleCancelOrder = async () => {
+    try {
+      const response = await ordersApi.cancelOrder(order._id)
+      toast.success('Hủy đơn thành công!')
+    } catch (error) {
+      toast.error('Có lỗi xảy ra khi hủy đơn!')
+    }
+  }
+
   const [isReviewOpen, setReviewOpen] = useState(false)
 
   const handleReviewOpen = () => setReviewOpen(true)
@@ -81,10 +92,12 @@ const OrderCard = ({ order }) => {
           <Button
             variant='outline'
             className='w-32 h-10 bg-[#ff0000] hover:bg-[#ff0000]/80 text-center text-white text-sm font-bold leading-[28px]'
+            onClick={handleCancelOrder}
           >
             Huỷ đơn
           </Button>
         )}
+
         <Button
           variant='outline'
           className='w-32 h-10 bg-[#c8c8c8] hover:bg-[#c8c8c8]/80 text-center text-primaryText text-sm font-bold leading-[28px]'
