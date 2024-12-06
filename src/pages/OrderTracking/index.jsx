@@ -17,15 +17,12 @@ const OrderTrackingPage = () => {
   const [orders, setOrders] = useState([])
   const [currentPage, setCurrentPage] = useState(1)
   const [totalPages, setTotalPages] = useState(1)
-  const [token, setToken] = useState(localStorage.getItem('token') || '')
 
   const fetchOrders = async () => {
-    if (!token) return
-
     try {
       const statusMap = ['pending', 'in-progress', 'completed', 'canceled']
       const status = statusMap[selectedTab]
-      const response = await ordersApi.getOrders(status, currentPage, token)
+      const response = await ordersApi.getOrders(status, currentPage)
 
       if (response.orders) {
         const ordersData = response.orders
@@ -48,7 +45,7 @@ const OrderTrackingPage = () => {
 
   useEffect(() => {
     fetchOrders()
-  }, [selectedTab, currentPage, token])
+  }, [selectedTab, currentPage])
 
   const handleTabChange = (event, newValue) => {
     setSelectedTab(newValue)
