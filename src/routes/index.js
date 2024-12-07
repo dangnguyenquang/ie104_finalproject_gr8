@@ -10,6 +10,7 @@ import orderInstructions from '~/pages/OrderInstructions'
 import contactInstructions from '~/pages/ContactInstructions'
 import operatingPolicy from '~/pages/OperatingPolicy'
 import OrderTrackingPage from '~/pages/OrderTracking'
+import DetailAccount from '~/pages/DetailAccount'
 import RestaurantDashboard from '~/pages/Restaunrant'
 
 import { routes } from '~/configs'
@@ -26,6 +27,7 @@ const publicRoutes = [
   { path: routes.SELLER_REGISTER, component: SellerRegisterForm },
   { path: routes.MENU, component: CustomerRegisterForm },
   { path: routes.ORDER_TRACKING, component: OrderTrackingPage },
+  { path: routes.DETAIL_ACCOUNT, component: DetailAccount },
 ]
 const privateRoutes = [{ path: routes.RESTAURANT_DASHBOARD, component: RestaurantDashboard }]
 
