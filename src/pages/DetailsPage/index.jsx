@@ -19,6 +19,8 @@ const DetailsPage = () => {
   const { id } = useParams()
   const { user } = useAuth()
 
+  console.log(user)
+
   useEffect(() => {
     console.log(cart)
   }, [cart])
