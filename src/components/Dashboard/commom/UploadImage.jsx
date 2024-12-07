@@ -1,66 +1,64 @@
-import React, { useEffect, useRef, useState, memo } from 'react'
+import React, { useEffect, useRef, memo } from 'react'
 
 const UploadImage = ({ imgFile, setImgFile, rawData, currentUrl, setCurrentUrl }) => {
-  console.log(rawData)
-  const RefInput = useRef('null')
-  // const [currentUrl,setCurrentUrl] =useState(()=>{
-  //   return rawData.images||null
-  // })
-  console.log(currentUrl)
+  const inputRef = useRef(null)
 
+  // Xử lý chọn ảnh
   const handleImage = (event) => {
-    const files = event.target.files[0]
-    console.log(files, 'files imgae')
-    if (files) {
-      setImgFile(files)
+    const file = event.target.files[0]
+    if (file) {
+      setImgFile(file) // Lưu file đã chọn
+      const previewUrl = URL.createObjectURL(file) // Tạo URL để preview ảnh
+      setCurrentUrl(previewUrl) // Cập nhật URL preview
     }
-    const url = URL.createObjectURL(files)
-    if (url) {
-      setCurrentUrl(url)
-    }
-    if (RefInput.current) {
-      RefInput.current.value = ''
+    if (inputRef.current) {
+      inputRef.current.value = '' // Reset input để chọn lại file
     }
   }
-  const handleInput = () => {
-    if (RefInput.current) {
-      RefInput.current.click()
+
+  // Mở input chọn file khi nhấn vào vùng upload
+  const handleInputClick = () => {
+    if (inputRef.current) {
+      inputRef.current.click()
     }
   }
-  const handleRemove = () => {
-    setCurrentUrl(null)
-    if (RefInput.current) {
-      RefInput.current.value = ''
+
+  // Xóa ảnh hiện tại
+  const handleRemoveImage = () => {
+    setCurrentUrl(null) // Xóa URL preview
+    setImgFile(null) // Xóa file ảnh
+    if (inputRef.current) {
+      inputRef.current.value = '' // Reset input file
     }
   }
+
+  // Cập nhật URL hiện tại từ dữ liệu ban đầu khi chỉnh sửa
   useEffect(() => {
-    if (rawData.images) {
-      setCurrentUrl(rawData.images)
-    } else setCurrentUrl(null)
-  }, [rawData.images])
+    if (rawData?.images && !imgFile) {
+      setCurrentUrl(rawData.images) // Hiển thị URL ảnh từ dữ liệu gốc nếu chưa chọn ảnh mới
+    }
+  }, [rawData?.images, imgFile, setCurrentUrl])
+
   return (
-    <div className='w-full grid gap-1.5 '>
-      <label className='first-letter:capitalize text-xl'>Upload Image</label>
-      <div className='h-[64px] border-2 border-solid border-bg-black border-opacity-25 '>
+    <div className='w-full grid gap-1.5'>
+      <label className='text-xl font-semibold'>Upload Image</label>
+      <div className='h-[64px] border-2 border-dashed border-gray-300 flex items-center justify-center'>
         <input
-          ref={RefInput}
-          onChange={(event) => handleImage(event)}
-          multiple
+          ref={inputRef}
+          onChange={handleImage}
           type='file'
+          accept='image/*'
           className='hidden'
-          name='image'
         />
         {currentUrl ? (
-          <div className='flex justify-between px-5 items-center'>
-            <div className='pt-1'>
-              {<img src={currentUrl} className='h-[50px] object-contain' />}
-            </div>
-            <div onClick={() => handleRemove()}>
-              <i className='bx bx-trash text-xl'></i>
-            </div>
+          <div className='flex justify-between px-5 items-center w-full'>
+            <img src={currentUrl} alt='Uploaded' className='h-[50px] object-contain' />
+            <button onClick={handleRemoveImage} className='text-red-500 text-xl'>
+              <i className='bx bx-trash'></i>
+            </button>
           </div>
         ) : (
-          <div onClick={() => handleInput()} className='cursor-pointer'>
+          <div onClick={handleInputClick} className='cursor-pointer text-center'>
             <svg
               xmlns='http://www.w3.org/2000/svg'
               width='24'
@@ -68,13 +66,13 @@ const UploadImage = ({ imgFile, setImgFile, rawData, currentUrl, setCurrentUrl }
               viewBox='0 0 24 24'
               fill='none'
               stroke='currentColor'
-              className='lucide lucide-cloud-upload mx-auto top-2'
+              className='lucide lucide-cloud-upload mx-auto'
             >
               <path d='M12 13v8' />
               <path d='M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242' />
               <path d='m8 17 4-4 4 4' />
             </svg>
-            <p className='text-center'>Click to upload image</p>
+            <p>Click to upload image</p>
           </div>
         )}
       </div>

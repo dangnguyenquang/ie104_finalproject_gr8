@@ -15,10 +15,45 @@ export const addItem = createAsyncThunk('/restaurant/addItem', async (rawData) =
   return result?.data
 })
 
+const onSubmit = async (event) => {
+  event.preventDefault()
+  try {
+    const formData = new FormData()
+    formData.append('title', rawData.title)
+    formData.append('description', rawData.description)
+    formData.append('price', rawData.price)
+    formData.append('category', rawData.category)
+    formData.append('quantity', rawData.quantity)
+    formData.append('discount', rawData.discount)
+
+    if (imgFile) {
+      formData.append('images', imgFile) // Chỉ thêm ảnh mới nếu được chọn
+    }
+
+    if (currentEditedId) {
+      // Chỉnh sửa món ăn
+      await dispatch(
+        updateItem({
+          currentEditedId,
+          formData,
+        }),
+      )
+      SuccessfulNotification('Item updated successfully')
+    } else {
+      // Thêm mới món ăn
+      await dispatch(addItem(formData))
+      SuccessfulNotification('Item added successfully')
+    }
+    dispatch(fetchAllItem()) // Cập nhật danh sách món ăn
+    setOpenForm(false) // Đóng form
+  } catch (err) {
+    FailedNotification('Failed to process item')
+  }
+}
+
 export const updateItem = createAsyncThunk(
   '/restaurant/updateItem',
   async ({ currentEditedId, formData }) => {
-    console.log(formData, 'may nhin')
     const result = await api.patch(
       `http://localhost:3000/api/restaurant/update-items/${currentEditedId}`,
       formData,
@@ -28,26 +63,21 @@ export const updateItem = createAsyncThunk(
         },
       },
     )
-
     return result?.data
   },
 )
 
 export const deleteItem = createAsyncThunk('/restaurant/deleteItem', async (id) => {
-  const result = await api.delete(
-    `http://localhost:3000/api/restaurant/delete-items/${id}`,
-
-    {
-      headers: {
-        'Content-Type': 'application/json',
-      },
+  const result = await api.delete(`http://localhost:3000/api/restaurant/delete-items/${id}`, {
+    headers: {
+      'Content-Type': 'application/json',
     },
-  )
+  })
   return result?.data
 })
 
 export const fetchAllItem = createAsyncThunk('/restaurant/fetchAllItem', async (restaurantId) => {
-  const result = await api.get(`http://localhost:3000/api/restaurant/all-items/${restaurantId}`, {
+  const result = await api.get(`http://localhost:3000/api/restaurant/all-items`, {
     headers: {
       'Content-Type': 'application/json',
     },
