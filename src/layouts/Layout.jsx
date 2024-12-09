@@ -20,9 +20,9 @@ const Layout = () => {
     else setOpen(false)
   }, [lg])
   return (
-    <div className='bg-[#F9FAFB]'>
+    <div className='bg-[#F9FAFB] h-screen'>
       <ToastContainer limit={1} className='' />
-      <Header handleOpen={handleOpen} />
+      {/* <Header handleOpen={handleOpen} /> */}
       <div className='flex flex-col lg:flex-row'>
         <Nav isOpen={isOpen} setOpen={setOpen} />
         {/* Outlet used to renders the current route selected */}

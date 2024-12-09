@@ -74,7 +74,6 @@ function App() {
           }
         >
           {/* Route Admin */}
-          <Route path='admin' element={<AdminDashboard />} />
           <Route path='admin/account' element={<ManageAccount />} />
           <Route path='admin/restaurant' element={<ManageRestaurant />} />
           <Route path='admin/specialty-food' element={<SpecialtyFood />} />
