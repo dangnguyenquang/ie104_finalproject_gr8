@@ -116,12 +116,12 @@ const SpecialtyFood = () => {
               {specialFood && specialFood.length > 0 ? (
                 specialFood.map((item) => (
                   <tr key={item._id}>
-                    <td>
+                    <td className='flex justify-center items-center'>
                       {item.imageUrl?.url ? (
                         <img
                           src={item.imageUrl.url}
                           alt={item.name}
-                          className='w-[100px] h-[100px] object-cover'
+                          className='w-[150px] h-[150px] object-cover rounded-xl'
                         />
                       ) : (
                         'No Image'
