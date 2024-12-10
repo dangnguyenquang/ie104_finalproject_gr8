@@ -5,8 +5,12 @@ import { useSelector, useDispatch } from 'react-redux'
 import { ToastContainer } from 'react-toastify'
 import TablePagination from '@mui/material/TablePagination'
 import hero from '../../assets/hero.png'
-import { fetchRestaurants } from '../../features/manageRestaurant-slice'
-import { FailedAccess } from '../../components/common/Notification.jsx'
+import { fetchRestaurants, updateRestaurant } from '../../features/manageRestaurant-slice'
+import {
+  FailedAccess,
+  SuccessfulNotification,
+  FailedNotification,
+} from '../../components/common/Notification.jsx'
 const ManageRestaurant = () => {
   const [status, setStatus] = useState('all')
   const [openStatus, setOpenStatus] = useState(false)
@@ -42,6 +46,22 @@ const ManageRestaurant = () => {
     console.log(openStatus)
     setIdRest(id)
   }
+  const handleActive = async (id, status_rest) => {
+    try {
+      if (status_rest !== 'active') {
+        const data = await dispatch(updateRestaurant({ idRest: id, status_rest: 'active' }))
+        console.log(data)
+        if (!isLoading && !error) {
+          dispatch(fetchRestaurants({ status, skipPage, rowsPerPage }))
+          SuccessfulNotification('Update Status')
+        }
+      }
+      console.log(id, status, 'hello anh em')
+    } catch (err) {
+      FailedNotification('Update Status')
+      console.error(err.message)
+    }
+  }
 
   useEffect(() => {
     console.log(status)
@@ -61,7 +81,6 @@ const ManageRestaurant = () => {
   console.log(restaurantList)
   return (
     <LoadingOverlay active={isLoading} spinner Text='Loading ...' className='h-[650px]'>
-      <ToastContainer limit={1} />
       <div className='relative mx-5 my-2 px-3 py-4'>
         <div className='mb-3'>
           <h3 className='text-3xl font-[700] font-family color-1 text-left mb-4 '>
@@ -146,8 +165,8 @@ const ManageRestaurant = () => {
                         <td
                           style={{
                             color:
-                              rest?.state == 'pending'
-                                ? 'yellow'
+                              rest?.status == 'pending'
+                                ? '#ffc107'
                                 : rest?.status == 'active'
                                   ? 'green'
                                   : 'brown',
@@ -167,13 +186,13 @@ const ManageRestaurant = () => {
                                 className='relative ms-auto bg-[#d6cdcd] mt-[10px] w-[80px] py-2  flex flex-col gap-1 transition-all '
                               >
                                 <button
-                                  onClick={() => handleActive(rest?._id, rest?.state)}
+                                  onClick={() => handleActive(rest?._id, rest?.status)}
                                   className='hover:text-blue-500 text-start w-full'
                                 >
                                   <span className='ms-2'>Active</span>
                                 </button>
                                 <button
-                                  onClick={() => handleInActive(rest?._id, rest?.state)}
+                                  onClick={() => handleInActive(rest?._id, rest?.status)}
                                   className='hover:text-blue-500 text-start w-full'
                                 >
                                   <span className='ms-2'>Inactive</span>

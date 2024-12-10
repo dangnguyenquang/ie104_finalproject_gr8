@@ -104,7 +104,7 @@ const ManageOrders = () => {
                 className='selected capitalize'
               >
                 <option value='pending'>Pending</option>
-                <option value='accept'>Accept</option>
+                <option value='in-progress'>Progress</option>
                 <option value='completed'>Completed</option>
                 <option value='canceled'>Canceled</option>
               </select>
@@ -177,7 +177,7 @@ const ManageOrders = () => {
                             className='rounded-sm bg-[#ffc107] font-bold p-[1px_2px] border-none outline-none '
                           >
                             <option>Pending</option>
-                            <option>Accept</option>
+                            <option>In-progress</option>
                             <option>Canceled</option>
                           </select>
                         ) : (

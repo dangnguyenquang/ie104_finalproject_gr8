@@ -38,8 +38,10 @@ export const fetchRestaurants = createAsyncThunk(
 
 export const updateRestaurant = createAsyncThunk(
   'admin/updateRestaurant',
-  async ({ idRest, status }) => {
-    const result = await api.patch(`/admin/restaurant/change-status-restaurant/${idRest}`, status)
+  async ({ idRest, status_rest }) => {
+    const result = await api.patch(`/admin/restaurant/change-status-restaurant/${idRest}`, {
+      status: status_rest,
+    })
     return result?.data
   },
 )

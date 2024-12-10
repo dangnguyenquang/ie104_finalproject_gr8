@@ -18,7 +18,7 @@ const DetailOrder = ({ orders, className, openForm, setOpenForm, handleChangeSta
             <table className='w-full border-collapse'>
               <thead className='hidden'>
                 <tr>
-                  <th>iamge</th>
+                  <th>image</th>
                   <th>name</th>
                   <th>price</th>
                   <th>quantity</th>
@@ -94,11 +94,11 @@ const DetailOrder = ({ orders, className, openForm, setOpenForm, handleChangeSta
                   </button>
                   <button
                     id={orders?._id}
-                    value='accept'
+                    value='in-progress'
                     onClick={(event) => handleChangeStatus(event)}
                     className='bg-[#0D6EFD] round-sm p-2'
                   >
-                    ACCEPT
+                    In-Progress
                   </button>
                 </div>
               ) : (
