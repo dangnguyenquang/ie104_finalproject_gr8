@@ -8,7 +8,7 @@ class AuthApi {
         email,
         password,
       })
-      return { msg: res.msg }
+      return res
     } catch (error) {
       console.log(error)
     }
@@ -16,7 +16,7 @@ class AuthApi {
 
   async signOut() {
     try {
-      const res = await httpClient.delete('/auth/sign-out')
+      const res = await httpClient.get(authEndpoint.signout)
       return res.user
     } catch (error) {
       console.log(error)

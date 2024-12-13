@@ -14,6 +14,8 @@ import ManageAccount from './pages/adminDashboard/manageAccount'
 import ManageRestaurant from './pages/adminDashboard/manageRestaurant'
 import SpecialtyFood from './pages/adminDashboard/SpecialtyFood'
 import 'react-toastify/dist/ReactToastify.min.css'
+import ScrollToTop from './ScrollToTop'
+
 // CLIENT
 import Home from '~/pages/Home'
 import AboutUs from '~/pages/AboutUs'
@@ -28,6 +30,7 @@ import DetailAccount from './pages/DetailAccount'
 function App() {
   return (
     <>
+      <ScrollToTop />
       {/* <Routes>
           <Route>
             {publicRoutes.map((route, index) => {

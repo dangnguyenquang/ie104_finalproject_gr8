@@ -1,11 +1,19 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import { routes } from '~/configs'
 import { IoMdClose } from 'react-icons/io'
 import { Button } from '~/components/ui/Button'
 import LoginModal from '../_components/LoginModal'
+import useAuth from '~/stores/useAuth'
+import LogoutModal from '../_components/LogoutModal'
+import { Avatar } from '@mui/material'
 
 const Sidebar = ({ isOpen, toggleSidebar }) => {
+  const { user } = useAuth()
+
+  const [userInfo, setUserInfo] = useState(user)
+  console.log(userInfo)
+
   useEffect(() => {
     if (isOpen) {
       document.body.classList.add('overflow-hidden')
@@ -39,6 +47,19 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
             className='text-white mb-6 font-bold text-3xl text-right cursor-pointer ml-auto'
             onClick={toggleSidebar}
           />
+
+          {userInfo && (
+            <div className='p-3 mx-auto cursor-pointer mb-8 hover:bg-secondary/10 rounded-xl'>
+              <div className='flex gap-3 justify-start'>
+                <Avatar sx={{ width: 32, height: 32 }} src={userInfo?.avatar?.url} alt='avatar' />
+                <div className='text-white flex-col gap-1 text-sm justify-start'>
+                  <p className='font-bold text-[15px]'>{userInfo?.username}</p>
+                  <p>{userInfo?.email}</p>
+                </div>
+              </div>
+            </div>
+          )}
+
           <nav className='flex flex-col gap-4'>
             <NavLink
               to={routes.HOME}
@@ -73,17 +94,37 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
             >
               Giới thiệu
             </NavLink>
+
+            {userInfo && (
+              <NavLink
+                to={routes.ORDER_TRACKING}
+                className={({ isActive }) =>
+                  isActive
+                    ? 'text-yellow-200 font-medium half-underline text-lg'
+                    : 'text-white font-medium hover:text-yellow-200'
+                }
+                onClick={toggleSidebar}
+              >
+                Lịch sử đơn hàng
+              </NavLink>
+            )}
           </nav>
         </div>
 
-        <div className='flex flex-col mb-6 gap-4'>
-          <Button variant='outline' className='border-primary text-primary'>
-            Đăng ký
-          </Button>
-          <LoginModal>
-            <Button className='bg-primary hover:bg-primary w-full'>Đăng nhập</Button>
-          </LoginModal>
-        </div>
+        {!userInfo ? (
+          <div className='flex flex-col mb-6 gap-3.5'>
+            <Button variant='outline' className='border-primary text-primary'>
+              Đăng ký
+            </Button>
+            <LoginModal setUserInfo={(user) => setUserInfo(user)}>
+              <Button className='bg-primary hover:bg-primary w-full'>Đăng nhập</Button>
+            </LoginModal>
+          </div>
+        ) : (
+          <LogoutModal setUserInfo={(user) => setUserInfo(user)}>
+            <Button className='bg-primary hover:bg-primary w-full'>Đăng xuất</Button>
+          </LogoutModal>
+        )}
       </div>
     </div>
   )

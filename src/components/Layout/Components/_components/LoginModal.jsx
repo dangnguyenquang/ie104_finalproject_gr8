@@ -19,12 +19,12 @@ import { routes } from '~/configs'
 import authApi from '~/apis/auth'
 import useAuth from '~/stores/useAuth'
 
-export default function LoginModal({ className, children, disabled = false }) {
+export default function LoginModal({ className, children, disabled = false, setUserInfo }) {
   const [open, setOpen] = useState(false)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-  const { setUser } = useAuth()
+  const { setUser, login } = useAuth()
 
   const theme = useTheme()
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'))
@@ -42,6 +42,9 @@ export default function LoginModal({ className, children, disabled = false }) {
       const res = await authApi.signIn(email, password)
 
       setUser(res.user)
+      login()
+
+      setUserInfo(res.user)
     } catch (error) {}
   }
 

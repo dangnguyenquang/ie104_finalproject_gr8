@@ -1,7 +1,15 @@
 import React, { useState } from 'react'
 import TextField from '@mui/material/TextField'
 
-function RequiredTextField({ label, className, placeholder, whiteBg, value, handleChange }) {
+function RequiredTextField({
+  label,
+  className,
+  placeholder,
+  whiteBg,
+  value,
+  handleChange,
+  required = true,
+}) {
   const [error, setError] = useState(false)
 
   const handleBlur = () => {
@@ -31,10 +39,10 @@ function RequiredTextField({ label, className, placeholder, whiteBg, value, hand
           if (error) setError(false)
         }}
         onBlur={handleBlur}
-        required
+        required={required}
         error={error}
         placeholder={placeholder}
-        helperText={error ? 'Đây là trường bắt buộc' : ''}
+        helperText={error && required ? 'Đây là trường bắt buộc' : ''}
       />
     </div>
   )

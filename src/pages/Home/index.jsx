@@ -98,7 +98,7 @@ const Home = () => {
             Món ăn được yêu thích nhất
           </h2>
           <div className='w-2/4 h-1 md:w-1/6 md:h-1.5 bg-secondary mt-3.5 mx-auto mb-8 lg:mb-14'></div>
-          <div className='grid md:grid-cols-3 lg:grid-cols-4 max-w-[1190px] md:gap-2 lg:gap-8 mx-auto'>
+          <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 max-w-[1190px] gap-4 lg:gap-8 mx-auto'>
             {data?.foods.map((food, index) => (
               <FoodCard
                 key={index}
@@ -106,6 +106,7 @@ const Home = () => {
                 name={food.title}
                 rating={food.starMedium}
                 restaurant={food.restaurantName}
+                restaurantId={food.restaurantId}
                 address={`${food.restaurantAddress.street} ${food.restaurantAddress.borough} ${food.restaurantAddress.city}`}
                 price={food.price}
                 id={food._id}
@@ -115,9 +116,9 @@ const Home = () => {
         </div>
 
         <div className='w-full mt-14'>
-          <div className='relative  w-fit ml-auto pl-16'>
-            <img src={vector} alt='vector' className='absolute z-10 bottom-0' />
-            <h2 className='text-[65px] font-semibold font-oswald text-primaryText text-right'>
+          <div className='relative  w-fit ml-auto pl-16 max-lg:overflow-hidden'>
+            <img src={vector} alt='vector' className='absolute max-lg:top-10 z-10 bottom-0' />
+            <h2 className='mb-8 text-[40px] md:text-[50px] lg:text-[65px] font-semibold font-oswald text-primaryText text-right'>
               Bộ sưu tập món ăn
             </h2>
           </div>
@@ -126,7 +127,7 @@ const Home = () => {
       </section>
 
       <section
-        className='relative w-full h-auto items-center py-20 px-16 mt-20'
+        className='relative w-full h-auto items-center p-6 md:py-20 md:px-16 mt-20'
         style={{
           backgroundImage: `url(${recommend})`,
           backgroundSize: '100% auto',
@@ -134,13 +135,13 @@ const Home = () => {
         }}
       >
         <div className='flex items-center h-full'>
-          <div className='rounded-full bg-primary text-[25px] font-oswald px-10 py-2 text-white'>
+          <div className='rounded-full bg-primary text-[20px] md:text-[25px] font-oswald px-5 md:px-10 py-1 md:py-2 text-white'>
             Một số quán bạn nên thử
           </div>
           <div className='flex-1 h-1 rounded-e-md bg-primary mb-14 mt-14'></div>
         </div>
 
-        <div className='mx-auto max-w-[1100px]'>
+        <div className='mx-auto max-w-[1100px] max-md:px-12'>
           <RecommendCarousel restaurants={data?.restaurants || []} />
         </div>
       </section>

@@ -1,13 +1,18 @@
 import { useState, useEffect } from 'react'
-import { NavLink } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import { Button } from '~/components/ui/Button'
 import LoginModal from '../_components/LoginModal'
 
 import Logo from '~/assets/icons/logo.svg'
 import { routes } from '~/configs'
+import useAuth from '~/stores/useAuth'
+import AccountMenu from '../_components/AccountDropdown'
 
 const Header = ({ toggleSidebar }) => {
+  const { user, isAuth } = useAuth()
+
   const [scrolled, setScrolled] = useState(false)
+  const [userInfo, setUserInfo] = useState(user)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -63,12 +68,20 @@ const Header = ({ toggleSidebar }) => {
           </NavLink>
         </div>
       </div>
-      <div className='flex gap-6 max-md:hidden'>
-        <Button variant='outline'>Đăng ký</Button>
-        <LoginModal>
-          <Button className='bg-secondary hover:bg-secondary'>Đăng nhập</Button>
-        </LoginModal>
-      </div>
+      {!userInfo ? (
+        <div className='flex gap-6 max-md:hidden'>
+          <Link to={routes.CUSTOMER_REGISTER}>
+            <Button variant='outline'>Đăng ký</Button>
+          </Link>
+          <LoginModal setUserInfo={(user) => setUserInfo(user)}>
+            <Button className='bg-secondary hover:bg-secondary'>Đăng nhập</Button>
+          </LoginModal>
+        </div>
+      ) : (
+        <div className='max-md:hidden'>
+          <AccountMenu user={userInfo} setUserInfo={(user) => setUserInfo(user)} />
+        </div>
+      )}
 
       <button
         className='hidden max-md:block text-white text-2xl focus:outline-none'
