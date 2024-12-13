@@ -14,7 +14,7 @@ const PrevArrow = (props) => {
       onClick={onClick}
       style={{
         ...style,
-        left: '-75px', // Tăng khoảng cách từ nút prev đến item carousel
+        left: '-65px', // Tăng khoảng cách từ nút prev đến item carousel
         zIndex: 1,
         backgroundColor: 'rgba(0, 0, 0, 0.5)', // Nền mờ màu đen
         borderRadius: '50%', // Viền tròn
@@ -41,7 +41,7 @@ const NextArrow = (props) => {
       onClick={onClick}
       style={{
         ...style,
-        right: '-75px', // Tăng khoảng cách từ nút next đến item carousel
+        right: '-65px', // Tăng khoảng cách từ nút next đến item carousel
         zIndex: 1,
         backgroundColor: 'rgba(0, 0, 0, 0.5)', // Nền mờ màu đen
         borderRadius: '50%', // Viền tròn
@@ -68,31 +68,36 @@ const RecommendCarousel = ({ restaurants }) => {
     autoplay: true,
     autoplaySpeed: 3000,
     pauseOnHover: true,
+    // centerMode: true,
     nextArrow: <NextArrow />, // Custom Next Arrow
     prevArrow: <PrevArrow />, // Custom Previous Arrow
     responsive: [
       {
-        breakpoint: 1024,
+        breakpoint: 1200,
         settings: {
           slidesToShow: 3,
           slidesToScroll: 1,
           infinite: true,
           dots: true,
+          centerPadding: '100px',
         },
       },
       {
-        breakpoint: 600,
+        breakpoint: 900,
         settings: {
           slidesToShow: 2,
           slidesToScroll: 1,
           initialSlide: 2,
+          centerMode: true,
         },
       },
       {
-        breakpoint: 480,
+        breakpoint: 700,
         settings: {
-          slidesToShow: 1,
+          slidesToShow: 2,
           slidesToScroll: 1,
+          initialSlide: 2,
+          centerMode: false,
         },
       },
     ],
@@ -102,7 +107,7 @@ const RecommendCarousel = ({ restaurants }) => {
     <div className='mx-auto max-w-[1190px] relative'>
       <Slider {...settings}>
         {restaurants.map((restaurant, index) => (
-          <div key={index}>
+          <div className='py-5' key={index}>
             <RestaurantCard
               image={restaurant.imageUrl[0].url}
               rating={restaurant.starMedium}
