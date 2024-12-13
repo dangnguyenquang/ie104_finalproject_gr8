@@ -27,7 +27,7 @@ const onSubmit = async (event) => {
     formData.append('discount', rawData.discount)
 
     if (imgFile) {
-      formData.append('images', imgFile) // Chỉ thêm ảnh mới nếu được chọn
+      formData.append('images', imgFile)
     }
 
     if (currentEditedId) {
@@ -38,17 +38,13 @@ const onSubmit = async (event) => {
           formData,
         }),
       )
-      SuccessfulNotification('Item updated successfully')
     } else {
       // Thêm mới món ăn
       await dispatch(addItem(formData))
-      SuccessfulNotification('Item added successfully')
     }
     dispatch(fetchAllItem()) // Cập nhật danh sách món ăn
     setOpenForm(false) // Đóng form
-  } catch (err) {
-    FailedNotification('Failed to process item')
-  }
+  } catch (err) {}
 }
 
 export const updateItem = createAsyncThunk(

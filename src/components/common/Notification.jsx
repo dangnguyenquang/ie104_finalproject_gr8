@@ -1,36 +1,20 @@
 import { toast } from 'react-toastify'
 import { deleteItem } from '../../features/products-slice'
 
+// Thông báo thành công
 export const SuccessfulNotification = (name) => {
-  console.log('reder 2 lân')
-  const toastId = `${name}-error`
+  const toastId = `${name}-success`
   if (!toast.isActive(toastId)) {
-    toast.success(`${name} was successful`, {
-      position: 'top-center',
-      autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      style: {
-        backgroundColor: '#fff',
-        color: '#000',
-      },
-    })
+    toast.success(`${name} thành công!`)
   }
 }
+
+// Thông báo thất bại
 export const FailedNotification = (name) => {
-  return toast.error(`${name} was not successful`, {
-    position: 'top-center',
-    autoClose: 2000,
-    closeOnClick: true,
-    hideProgressBar: false,
-  })
+  return toast.error(`${name} thất bại!`)
 }
 
+// Thông báo truy cập thất bại
 export const FailedAccess = async (name) => {
-  return toast.error(`${name} access.Redirecting to login.`, {
-    position: 'top-center',
-    autoClose: 5000,
-    closeOnClick: true,
-    hideProgressBar: true,
-  })
+  return toast.error(`${name} access. Redirecting to login.`)
 }

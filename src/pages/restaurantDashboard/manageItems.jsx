@@ -47,28 +47,27 @@ const ManageItems = () => {
       formData.append('discount', rawData.discount)
 
       if (imgFile) {
-        formData.append('images', imgFile) // Thêm ảnh nếu có
+        formData.append('images', imgFile)
       }
 
       if (currentEditedId) {
-        // Chỉnh sửa món
+        // Chỉnh sửa món ăn
         await dispatch(
           updateItem({
             currentEditedId,
             formData,
           }),
         )
-        SuccessfulNotification('Item updated successfully')
+        SuccessfulNotification('Cập nhật món')
       } else {
-        // Thêm mới món
+        // Thêm mới món ăn
         await dispatch(addItem(formData))
-        SuccessfulNotification('Item added successfully')
+        SuccessfulNotification('Thêm món')
       }
-
-      dispatch(fetchAllItem()) // Cập nhật danh sách món
+      dispatch(fetchAllItem()) // Cập nhật danh sách món ăn
       setOpenForm(false) // Đóng form
     } catch (err) {
-      FailedNotification('Failed to process item')
+      FailedNotification('Xử lý món')
     }
   }
 
@@ -76,10 +75,10 @@ const ManageItems = () => {
   const handleDeleteItem = async (id) => {
     try {
       await dispatch(deleteItem(id))
-      SuccessfulNotification('Item deleted successfully')
+      SuccessfulNotification('Xóa món')
       dispatch(fetchAllItem()) // Cập nhật danh sách món
     } catch (err) {
-      FailedNotification('Failed to delete item')
+      FailedNotification('Xóa món')
     }
   }
 
@@ -89,7 +88,23 @@ const ManageItems = () => {
   }, [dispatch])
 
   return (
-    <LoadingOverlay active={isLoading} spinner text='Loading...'>
+    <LoadingOverlay
+      active={isLoading}
+      spinner
+      text='Loading...'
+      styles={{
+        overlay: (base) => ({
+          ...base,
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100vw',
+          height: '100vh',
+          background: 'rgba(0, 0, 0, 0.5)',
+          zIndex: 1000,
+        }),
+      }}
+    >
       <div className='relative mx-5 my-2 px-3 py-4'>
         <div className='flex justify-between mb-3'>
           <h3 className='text-3xl font-bold'>Manage Items</h3>
@@ -110,9 +125,12 @@ const ManageItems = () => {
                   <th>Title</th>
                   <th>Category</th>
                   <th>Price</th>
+                  <th>Quantity</th>
+                  <th>Discount</th>
                   <th>Actions</th>
                 </tr>
               </thead>
+
               <tbody>
                 {itemList?.length > 0 ? (
                   itemList.map((item) => (
@@ -127,6 +145,8 @@ const ManageItems = () => {
                       <td>{item.title}</td>
                       <td>{item.category}</td>
                       <td>{item.price}</td>
+                      <td>{item.quantity}</td> {/* Cột Quantity */}
+                      <td>{item.discount}</td> {/* Cột Discount */}
                       <td>
                         <button
                           className='bg-yellow-500 text-white px-2 py-1 rounded'
@@ -150,7 +170,7 @@ const ManageItems = () => {
                   ))
                 ) : (
                   <tr>
-                    <td colSpan='5' className='text-center'>
+                    <td colSpan='7' className='text-center'>
                       No items found
                     </td>
                   </tr>
