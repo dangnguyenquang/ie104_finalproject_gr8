@@ -25,8 +25,9 @@ export default function BookingModal({
   items,
 }) {
   const [open, setOpen] = useState(false)
-  const [phone, setPhone] = useState('')
-  const [address, setAddress] = useState('')
+  const [phone, setPhone] = useState(user?.phone)
+  const [address, setAddress] = useState(user?.address)
+  const [message, setMessage] = useState('')
 
   const theme = useTheme()
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'))
@@ -39,13 +40,14 @@ export default function BookingModal({
     setOpen(false)
   }
 
-  const handleLogin = async (restaurantId, items, deliveryAddress, phone) => {
+  const handleBooking = async (restaurantId, items, deliveryAddress, phone, message) => {
     try {
       const res = await BookingApiInstance.bookingFood({
         restaurantId,
         items,
         deliveryAddress,
         phone,
+        message,
       })
     } catch (error) {}
   }
@@ -108,11 +110,20 @@ export default function BookingModal({
             value={address}
             handleChange={(e) => setAddress(e.target.value)}
           />
+
+          <RequiredTextField
+            placeholder='Để lại lời nhắn cho quán'
+            className='w-[400px] mt-0'
+            whiteBg
+            value={message}
+            required={false}
+            handleChange={(e) => setMessage(e.target.value)}
+          />
         </DialogContent>
         <DialogActions className='flex flex-col gap-4 px-6 pb-8 mt-8'>
           <Button
             onClick={() => {
-              handleLogin(restaurantId, items, address, phone)
+              handleBooking(restaurantId, items, address, phone, message)
               handleClose()
             }}
             autoFocus

@@ -72,13 +72,13 @@ const OrderTrackingPage = () => {
   }
 
   return (
-    <div className='w-full flex flex-col items-center mt-10 space-y-2'>
-      <div className='w-full max-w-[800px]'>
+    <div className='w-full flex flex-col items-center mt-24 space-y-2'>
+      <div className='w-full max-w-[800px] shadow-[0_3px_10px_rgb(0,0,0,0.2)]'>
         {/* Thanh Navigation */}
         <Navigation labels={tabLabels} value={selectedTab} onChange={handleTabChange} />
       </div>
 
-      <div className='bg-[#fdf8e7] w-full max-w-[800px] rounded-lg'>
+      <div className='bg-[#fdf8e7] w-full max-w-[800px] min-h-[350px] shadow-[0_3px_10px_rgb(0,0,0,0.2)] rounded-lg'>
         {/* Khung OrdersList */}
         <OrdersList orders={orders} />
       </div>

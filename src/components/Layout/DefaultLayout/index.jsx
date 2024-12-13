@@ -17,7 +17,7 @@ export default function DefaultLayout() {
         <Header toggleSidebar={toggleSidebar} />
         <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
         {/* <div className='mt-16'>{children}</div> */}
-        <main className='mt-16'>
+        <main className='mt-16 min-h-screen'>
           <Outlet />
         </main>
         <Footer />

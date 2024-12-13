@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, useSearchParams } from 'react-router-dom'
 import { Skeleton } from '@mui/material'
 
 import RestaurantImage from './_components/RestaurantImage.jsx'
@@ -14,20 +14,20 @@ import useAuth from '~/stores/useAuth'
 import LoginModal from '~/components/Layout/Components/_components/LoginModal'
 
 const DetailsPage = () => {
+  const { user, isAuth } = useAuth()
+
   const [data, setData] = useState()
   const [cart, setCart] = useState([])
+  const [userInfo, setUserInfo] = useState(user)
   const { id } = useParams()
-  const { user } = useAuth()
 
-  console.log(user)
-
-  useEffect(() => {
-    console.log(cart)
-  }, [cart])
+  const [searchParams] = useSearchParams()
 
   useEffect(() => {
+    const foodId = searchParams.get('id') || ''
+
     const list = {
-      listIdFood: [],
+      listIdFood: [foodId],
     }
 
     const fetchData = async () => {
@@ -94,6 +94,17 @@ const DetailsPage = () => {
     0,
   )
 
+  const onChangeQuality = (id, value) => {
+    const itemFind = data.listAllFood.find((item) => item._id === id)
+    if (value > itemFind.quantity) return
+
+    setCart((prevCart) =>
+      prevCart
+        .map((item) => (item._id === id ? { ...item, quantity: value } : item))
+        .filter((item) => item.quantity > 0),
+    )
+  }
+
   const transformMenuItems = (items) => {
     return items.map((item) => ({
       menuItemId: item._id,
@@ -138,13 +149,14 @@ const DetailsPage = () => {
             }}
           >
             <h2 className='font-bold text-primary text-[30px] mb-10'>GIỎ HÀNG CỦA TÔI</h2>
-            <div className='flex flex-col gap-3 max-h-[400px] overflow-y-auto'>
+            <div className='flex flex-col gap-3 max-h-[400px] overflow-y-auto px-1 py-2'>
               {cart?.map((item) => (
                 <FoodCart
                   foodInfo={item}
                   key={item?._id}
                   onIncrease={() => handleIncreaseQuantity(item?._id)}
                   onDecrease={() => handleDecreaseQuantity(item?._id)}
+                  onChangeQuality={(value) => onChangeQuality(item?._id, value)}
                 />
               ))}
             </div>
@@ -158,20 +170,27 @@ const DetailsPage = () => {
                 </div>
               </div>
 
-              {user ? (
-                <BookingModal
-                  className='rounded-xl font-bold flex justify-center items-center bg-secondary text-[#FDFDFD] cursor-pointer text-xl h-10 w-[50%] mx-auto mt-5 hover:bg-secondary/80'
-                  user={user}
-                  restaurantId={data.restaurant._id}
-                  items={transformMenuItems(cart)}
-                >
-                  Đặt món
-                </BookingModal>
-              ) : (
-                <LoginModal className='rounded-xl font-bold flex justify-center items-center bg-secondary text-[#FDFDFD] cursor-pointer text-xl h-10 w-[50%] mx-auto mt-5 hover:bg-secondary/80'>
-                  Đặt món
-                </LoginModal>
-              )}
+              {cart.length > 0 &&
+                (userInfo ? (
+                  <BookingModal
+                    className='rounded-xl font-bold flex justify-center items-center bg-secondary text-[#FDFDFD] cursor-pointer text-xl h-10 w-[50%] mx-auto mt-5 hover:bg-secondary/80'
+                    user={userInfo}
+                    restaurantId={data.restaurant._id}
+                    items={transformMenuItems(cart)}
+                  >
+                    Đặt món
+                  </BookingModal>
+                ) : (
+                  <LoginModal
+                    setUserInfo={(user) => {
+                      console.log(user)
+                      setUserInfo(user)
+                    }}
+                    className='rounded-xl font-bold flex justify-center items-center bg-secondary text-[#FDFDFD] cursor-pointer text-xl h-10 w-[50%] mx-auto mt-5 hover:bg-secondary/80'
+                  >
+                    Đặt món
+                  </LoginModal>
+                ))}
             </div>
           </div>
         </div>
