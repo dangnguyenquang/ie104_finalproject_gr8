@@ -52,6 +52,7 @@ body {
   padding: 30px;
 } */
 
+/* Btn animation */
 .bubbly-button {
   font-family: 'Helvetica', 'Arial', sans-serif;
   display: inline-block;
@@ -233,4 +234,58 @@ body {
       0% 0%,
       0% 0%;
   }
+}
+
+/* Typing */
+.typing {
+  width: 4em;
+  height: 2em;
+  position: relative;
+  padding: 10px;
+  background: #e6e6e6;
+  border-radius: 15px;
+}
+
+.typing__dot {
+  float: left;
+  width: 8px;
+  height: 8px;
+  margin: 0 3px;
+  background: #8d8c91;
+  border-radius: 50%;
+  opacity: 0;
+  animation: loadingFade 1s infinite;
+}
+
+.typing__dot:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.typing__dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.typing__dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes loadingFade {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* Scroll Hide */
+.scrollbar-hide {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE 10+ */
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Edge */
 }

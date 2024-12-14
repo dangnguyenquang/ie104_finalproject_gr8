@@ -10,6 +10,15 @@ class UserApi {
       console.log(error)
     }
   }
+
+  async chatBot(payload) {
+    try {
+      const res = await httpClient.post(userEndpoint.chatbot, payload)
+      return res
+    } catch (error) {
+      console.log(error)
+    }
+  }
 }
 
 export default new UserApi()
