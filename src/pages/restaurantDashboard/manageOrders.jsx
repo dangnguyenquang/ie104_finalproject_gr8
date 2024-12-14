@@ -129,20 +129,8 @@ const ManageOrders = () => {
                       <td>{val?.accountId?.name}</td>
                       <td className='text-start'>
                         <p>
-                          <strong>Street: </strong>
-                          {val.deliveryAddress.street}
-                        </p>
-                        <p>
-                          <strong>City: </strong>
-                          {val.deliveryAddress.city}
-                        </p>
-                        <p>
-                          <strong>Borough: </strong>
-                          {val.deliveryAddress.borough}
-                        </p>
-                        <p>
-                          <strong>Zip: </strong>
-                          {val.deliveryAddress.zip}
+                          <strong>Delivery Address: </strong>
+                          {val.deliveryAddress}
                         </p>
                         <p>
                           <strong>Phone: </strong>
@@ -170,15 +158,20 @@ const ManageOrders = () => {
                         )}
                       </td>
                       <td>
-                        {val.status == 'pending' ? (
+                        {val.status === 'pending' || val.status === 'in-progress' ? (
                           <select
                             id={val._id}
                             onChange={(event) => handleChangeStatus(event)}
-                            className='rounded-sm bg-[#ffc107] font-bold p-[1px_2px] border-none outline-none '
+                            className={`rounded-sm font-bold p-[1px_2px] border-none outline-none ${
+                              val.status === 'pending' ? 'bg-[#ffc107]' : 'bg-[#0D6EFD]'
+                            }`}
                           >
-                            <option>Pending</option>
-                            <option>In-progress</option>
-                            <option>Canceled</option>
+                            {val.status === 'pending' && <option value='pending'>Pending</option>}
+                            {val.status === 'pending' && <option value='canceled'>Canceled</option>}
+                            <option value='in-progress'>In-progress</option>
+                            {val.status === 'in-progress' && (
+                              <option value='completed'>Completed</option>
+                            )}
                           </select>
                         ) : (
                           val.status

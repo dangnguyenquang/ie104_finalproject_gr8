@@ -82,13 +82,13 @@ const DetailOrder = ({ orders, className, openForm, setOpenForm, handleChangeSta
               </div>
             </div>
             <div className='flex justify-end'>
-              {orders?.status == 'pending' ? (
+              {orders?.status === 'pending' ? (
                 <div className='flex justify-center items-start gap-2'>
                   <button
                     id={orders?._id}
                     value='canceled'
                     onClick={(event) => handleChangeStatus(event)}
-                    className='bg-[#F7F7F7] round-sm p-2'
+                    className='bg-[#F7F7F7] rounded-sm p-2'
                   >
                     CANCEL
                   </button>
@@ -96,9 +96,20 @@ const DetailOrder = ({ orders, className, openForm, setOpenForm, handleChangeSta
                     id={orders?._id}
                     value='in-progress'
                     onClick={(event) => handleChangeStatus(event)}
-                    className='bg-[#0D6EFD] round-sm p-2'
+                    className='bg-[#0D6EFD] rounded-sm p-2'
                   >
                     In-Progress
+                  </button>
+                </div>
+              ) : orders?.status === 'in-progress' ? (
+                <div className='flex justify-center items-start gap-2'>
+                  <button
+                    id={orders?._id}
+                    value='completed'
+                    onClick={(event) => handleChangeStatus(event)}
+                    className='bg-[#28a745] rounded-sm p-2'
+                  >
+                    Completed
                   </button>
                 </div>
               ) : (
