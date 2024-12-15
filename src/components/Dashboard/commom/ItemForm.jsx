@@ -1,5 +1,6 @@
 import React from 'react'
 import UploadImage from './UploadImage'
+import { FormData } from '../../../configs/FormDate'
 
 const ItemForm = ({
   rawData,
@@ -20,11 +21,56 @@ const ItemForm = ({
     setCurrentUrl(null)
   }
 
-  const categories = [
-    { id: 1, label: 'Khai vị' },
-    { id: 2, label: 'Món chính' },
-    { id: 3, label: 'Tráng miệng' },
-  ]
+  const renderFormFields = () => {
+    return FormData.map((field) => {
+      let inputElement
+
+      if (field.componentType === 'input') {
+        inputElement = (
+          <input
+            type={field.type}
+            placeholder={field.placeholder}
+            value={rawData?.[field.name] || ''}
+            onChange={(e) => setRawData({ ...rawData, [field.name]: e.target.value })}
+            className='border px-3 py-2 rounded w-full'
+          />
+        )
+      } else if (field.componentType === 'textarea') {
+        inputElement = (
+          <textarea
+            placeholder={field.placeholder}
+            value={rawData?.[field.name] || ''}
+            onChange={(e) => setRawData({ ...rawData, [field.name]: e.target.value })}
+            className='border px-3 py-2 rounded w-full'
+          ></textarea>
+        )
+      } else if (field.componentType === 'select') {
+        inputElement = (
+          <select
+            value={rawData?.[field.name] || ''}
+            onChange={(e) => setRawData({ ...rawData, [field.name]: e.target.value })}
+            className='border px-3 py-2 rounded w-full'
+          >
+            <option value='' disabled>
+              Chọn {field.placeholder}
+            </option>
+            {field.options.map((option) => (
+              <option key={option.id} value={option.label}>
+                {option.label}
+              </option>
+            ))}
+          </select>
+        )
+      }
+
+      return (
+        <div key={field.name} className='mb-4'>
+          <label className='block font-semibold mb-1'>{field.lable}</label>
+          {inputElement}
+        </div>
+      )
+    })
+  }
 
   return (
     <div
@@ -33,71 +79,11 @@ const ItemForm = ({
       } fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50`}
     >
       <div className='bg-white w-full max-w-2xl max-h-[90vh] p-6 rounded-lg shadow-lg relative overflow-y-auto'>
-        <h3 className='text-2xl font-bold mb-6 text-center'>
+        <h3 className="text-3xl font-medium font-['Oswald'] text-center text-primary uppercase mb-5">
           {currentEditedId ? 'Chỉnh sửa món' : 'Thêm món mới'}
         </h3>
-        <form onSubmit={onSubmit}>
-          <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
-            <div>
-              <label className='block font-semibold mb-1'>Tên món</label>
-              <input
-                type='text'
-                value={rawData?.title || ''}
-                onChange={(e) => setRawData({ ...rawData, title: e.target.value })}
-                className='border px-3 py-2 rounded w-full'
-              />
-            </div>
-            <div>
-              <label className='block font-semibold mb-1'>Loại</label>
-              <select
-                value={rawData?.category || ''}
-                onChange={(e) => setRawData({ ...rawData, category: e.target.value })}
-                className='border px-3 py-2 rounded w-full'
-              >
-                <option value=''>Chọn loại</option>
-                {categories.map((cat) => (
-                  <option key={cat.id} value={cat.label}>
-                    {cat.label}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div>
-              <label className='block font-semibold mb-1'>Giá</label>
-              <input
-                type='number'
-                value={rawData?.price || ''}
-                onChange={(e) => setRawData({ ...rawData, price: e.target.value })}
-                className='border px-3 py-2 rounded w-full'
-              />
-            </div>
-            <div>
-              <label className='block font-semibold mb-1'>Số lượng</label>
-              <input
-                type='number'
-                value={rawData?.quantity || ''}
-                onChange={(e) => setRawData({ ...rawData, quantity: e.target.value })}
-                className='border px-3 py-2 rounded w-full'
-              />
-            </div>
-            <div>
-              <label className='block font-semibold mb-1'>Giảm giá</label>
-              <input
-                type='number'
-                value={rawData?.discount || ''}
-                onChange={(e) => setRawData({ ...rawData, discount: e.target.value })}
-                className='border px-3 py-2 rounded w-full'
-              />
-            </div>
-            <div className='col-span-2'>
-              <label className='block font-semibold mb-1'>Mô tả</label>
-              <textarea
-                value={rawData?.description || ''}
-                onChange={(e) => setRawData({ ...rawData, description: e.target.value })}
-                className='border px-3 py-2 rounded w-full'
-              ></textarea>
-            </div>
-          </div>
+        <form className='text-left' onSubmit={onSubmit}>
+          {renderFormFields()}
           <UploadImage
             imgFile={imgFile}
             setImgFile={setImgFile}

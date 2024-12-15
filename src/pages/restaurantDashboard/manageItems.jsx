@@ -77,7 +77,23 @@ const ManageItems = () => {
   }, [dispatch])
 
   return (
-    <LoadingOverlay active={isLoading} spinner text='Loading...' className='h-[650px]'>
+    <LoadingOverlay
+      active={isLoading}
+      spinner
+      text='Loading...'
+      styles={{
+        overlay: (base) => ({
+          ...base,
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100vw',
+          height: '100vh',
+          background: 'rgba(0, 0, 0, 0.5)',
+          zIndex: 1000,
+        }),
+      }}
+    >
       <div className='relative mx-5 my-2 px-3 py-4'>
         <div className='mb-3'>
           <h1 className="text-4xl font-medium font-['Oswald'] text-center text-primary uppercase">
@@ -117,7 +133,7 @@ const ManageItems = () => {
                         className='w-16 h-16 rounded-md object-cover mx-auto'
                       />
                     </td>
-                    <td className='p-4'>{item.title}</td>
+                    <td className='p-4 text-left'>{item.title}</td>
                     <td className='p-4'>{item.category}</td>
                     <td className='p-4'>{item.price}</td>
                     <td className='p-4'>{item.quantity}</td>
