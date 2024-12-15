@@ -17,7 +17,6 @@ const Header = ({ handleOpen }) => {
       )}
       <Search />
       <div className='w-full flex-1 '></div>
-      <div>signin,signout here</div>
     </div>
   )
 }
