@@ -19,7 +19,6 @@ const ManageItems = () => {
   const [currentEditedId, setCurrentEditedId] = useState(null)
   const [currentUrl, setCurrentUrl] = useState(null)
 
-  // Mở form tạo món mới
   const handleCreateItem = () => {
     setCurrentEditedId(null)
     setOpenForm(true)
@@ -34,7 +33,6 @@ const ManageItems = () => {
     })
   }
 
-  // Submit thêm mới hoặc cập nhật món
   const onSubmit = async (event) => {
     event.preventDefault()
     try {
@@ -51,133 +49,107 @@ const ManageItems = () => {
       }
 
       if (currentEditedId) {
-        // Chỉnh sửa món ăn
-        await dispatch(
-          updateItem({
-            currentEditedId,
-            formData,
-          }),
-        )
+        await dispatch(updateItem({ currentEditedId, formData }))
         SuccessfulNotification('Cập nhật món')
       } else {
-        // Thêm mới món ăn
         await dispatch(addItem(formData))
         SuccessfulNotification('Thêm món')
       }
-      dispatch(fetchAllItem()) // Cập nhật danh sách món ăn
-      setOpenForm(false) // Đóng form
+      dispatch(fetchAllItem())
+      setOpenForm(false)
     } catch (err) {
       FailedNotification('Xử lý món')
     }
   }
 
-  // Xử lý xóa món
   const handleDeleteItem = async (id) => {
     try {
       await dispatch(deleteItem(id))
       SuccessfulNotification('Xóa món')
-      dispatch(fetchAllItem()) // Cập nhật danh sách món
+      dispatch(fetchAllItem())
     } catch (err) {
       FailedNotification('Xóa món')
     }
   }
 
-  // Lấy danh sách món ăn khi component được mount
   useEffect(() => {
     dispatch(fetchAllItem())
   }, [dispatch])
 
   return (
-    <LoadingOverlay
-      active={isLoading}
-      spinner
-      text='Loading...'
-      styles={{
-        overlay: (base) => ({
-          ...base,
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          width: '100vw',
-          height: '100vh',
-          background: 'rgba(0, 0, 0, 0.5)',
-          zIndex: 1000,
-        }),
-      }}
-    >
+    <LoadingOverlay active={isLoading} spinner text='Loading...' className='h-[650px]'>
       <div className='relative mx-5 my-2 px-3 py-4'>
-        <div className='flex justify-between mb-3'>
-          <h3 className='text-3xl font-bold'>Manage Items</h3>
+        <div className='mb-3'>
+          <h1 className='text-3xl font-bold text-center text-primary'>Quản lý món ăn</h1>
+        </div>
+        <div className='flex justify-between items-center mb-4'>
           <button
             onClick={handleCreateItem}
-            className='bg-blue-600 text-white font-bold rounded-md px-3 py-2'
+            className='bg-blue-600 text-white font-bold rounded-md px-4 py-2'
           >
-            Add New Product
+            Thêm món mới
           </button>
         </div>
 
-        <div className='bg-white shadow rounded'>
-          <div className='px-6 pb-6'>
-            <table className='w-full border'>
-              <thead>
-                <tr>
-                  <th>Image</th>
-                  <th>Title</th>
-                  <th>Category</th>
-                  <th>Price</th>
-                  <th>Quantity</th>
-                  <th>Discount</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-
-              <tbody>
-                {itemList?.length > 0 ? (
-                  itemList.map((item) => (
-                    <tr key={item._id}>
-                      <td>
-                        <img
-                          src={item.imageUrl[0]?.url || hero}
-                          alt={item.title}
-                          className='w-[100px] mx-auto'
-                        />
-                      </td>
-                      <td>{item.title}</td>
-                      <td>{item.category}</td>
-                      <td>{item.price}</td>
-                      <td>{item.quantity}</td> {/* Cột Quantity */}
-                      <td>{item.discount}</td> {/* Cột Discount */}
-                      <td>
-                        <button
-                          className='bg-yellow-500 text-white px-2 py-1 rounded'
-                          onClick={() => {
-                            setCurrentEditedId(item._id)
-                            setRawData(item)
-                            setCurrentUrl(item.imageUrl[0]?.url || null)
-                            setOpenForm(true)
-                          }}
-                        >
-                          Edit
-                        </button>
-                        <button
-                          className='bg-red-500 text-white px-2 py-1 rounded ml-2'
-                          onClick={() => handleDeleteItem(item._id)}
-                        >
-                          Delete
-                        </button>
-                      </td>
-                    </tr>
-                  ))
-                ) : (
-                  <tr>
-                    <td colSpan='7' className='text-center'>
-                      No items found
+        <div className='bg-white shadow-md rounded-lg p-6'>
+          <table className='w-full border border-gray-300'>
+            <thead>
+              <tr className='bg-gray-200'>
+                <th className='p-4 text-center'>Hình ảnh</th>
+                <th className='p-4 text-center'>Tên món</th>
+                <th className='p-4 text-center'>Loại</th>
+                <th className='p-4 text-center'>Giá</th>
+                <th className='p-4 text-center'>Số lượng</th>
+                <th className='p-4 text-center'>Giảm giá</th>
+                <th className='p-4 text-center'>Hành động</th>
+              </tr>
+            </thead>
+            <tbody>
+              {itemList?.length > 0 ? (
+                itemList.map((item) => (
+                  <tr key={item._id} className='border-t border-gray-300'>
+                    <td className='p-4 text-center'>
+                      <img
+                        src={item.imageUrl[0]?.url || hero}
+                        alt={item.title}
+                        className='w-16 h-16 rounded-md object-cover mx-auto'
+                      />
+                    </td>
+                    <td className='p-4'>{item.title}</td>
+                    <td className='p-4'>{item.category}</td>
+                    <td className='p-4'>{item.price}</td>
+                    <td className='p-4'>{item.quantity}</td>
+                    <td className='p-4'>{item.discount}</td>
+                    <td className='p-4 flex gap-2'>
+                      <button
+                        className='bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600'
+                        onClick={() => {
+                          setCurrentEditedId(item._id)
+                          setRawData(item)
+                          setCurrentUrl(item.imageUrl[0]?.url || null)
+                          setOpenForm(true)
+                        }}
+                      >
+                        Sửa
+                      </button>
+                      <button
+                        className='bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600'
+                        onClick={() => handleDeleteItem(item._id)}
+                      >
+                        Xóa
+                      </button>
                     </td>
                   </tr>
-                )}
-              </tbody>
-            </table>
-          </div>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan='7' className='text-center p-4'>
+                    Không có món nào
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
         </div>
 
         <ItemForm
