@@ -15,38 +15,6 @@ export const addItem = createAsyncThunk('/restaurant/addItem', async (rawData) =
   return result?.data
 })
 
-const onSubmit = async (event) => {
-  event.preventDefault()
-  try {
-    const formData = new FormData()
-    formData.append('title', rawData.title)
-    formData.append('description', rawData.description)
-    formData.append('price', rawData.price)
-    formData.append('category', rawData.category)
-    formData.append('quantity', rawData.quantity)
-    formData.append('discount', rawData.discount)
-
-    if (imgFile) {
-      formData.append('images', imgFile)
-    }
-
-    if (currentEditedId) {
-      // Chỉnh sửa món ăn
-      await dispatch(
-        updateItem({
-          currentEditedId,
-          formData,
-        }),
-      )
-    } else {
-      // Thêm mới món ăn
-      await dispatch(addItem(formData))
-    }
-    dispatch(fetchAllItem()) // Cập nhật danh sách món ăn
-    setOpenForm(false) // Đóng form
-  } catch (err) {}
-}
-
 export const updateItem = createAsyncThunk(
   '/restaurant/updateItem',
   async ({ currentEditedId, formData }) => {

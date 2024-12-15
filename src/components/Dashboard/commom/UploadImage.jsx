@@ -41,7 +41,7 @@ const UploadImage = ({ imgFile, setImgFile, rawData, currentUrl, setCurrentUrl }
 
   return (
     <div className='w-full grid gap-1.5'>
-      <label className='text-xl font-semibold'>Upload Image</label>
+      <label className='text-xl text-left font-semibold'>Gửi ảnh</label>
       <div className='h-[64px] border-2 border-dashed border-gray-300 flex items-center justify-center'>
         <input
           ref={inputRef}
@@ -72,7 +72,7 @@ const UploadImage = ({ imgFile, setImgFile, rawData, currentUrl, setCurrentUrl }
               <path d='M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242' />
               <path d='m8 17 4-4 4 4' />
             </svg>
-            <p>Click to upload image</p>
+            <p>Nhấn để chọn ảnh</p>
           </div>
         )}
       </div>
