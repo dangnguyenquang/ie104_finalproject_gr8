@@ -9,7 +9,9 @@ export const routes = {
   MENU: '/menu',
   SELLER_REGISTER: '/register/seller',
   CUSTOMER_REGISTER: '/register',
-  ORDER_TRACKING: '/order_tracking',
-  DETAIL_ACCOUNT: '/detail_account',
+  ORDER_TRACKING: '/order-tracking',
+  DETAILS: '/details',
+
+  DETAIL_ACCOUNT: '/detail-account',
   RESTAURANT_DASHBOARD: '/restaurant/dashboard',
 }

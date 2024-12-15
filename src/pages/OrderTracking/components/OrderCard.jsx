@@ -1,14 +1,25 @@
 import React, { useState } from 'react'
+import { toast } from 'react-toastify'
 import { Button } from '~/components/ui/Button'
 import { Chip } from '@mui/material'
 import OrderItem from './OrderItem'
 import ReviewModal from '~/components/Layout/Components/_components/ReviewModal'
+import ordersApi from '~/apis/orders'
 
 const formatNumber = (number) => {
   return new Intl.NumberFormat().format(number)
 }
 
 const OrderCard = ({ order }) => {
+  const handleCancelOrder = async () => {
+    try {
+      const response = await ordersApi.cancelOrder(order._id)
+      toast.success('Hủy đơn thành công!')
+    } catch (error) {
+      toast.error('Có lỗi xảy ra khi hủy đơn!')
+    }
+  }
+
   const [isReviewOpen, setReviewOpen] = useState(false)
 
   const handleReviewOpen = () => setReviewOpen(true)
@@ -28,7 +39,7 @@ const OrderCard = ({ order }) => {
   }
 
   return (
-    <div className='p-4 border rounded-lg w-[600px] my-3 relative bg-white'>
+    <div className='p-4 border rounded-lg w-full sm:w-[600px] my-3 relative bg-white'>
       <div className='absolute top-4 right-4'>
         <Chip
           label={chipData.label}
@@ -67,11 +78,11 @@ const OrderCard = ({ order }) => {
       <div className='flex justify-end items-center mt-4'>
         <p className='text-lg font-semibold'>Tổng tiền: {formatNumber(order.totalPrice)} VND</p>
       </div>
-      <div className='flex justify-end space-x-3 mt-3'>
+      <div className='flex flex-col sm:flex-row justify-end space-y-2 sm:space-y-0 sm:space-x-3 mt-3'>
         {chipData.actions.includes('Đánh giá') && (
           <Button
             variant='outline'
-            className='w-32 h-10 bg-primary hover:bg-primary/80 text-center text-sm font-bold leading-[28px]'
+            className='w-full sm:w-32 h-10 bg-primary hover:bg-primary/80 text-center text-sm font-bold leading-[28px]'
             onClick={handleReviewOpen}
           >
             Đánh giá
@@ -81,15 +92,17 @@ const OrderCard = ({ order }) => {
           <Button
             variant='outline'
             className='w-32 h-10 bg-[#ff0000] hover:bg-[#ff0000]/80 text-center text-white text-sm font-bold leading-[28px]'
+            onClick={handleCancelOrder}
           >
             Huỷ đơn
           </Button>
         )}
+
         <Button
           variant='outline'
-          className='w-32 h-10 bg-[#c8c8c8] hover:bg-[#c8c8c8]/80 text-center text-primaryText text-sm font-bold leading-[28px]'
+          className='w-full sm:w-32 h-10 bg-[#c8c8c8] hover:bg-[#c8c8c8]/80 text-center text-primaryText text-sm font-bold leading-[28px]'
         >
-          Quay lại quán này
+          Quay lại
         </Button>
       </div>
 

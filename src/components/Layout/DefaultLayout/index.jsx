@@ -4,6 +4,8 @@ import Footer from '../Components/Footer'
 import Sidebar from '../Components/Sidebar'
 import AutoLogin from '~/stores/autoLogin'
 import { Outlet } from 'react-router-dom'
+import Chatbot from '../Components/_components/Chatbot'
+
 export default function DefaultLayout() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
 
@@ -17,10 +19,11 @@ export default function DefaultLayout() {
         <Header toggleSidebar={toggleSidebar} />
         <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
         {/* <div className='mt-16'>{children}</div> */}
-        <main className='mt-16'>
+        <main className='mt-16 min-h-screen'>
           <Outlet />
         </main>
         <Footer />
+        <Chatbot />
       </div>
     </AutoLogin>
   )

@@ -4,11 +4,6 @@ import ordersEndpoint from '~/services/endpoints/orders.endpoint'
 class OrdersApi {
   async getOrders(status, page) {
     try {
-      const token = localStorage.getItem('token')
-      if (!token) {
-        throw new Error('Token không tồn tại. Vui lòng đăng nhập lại.')
-      }
-      httpClient.setAuthHeader(token)
       const res = await httpClient.get(`${ordersEndpoint.getOrder}?status=${status}&page=${page}`)
       return res
     } catch (error) {
@@ -19,11 +14,6 @@ class OrdersApi {
 
   async postEvaluation(idOrder, comment, listFood) {
     try {
-      const token = localStorage.getItem('token')
-      if (!token) {
-        throw new Error('Token không tồn tại. Vui lòng đăng nhập lại.')
-      }
-      httpClient.setAuthHeader(token)
       const res = await httpClient.post(ordersEndpoint.postEvaluation, {
         idOrder,
         comment,
@@ -43,13 +33,11 @@ class OrdersApi {
         throw new Error('Token không tồn tại. Vui lòng đăng nhập lại.')
       }
       httpClient.setAuthHeader(token)
-      const res = await httpClient.delete(ordersEndpoint.cancelOrder, {
-        data: { idOrder },
-      })
-      return { msg: res.message }
+      const res = await httpClient.patch(ordersEndpoint.cancelOrder, { idOrder })
+      return res
     } catch (error) {
-      console.error(error)
-      throw new Error('Có lỗi xảy ra khi hủy đơn hàng')
+      console.error('Error in cancelOrder: ', error)
+      throw new Error('Có lỗi xảy ra khi hủy đơn')
     }
   }
 }

@@ -2,6 +2,8 @@ import React from 'react'
 import Slider from 'react-slick'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
+import { Link } from 'react-router-dom'
+import { routes } from '~/configs'
 
 const SpecialityCarousel = ({ SpecialityFoods }) => {
   const settings = {
@@ -50,13 +52,15 @@ const SpecialityCarousel = ({ SpecialityFoods }) => {
       <Slider {...settings}>
         {SpecialityFoods &&
           SpecialityFoods.map((food, index) => (
-            <div key={food.name}>
-              <img
-                src={food.imageUrl.url}
-                alt={`Image ${food.name}`}
-                className='w-[210px] h-[339px] lg:w-[272px] lg:h-[381px] object-cover rounded-xl'
-              />
-            </div>
+            <Link key={index} to={`${routes.MENU}?search=${food.name}&type=food`}>
+              <div key={food.name}>
+                <img
+                  src={food.imageUrl.url}
+                  alt={`Image ${food.name}`}
+                  className='w-[210px] h-[339px] lg:w-[272px] lg:h-[381px] object-cover rounded-xl'
+                />
+              </div>
+            </Link>
           ))}
       </Slider>
     </div>

@@ -40,6 +40,11 @@ const DetailAccount = () => {
     fetchAccountInfo()
   }, [])
 
+  const uploadImg = (avatar) => {
+    setAvatar(avatar)
+    setIsChanged(true)
+  }
+
   const handleInputChange = (field, value) => {
     setAccountInfo((prev) => ({ ...prev, [field]: value }))
     setIsChanged(true)
@@ -99,7 +104,7 @@ const DetailAccount = () => {
             </div>
             <div className='grid grid-cols-3 gap-4 min-h-screen'>
               <div className='flex flex-col items-center'>
-                <AvatarUploader currentAvatar={avatar} onAvatarChange={setAvatar} />
+                <AvatarUploader currentAvatar={avatar} onAvatarChange={uploadImg} />
               </div>
               <div className='col-span-2 w-full max-w-[500px] space-y-4'>
                 <DisabledTextField className='w-full' label='Họ và tên' value={accountInfo.name} />

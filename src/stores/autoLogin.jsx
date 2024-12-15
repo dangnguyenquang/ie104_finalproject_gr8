@@ -18,7 +18,7 @@ const AutoLogin = ({ children }) => {
     async function fetchMe() {
       try {
         const res = await user.getMe()
-        setUser(res)
+        setUser(res.user)
         login()
       } catch (error) {
         logout()

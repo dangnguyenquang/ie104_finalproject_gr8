@@ -5,12 +5,6 @@ class AccountApi {
   // Lấy thông tin tài khoản
   async getAccount() {
     try {
-      const token = localStorage.getItem('token')
-      if (!token) {
-        throw new Error('Token không tồn tại. Vui lòng đăng nhập lại.')
-      }
-      httpClient.setAuthHeader(token)
-
       const res = await httpClient.get(accountsEndpoint.getAccount)
       if (!res.account) {
         throw new Error('Không tìm thấy dữ liệu tài khoản.')
@@ -25,12 +19,6 @@ class AccountApi {
   // Cập nhật thông tin tài khoản
   async updateAccount(formData) {
     try {
-      const token = localStorage.getItem('token')
-      if (!token) {
-        throw new Error('Token không tồn tại. Vui lòng đăng nhập lại.')
-      }
-      httpClient.setAuthHeader(token)
-
       const res = await httpClient.patch(accountsEndpoint.updateAccount, formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       })
@@ -43,12 +31,6 @@ class AccountApi {
 
   async changePassword(passwordData) {
     try {
-      const token = localStorage.getItem('token')
-      if (!token) {
-        throw new Error('Token không tồn tại. Vui lòng đăng nhập lại.')
-      }
-      httpClient.setAuthHeader(token)
-
       const res = await httpClient.patch(accountsEndpoint.changePassword, passwordData)
       return res.data
     } catch (error) {

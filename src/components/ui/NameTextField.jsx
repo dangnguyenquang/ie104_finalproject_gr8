@@ -5,8 +5,7 @@ function NameTextField({ label, className, whiteBg, value, handleChange }) {
   const [error, setError] = useState(false)
 
   const validateName = (name) => {
-    const nameRegex =
-      /^[A-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝĂĐĨŨƠƯa-zàáâãèéêìíòóôõùúýăđĩũơư]+(?:[\s][A-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝĂĐĨŨƠƯa-zàáâãèéêìíòóôõùúýăđĩũơư]+)*$/u
+    const nameRegex = /^[A-Za-zÀ-ỹ]+(?:[\s][A-Za-zÀ-ỹ]+)*$/u
     return nameRegex.test(name.trim())
   }
 

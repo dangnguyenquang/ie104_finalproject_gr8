@@ -17,15 +17,12 @@ const OrderTrackingPage = () => {
   const [orders, setOrders] = useState([])
   const [currentPage, setCurrentPage] = useState(1)
   const [totalPages, setTotalPages] = useState(1)
-  const [token, setToken] = useState(localStorage.getItem('token') || '')
 
   const fetchOrders = async () => {
-    if (!token) return
-
     try {
       const statusMap = ['pending', 'in-progress', 'completed', 'canceled']
       const status = statusMap[selectedTab]
-      const response = await ordersApi.getOrders(status, currentPage, token)
+      const response = await ordersApi.getOrders(status, currentPage)
 
       if (response.orders) {
         const ordersData = response.orders
@@ -48,7 +45,7 @@ const OrderTrackingPage = () => {
 
   useEffect(() => {
     fetchOrders()
-  }, [selectedTab, currentPage, token])
+  }, [selectedTab, currentPage])
 
   const handleTabChange = (event, newValue) => {
     setSelectedTab(newValue)
@@ -75,43 +72,31 @@ const OrderTrackingPage = () => {
   }
 
   return (
-    <div className='w-full flex flex-col items-center mt-10 space-y-2'>
-      {!token ? (
-        <LoginModal>
-          <button
-            className='text-primary font-bold'
-            onClick={() => handleLoginSuccess(email, password)}
-          >
-            Đăng nhập để xem đơn hàng
-          </button>
-        </LoginModal>
-      ) : (
-        <>
-          <div className='w-full max-w-[800px]'>
-            {/* Thanh Navigation */}
-            <Navigation labels={tabLabels} value={selectedTab} onChange={handleTabChange} />
-          </div>
+    <div className='w-full flex flex-col items-center mt-24 space-y-2'>
+      <div className='w-full max-w-[800px] shadow-[0_3px_10px_rgb(0,0,0,0.2)]'>
+        {/* Thanh Navigation */}
+        <Navigation labels={tabLabels} value={selectedTab} onChange={handleTabChange} />
+      </div>
 
-          <div className='bg-[#fdf8e7] w-full max-w-[800px] rounded-lg'>
-            {/* Khung OrdersList */}
-            <OrdersList orders={orders} />
-          </div>
+      <div className='bg-[#fdf8e7] w-full max-w-[800px] min-h-[350px] shadow-[0_3px_10px_rgb(0,0,0,0.2)] rounded-lg'>
+        {/* Khung OrdersList */}
+        <OrdersList orders={orders} />
+      </div>
 
-          <div className='flex justify-center mt-4'>
-            {Array.from({ length: totalPages }).map((_, index) => (
-              <button
-                key={index}
-                className={`w-10 h-10 px-1 py-[5px] ${
-                  currentPage === index + 1 ? 'bg-[#7d0600] text-white' : 'bg-white text-[#212b36]'
-                } rounded border border-[#dfe3e8] text-xl font-bold`}
-                onClick={() => handlePageChange(index + 1)}
-              >
-                {index + 1}
-              </button>
-            ))}
-          </div>
-        </>
-      )}
+      <div className='flex justify-center mt-4'>
+        {totalPages > 1 &&
+          Array.from({ length: totalPages }).map((_, index) => (
+            <button
+              key={index}
+              className={`w-10 h-10 px-1 py-[5px] mb-4 ${
+                currentPage === index + 1 ? 'bg-[#7d0600] text-white' : 'bg-white text-[#212b36]'
+              } rounded border border-[#dfe3e8] text-xl font-bold`}
+              onClick={() => handlePageChange(index + 1)}
+            >
+              {index + 1}
+            </button>
+          ))}
+      </div>
     </div>
   )
 }

@@ -35,13 +35,13 @@ class HttpClient {
     return response.data
   }
 
-  setAuthHeader(token) {
-    this.instance.defaults.headers.common['Authorization'] = `Bearer ${token}`
-  }
+  // setAuthHeader(token) {
+  //   this.instance.defaults.headers.common['Authorization'] = `Bearer ${token}`
+  // }
 
-  removeAuthHeader() {
-    delete this.instance.defaults.headers.common['Authorization']
-  }
+  // removeAuthHeader() {
+  //   delete this.instance.defaults.headers.common['Authorization']
+  // }
 }
 
 export function handleError(error, onError) {

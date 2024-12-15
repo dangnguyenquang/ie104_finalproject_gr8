@@ -8,7 +8,7 @@ class AuthApi {
         email,
         password,
       })
-      return { msg: res.msg }
+      return res
     } catch (error) {
       console.log(error)
     }
@@ -16,40 +16,34 @@ class AuthApi {
 
   async signOut() {
     try {
-      const res = await httpClient.delete('/auth/sign-out')
+      const res = await httpClient.get(authEndpoint.signout)
       return res.user
     } catch (error) {
       console.log(error)
     }
   }
 
-  async customerRegister(infoAccount) {
+  async customerRegister(formData) {
     try {
-      const res = await httpClient.post(authEndpoint.register, {
-        infoAccount: {
-          name: infoAccount.name,
-          role: infoAccount.role,
-          address: infoAccount.address,
-          password_account: infoAccount.password_account,
-          name_account: infoAccount.name_account,
-          email: infoAccount.email,
-          phone: infoAccount.phone,
+      const res = await httpClient.post(authEndpoint.register, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
         },
       })
       return { msg: res.msg }
     } catch (error) {
-      console.log(error)
+      return { error: error.message || 'Đã xảy ra lỗi trong quá trình đăng ký' }
     }
   }
 
   async sellerRegister(formData) {
     try {
-      const res = await fetch('http://localhost:3000/user/account/signup', {
-        method: 'POST',
-        body: formData, // Không cần đặt Content-Type
+      const res = await httpClient.post(authEndpoint.register, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
       })
-      const result = await res.json()
-      return { msg: result.msg }
+      return { msg: res.msg }
     } catch (error) {
       return { error: error.message || 'Đã xảy ra lỗi trong quá trình đăng ký' }
     }

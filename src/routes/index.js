@@ -17,7 +17,7 @@ import { routes } from '~/configs'
 
 const publicRoutes = [
   { path: routes.HOME, component: Home },
-  { path: routes.MENU, component: Menu },
+  // { path: routes.MENU, component: Menu },
   { path: routes.ABOUTUS, component: AboutUs },
   { path: routes.OURCOMMIT, component: ourCommit },
   { path: routes.PRIVACYPOLICY, component: privacyPolicy },
@@ -25,7 +25,7 @@ const publicRoutes = [
   { path: routes.CONTACTINSTRUCTIONS, component: contactInstructions },
   { path: routes.OPERATINGPOLICY, component: operatingPolicy },
   { path: routes.SELLER_REGISTER, component: SellerRegisterForm },
-  { path: routes.CUSTOMER_REGISTER, component: CustomerRegisterForm },
+  { path: routes.MENU, component: CustomerRegisterForm },
   { path: routes.ORDER_TRACKING, component: OrderTrackingPage },
   { path: routes.DETAIL_ACCOUNT, component: DetailAccount },
 ]
