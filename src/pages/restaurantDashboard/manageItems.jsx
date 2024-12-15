@@ -80,7 +80,9 @@ const ManageItems = () => {
     <LoadingOverlay active={isLoading} spinner text='Loading...' className='h-[650px]'>
       <div className='relative mx-5 my-2 px-3 py-4'>
         <div className='mb-3'>
-          <h1 className='text-3xl font-bold text-center text-primary'>Quản lý món ăn</h1>
+          <h1 className="text-4xl font-medium font-['Oswald'] text-center text-primary uppercase">
+            Quản lý món ăn
+          </h1>
         </div>
         <div className='flex justify-between items-center mb-4'>
           <button
@@ -92,7 +94,7 @@ const ManageItems = () => {
         </div>
 
         <div className='bg-white shadow-md rounded-lg p-6'>
-          <table className='w-full border border-gray-300'>
+          <table className='w-full border-separate border-spacing-0'>
             <thead>
               <tr className='bg-gray-200'>
                 <th className='p-4 text-center'>Hình ảnh</th>
@@ -120,9 +122,9 @@ const ManageItems = () => {
                     <td className='p-4'>{item.price}</td>
                     <td className='p-4'>{item.quantity}</td>
                     <td className='p-4'>{item.discount}</td>
-                    <td className='p-4 flex gap-2'>
+                    <td className='p-4 text-center align-middle'>
                       <button
-                        className='bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600'
+                        className='inline-flex items-center gap-1 px-3 py-2 bg-yellow-400 text-white rounded-lg shadow hover:bg-yellow-500 transition-all duration-300'
                         onClick={() => {
                           setCurrentEditedId(item._id)
                           setRawData(item)
@@ -130,13 +132,13 @@ const ManageItems = () => {
                           setOpenForm(true)
                         }}
                       >
-                        Sửa
+                        <i className='bx bx-edit'></i> Sửa
                       </button>
                       <button
-                        className='bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600'
+                        className='inline-flex items-center gap-1 px-3 py-2 bg-red-400 text-white rounded-lg shadow hover:bg-red-500 transition-all duration-300 ml-3'
                         onClick={() => handleDeleteItem(item._id)}
                       >
-                        Xóa
+                        <i className='bx bx-trash'></i> Xóa
                       </button>
                     </td>
                   </tr>
