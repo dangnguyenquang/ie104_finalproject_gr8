@@ -10,6 +10,7 @@ import RestaurantDashboard from './pages/restaurantDashboard'
 import ManageItems from './pages/restaurantDashboard/manageItems'
 import ManageOrders from './pages/restaurantDashboard/manageOrders'
 import ManageMails from './pages/restaurantDashboard/manageMails'
+import MyRestaurant from './pages/restaurantDashboard/myrestaurant'
 import ManageAccount from './pages/adminDashboard/manageAccount'
 import ManageRestaurant from './pages/adminDashboard/manageRestaurant'
 import SpecialtyFood from './pages/adminDashboard/SpecialtyFood'
@@ -86,6 +87,7 @@ function App() {
           <Route path='restaurant/manage-items' element={<ManageItems />} />
           <Route path='restaurant/manage-orders' element={<ManageOrders />} />
           <Route path='restaurant/send-email' element={<ManageMails />} />
+          <Route path='restaurant/my-restaurant' element={<MyRestaurant />} />
         </Route>
       </Routes>
       <ToastContainer />
