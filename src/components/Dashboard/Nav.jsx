@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, Link, useLocation } from 'react-router-dom'
+import PersonPinIcon from '@mui/icons-material/PersonPin'
 import background from '../../assets/images/admin/background.png'
 import UseResponsive from '../../hooks/useResponsive'
 const navArrayRestaurant = [
@@ -125,6 +126,12 @@ const navArrayRestaurant = [
     ),
     label: 'Send Email',
     navigate: '/v2/dashboard/restaurant/send-email',
+  },
+  {
+    id: 5,
+    icon: <PersonPinIcon sx={{ color: 'white' }} fontSize='large' />,
+    label: 'Nhà hàng của tôi',
+    navigate: '/v2/dashboard/restaurant/my-restaurant',
   },
 ]
 
@@ -332,6 +339,8 @@ const Nav = ({ isOpen, setOpen }) => {
       return 3
     } else if (location.pathname.includes('dashboard/restaurant/sent-email')) {
       return 4
+    } else if (location.pathname.includes('dashboard/restaurant/my-restaurant')) {
+      return 5
     } else if (location.pathname.includes('dashboard/restaurant')) {
       return 1
     } else if (location.pathname.includes('dashboard/admin')) {
@@ -373,7 +382,6 @@ const Nav = ({ isOpen, setOpen }) => {
         <div className='w-full flex flex-col'>
           <div className='flex items-center gap-1 rounded-md my-6 mx-5 px-5 py-4 bg-white'>
             <i className='bx bx-user-circle text-3xl'></i>
-            {/* {arr.id} */}
             <label className='font-medium'>your name</label>
           </div>
           <nav className='flex flex-col mx-5 my-6 gap-y-3'>

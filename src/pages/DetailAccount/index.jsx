@@ -56,6 +56,7 @@ const DetailAccount = () => {
       formData.append('phone', accountInfo.phone)
       formData.append('address', accountInfo.address)
       if (avatar instanceof File) {
+        console.log('sdấdádad', avatar)
         formData.append('avatar', avatar)
       }
       await accountApi.updateAccount(formData)
@@ -84,7 +85,7 @@ const DetailAccount = () => {
     try {
       const msg = await authApi.signOut()
       toast.success(msg)
-      window.location.href = '/' // Chuyển hướng về trang đăng nhập
+      window.location.href = '/'
     } catch (error) {
       toast.error(error.message || 'Có lỗi xảy ra khi đăng xuất.')
       console.error('Error signing out:', error)
