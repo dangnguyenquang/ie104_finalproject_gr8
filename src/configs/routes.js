@@ -13,5 +13,7 @@ export const routes = {
   DETAILS: '/details',
 
   DETAIL_ACCOUNT: '/detail-account',
-  RESTAURANT_DASHBOARD: '/restaurant/dashboard',
+
+  RESTAURANT_DASHBOARD: '/v2/dashboard/restaurant',
+  ADMIN_MANAGEACCOUNT: '/v2/dashboard/admin/account',
 }

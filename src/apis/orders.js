@@ -28,11 +28,6 @@ class OrdersApi {
 
   async cancelOrder(idOrder) {
     try {
-      const token = localStorage.getItem('token')
-      if (!token) {
-        throw new Error('Token không tồn tại. Vui lòng đăng nhập lại.')
-      }
-      httpClient.setAuthHeader(token)
       const res = await httpClient.patch(ordersEndpoint.cancelOrder, { idOrder })
       return res
     } catch (error) {

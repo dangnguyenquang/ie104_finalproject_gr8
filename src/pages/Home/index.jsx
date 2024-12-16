@@ -83,7 +83,7 @@ const Home = () => {
           backgroundRepeat: 'no-repeat',
         }}
       >
-        <div className='py-8 mx-auto text-center h-[90vh] lg:h-screen'>
+        <div className='py-10 mx-auto text-center h-full'>
           <h2 className='text-[35px] md:text-[60px] lg:text-[80px] font-semibold font-oswald text-primaryText lg:leading-[110px]'>
             Các món ăn đặc sản
           </h2>
@@ -93,7 +93,7 @@ const Home = () => {
           <SpecialityCarousel SpecialityFoods={data?.specialtyFoods} />
         </div>
 
-        <div className='flex flex-col justify-center text-center'>
+        <div className='flex flex-col justify-center text-center mt-10'>
           <h2 className='text-[30px] md:text-[60px] lg:text-[80px] font-semibold font-oswald text-primaryText lg:leading-[110px]'>
             Món ăn được yêu thích nhất
           </h2>

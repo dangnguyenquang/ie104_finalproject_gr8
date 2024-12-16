@@ -4,6 +4,7 @@ const DetailOrder = ({ orders, className, openForm, setOpenForm, handleChangeSta
   const handleCloseForm = () => {
     setOpenForm(false)
   }
+  console.log(orders)
   return (
     <>
       <div className={`${className}  overflow-hidden`}>
@@ -18,7 +19,7 @@ const DetailOrder = ({ orders, className, openForm, setOpenForm, handleChangeSta
             <table className='w-full border-collapse'>
               <thead className='hidden'>
                 <tr>
-                  <th>iamge</th>
+                  <th>image</th>
                   <th>name</th>
                   <th>price</th>
                   <th>quantity</th>
@@ -72,33 +73,51 @@ const DetailOrder = ({ orders, className, openForm, setOpenForm, handleChangeSta
               <h2 className='text-xl font-sans font-bold mb-4'>Địa Chỉ</h2>
 
               <div className='border-[2px_solid_black] border-2 p-[5px_10px]'>
-                <h3 className='font-bold'>Name: {orders?.accountId.name}</h3>
-                <p>
-                  {orders?.deliveryAddress.street}, {orders?.deliveryAddress.borough},{' '}
-                  {orders?.deliveryAddress.city}, Việt Nam
+                {/* <h3 className='font-bold'>Name: {orders?.accountId.name}</h3> */}
+                <p className='mt-2 text-gray-700'>
+                  <strong>Tên:</strong>
+                  {orders?.accountId.name}
                 </p>
-                <span>Zip: {orders?.deliveryAddress.zip}</span>
-                <h2 className='text-md font-[300px]'>STD: {orders?.accountId.phone}</h2>
+                <p className='mt-2 text-gray-700'>
+                  <strong>Địa Chỉ:</strong>
+                  {orders?.deliveryAddress},Việt Nam.
+                </p>
+                {/* <p className="mt-2 text-gray-700"><strong>Zip: </strong>{orders?.menuItemId?.deliveryAddress.zip}</p> */}
+                <p className='mt-2 text-gray-700'>
+                  <strong>SDT: </strong>
+                  {orders?.accountId.phone}
+                </p>
               </div>
             </div>
             <div className='flex justify-end'>
-              {orders?.status == 'pending' ? (
+              {orders?.status === 'pending' ? (
                 <div className='flex justify-center items-start gap-2'>
                   <button
                     id={orders?._id}
                     value='canceled'
                     onClick={(event) => handleChangeStatus(event)}
-                    className='bg-[#F7F7F7] round-sm p-2'
+                    className='bg-[#F7F7F7] rounded-sm p-2'
                   >
                     CANCEL
                   </button>
                   <button
                     id={orders?._id}
-                    value='accept'
+                    value='in-progress'
                     onClick={(event) => handleChangeStatus(event)}
-                    className='bg-[#0D6EFD] round-sm p-2'
+                    className='bg-[#0D6EFD] rounded-sm p-2'
                   >
-                    ACCEPT
+                    In-Progress
+                  </button>
+                </div>
+              ) : orders?.status === 'in-progress' ? (
+                <div className='flex justify-center items-start gap-2'>
+                  <button
+                    id={orders?._id}
+                    value='completed'
+                    onClick={(event) => handleChangeStatus(event)}
+                    className='bg-[#28a745] rounded-sm p-2'
+                  >
+                    Completed
                   </button>
                 </div>
               ) : (

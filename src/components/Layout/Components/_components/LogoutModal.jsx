@@ -11,6 +11,7 @@ import { Link } from 'react-router-dom'
 import { useState } from 'react'
 import { Typography } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 import { Button } from '~/components/ui/Button'
 import { routes } from '~/configs'
@@ -38,8 +39,11 @@ export default function LogoutModal({ className, children, disabled = false, set
       setUser(null)
       setUserInfo(null)
 
+      toast.success('Đăng xuất thành công!')
       navigate(routes.HOME)
-    } catch (error) {}
+    } catch (error) {
+      toast.error('Đã có lỗi xảy ra, thử lại sau!')
+    }
   }
 
   return (

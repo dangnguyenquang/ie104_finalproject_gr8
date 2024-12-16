@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-export default function ourCommit() {
+const OurCommit = () => {
   return (
     <div className='py-20 flex justify-center items-center'>
       <div>
@@ -83,3 +83,5 @@ export default function ourCommit() {
     </div>
   )
 }
+
+export default OurCommit

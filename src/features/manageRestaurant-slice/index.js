@@ -38,8 +38,10 @@ export const fetchRestaurants = createAsyncThunk(
 
 export const updateRestaurant = createAsyncThunk(
   'admin/updateRestaurant',
-  async ({ idRest, status }) => {
-    const result = await api.patch(`/admin/restaurant/change-status-restaurant/${idRest}`, status)
+  async ({ idRest, status_rest }) => {
+    const result = await api.patch(`/admin/restaurant/change-status-restaurant/${idRest}`, {
+      status: status_rest,
+    })
     return result?.data
   },
 )
@@ -72,12 +74,13 @@ const ManageRestaurantSlice = createSlice({
         state.error = null
       })
       .addCase(updateRestaurant.fulfilled, (state) => {
-        ;(state.isLoading = false), (state.error = null)
+        state.isLoading = false
+        state.error = null
       })
       .addCase(updateRestaurant.rejected, (state, action) => {
-        ;(state.isLoading = false),
-          (state.error = action.error.message),
-          (state.checkAuth = action.payload)
+        state.isLoading = false
+        state.error = action.error.message
+        state.checkAuth = action.payload
       })
   },
 })

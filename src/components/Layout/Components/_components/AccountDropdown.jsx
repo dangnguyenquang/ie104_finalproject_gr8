@@ -6,18 +6,19 @@ import MenuItem from '@mui/material/MenuItem'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import Divider from '@mui/material/Divider'
 import IconButton from '@mui/material/IconButton'
-import Typography from '@mui/material/Typography'
 import Tooltip from '@mui/material/Tooltip'
-import PersonAdd from '@mui/icons-material/PersonAdd'
-import Settings from '@mui/icons-material/Settings'
+import RestaurantIcon from '@mui/icons-material/Restaurant'
 import Logout from '@mui/icons-material/Logout'
 import HistoryIcon from '@mui/icons-material/History'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings'
 import { Link } from 'react-router-dom'
 import { routes } from '~/configs'
 import authApi from '~/apis/auth'
 import useAuth from '~/stores/useAuth'
 import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
+import useCheckRole from '~/hooks/useCheckRole'
 
 export default function AccountMenu({ user, setUserInfo }) {
   const { logout, setUser } = useAuth()
@@ -35,7 +36,11 @@ export default function AccountMenu({ user, setUserInfo }) {
       logout()
       setUser(null)
       setUserInfo(null)
-    } catch (error) {}
+
+      toast.success('Đăng xuất thành công!')
+    } catch (error) {
+      toast.error('Đã xảy ra lỗi, thử lại sau!')
+    }
 
     navigate(routes.HOME)
     handleClose()
@@ -121,6 +126,27 @@ export default function AccountMenu({ user, setUserInfo }) {
             Lịch sử mua hàng
           </MenuItem>
         </Link>
+        {useCheckRole('seller') && (
+          <Link to={routes.RESTAURANT_DASHBOARD}>
+            <MenuItem onClick={handleClose} sx={{ paddingTop: '8px', paddingBottom: '8px' }}>
+              <ListItemIcon>
+                <RestaurantIcon fontSize='small' />
+              </ListItemIcon>
+              Nhà hàng của tôi
+            </MenuItem>
+          </Link>
+        )}
+
+        {useCheckRole('admin') && (
+          <Link to={routes.ADMIN_MANAGEACCOUNT}>
+            <MenuItem onClick={handleClose} sx={{ paddingTop: '8px', paddingBottom: '8px' }}>
+              <ListItemIcon>
+                <AdminPanelSettingsIcon fontSize='small' />
+              </ListItemIcon>
+              Admin
+            </MenuItem>
+          </Link>
+        )}
 
         <Divider sx={{ marginTop: '5px', marginBottom: '5px' }} />
 

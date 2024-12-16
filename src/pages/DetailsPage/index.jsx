@@ -150,15 +150,26 @@ const DetailsPage = () => {
           >
             <h2 className='font-bold text-primary text-[30px] mb-10'>GIỎ HÀNG CỦA TÔI</h2>
             <div className='flex flex-col gap-3 max-h-[400px] overflow-y-auto px-1 py-2'>
-              {cart?.map((item) => (
-                <FoodCart
-                  foodInfo={item}
-                  key={item?._id}
-                  onIncrease={() => handleIncreaseQuantity(item?._id)}
-                  onDecrease={() => handleDecreaseQuantity(item?._id)}
-                  onChangeQuality={(value) => onChangeQuality(item?._id, value)}
-                />
-              ))}
+              {cart.length !== 0 ? (
+                cart?.map((item) => (
+                  <FoodCart
+                    foodInfo={item}
+                    key={item?._id}
+                    onIncrease={() => handleIncreaseQuantity(item?._id)}
+                    onDecrease={() => handleDecreaseQuantity(item?._id)}
+                    onChangeQuality={(value) => onChangeQuality(item?._id, value)}
+                  />
+                ))
+              ) : (
+                <div className='opacity-50'>
+                  <img
+                    src='/assets/images/empty_cart.png'
+                    alt=''
+                    className='mx-auto max-w-60 mt-[-30px] h-auto'
+                  />
+                  <p className='text-center mt-[-30px]'>Giỏ hàng của bạn đang trống</p>
+                </div>
+              )}
             </div>
 
             <div className='w-full py-4 mt-5 flex flex-col items-center'>

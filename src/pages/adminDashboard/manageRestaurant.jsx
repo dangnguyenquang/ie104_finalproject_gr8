@@ -5,13 +5,20 @@ import { useSelector, useDispatch } from 'react-redux'
 import { ToastContainer } from 'react-toastify'
 import TablePagination from '@mui/material/TablePagination'
 import hero from '../../assets/hero.png'
-import { fetchRestaurants } from '../../features/manageRestaurant-slice'
-import { FailedAccess } from '../../components/common/Notification.jsx'
+import DetailRest from '~/components/Dashboard/commom/DetailRest'
+import { fetchRestaurants, updateRestaurant } from '../../features/manageRestaurant-slice'
+import {
+  FailedAccess,
+  SuccessfulNotification,
+  FailedNotification,
+} from '../../components/common/Notification.jsx'
 const ManageRestaurant = () => {
   const [status, setStatus] = useState('all')
   const [openStatus, setOpenStatus] = useState(false)
   const [skipPage, setSkipPage] = useState(0) //0 is the first page
   const [idRest, setIdRest] = useState(null)
+  const [openForm, setOpenForm] = useState(false)
+  const [restaurant, setRestaurant] = useState(null)
   // const [page,setPage] =useState(0) //0 is the first page
   const [rowsPerPage, setRowPerPage] = useState(5) //default rows per page
   const { isLoading, error, checkAuth, restaurantList, number_row } = useSelector(
@@ -19,7 +26,12 @@ const ManageRestaurant = () => {
   )
   const dispatch = useDispatch()
   const navigate = useNavigate()
-
+  // handle Form
+  const handleForm = (val) => {
+    console.log(val)
+    setRestaurant(val)
+    setOpenForm(!openForm)
+  }
   // handle page change
   const handleChangePage = (event, newPage) => {
     console.log(newPage, 'thực sự nhớ em')
@@ -42,6 +54,54 @@ const ManageRestaurant = () => {
     console.log(openStatus)
     setIdRest(id)
   }
+  const handleActive = async (id, status_rest) => {
+    try {
+      if (status_rest !== 'active') {
+        const data = await dispatch(updateRestaurant({ idRest: id, status_rest: 'active' }))
+        console.log(data)
+        if (!isLoading && !error) {
+          dispatch(fetchRestaurants({ status, skipPage, rowsPerPage }))
+          SuccessfulNotification('Update Status')
+        }
+      }
+      console.log(id, status, 'hello anh em')
+    } catch (err) {
+      FailedNotification('Update Status')
+      console.error(err.message)
+    }
+  }
+  const handleInActive = async (id, status_rest) => {
+    try {
+      if (status_rest !== 'inactive') {
+        const data = await dispatch(updateRestaurant({ idRest: id, status_rest: 'inactive' }))
+        console.log(data)
+        if (!isLoading && !error) {
+          dispatch(fetchRestaurants({ status, skipPage, rowsPerPage }))
+          SuccessfulNotification('Update Status')
+        }
+      }
+      // console.log(id, status, 'hello anh em')
+    } catch (err) {
+      FailedNotification('Update Status')
+      console.error(err.message)
+    }
+  }
+  const handleDeny = async (id, status_rest) => {
+    try {
+      if (status_rest !== 'deny') {
+        const data = await dispatch(updateRestaurant({ idRest: id, status_rest: 'deny' }))
+        console.log(data)
+        if (!isLoading && !error) {
+          dispatch(fetchRestaurants({ status, skipPage, rowsPerPage }))
+          SuccessfulNotification('Update Status')
+        }
+      }
+      // console.log(id, status, 'hello anh em')
+    } catch (err) {
+      FailedNotification('Update Status')
+      console.error(err.message)
+    }
+  }
 
   useEffect(() => {
     console.log(status)
@@ -61,7 +121,6 @@ const ManageRestaurant = () => {
   console.log(restaurantList)
   return (
     <LoadingOverlay active={isLoading} spinner Text='Loading ...' className='h-[650px]'>
-      <ToastContainer limit={1} />
       <div className='relative mx-5 my-2 px-3 py-4'>
         <div className='mb-3'>
           <h3 className='text-3xl font-[700] font-family color-1 text-left mb-4 '>
@@ -82,7 +141,7 @@ const ManageRestaurant = () => {
             className={`${status == 'active' ? 'border-b-4' : 'border-none'} border-orange-500 flex items-center gap-1`}
           >
             <h4>Đang hoạt động</h4>
-            <span>(3)</span>
+            <span></span>
           </button>
           <button
             value='inactive'
@@ -98,6 +157,14 @@ const ManageRestaurant = () => {
             className={`${status == 'pending' ? 'border-b-4' : 'border-none'} border-orange-500 flex items-center gap-1`}
           >
             <h4>Chờ duyệt bởi Admin</h4>
+            <span></span>
+          </button>
+          <button
+            value='deny'
+            onClick={() => handleChangeStatus('deny')}
+            className={`${status == 'deny' ? 'border-b-4' : 'border-none'} border-orange-500 flex items-center gap-1`}
+          >
+            <h4>Từ chối bởi Admin</h4>
             <span></span>
           </button>
         </div>
@@ -146,8 +213,8 @@ const ManageRestaurant = () => {
                         <td
                           style={{
                             color:
-                              rest?.state == 'pending'
-                                ? 'yellow'
+                              rest?.status == 'pending'
+                                ? '#ffc107'
                                 : rest?.status == 'active'
                                   ? 'green'
                                   : 'brown',
@@ -167,21 +234,32 @@ const ManageRestaurant = () => {
                                 className='relative ms-auto bg-[#d6cdcd] mt-[10px] w-[80px] py-2  flex flex-col gap-1 transition-all '
                               >
                                 <button
-                                  onClick={() => handleActive(rest?._id, rest?.state)}
+                                  onClick={() => handleActive(rest?._id, rest?.status)}
                                   className='hover:text-blue-500 text-start w-full'
                                 >
                                   <span className='ms-2'>Active</span>
                                 </button>
                                 <button
-                                  onClick={() => handleInActive(rest?._id, rest?.state)}
+                                  onClick={() => handleInActive(rest?._id, rest?.status)}
                                   className='hover:text-blue-500 text-start w-full'
                                 >
                                   <span className='ms-2'>Inactive</span>
                                 </button>
+                                <button
+                                  onClick={() => handleDeny(rest?._id, rest?.status)}
+                                  className='hover:text-blue-500 text-start w-full'
+                                >
+                                  <span className='ms-2'>Deny</span>
+                                </button>
                               </div>
                             </div>
                             <div>
-                              <button className='cursor-pointer text-blue-400'>Xem thêm</button>
+                              <button
+                                onClick={() => handleForm(rest)}
+                                className='cursor-pointer text-blue-400'
+                              >
+                                Xem thêm
+                              </button>
                             </div>
                           </div>
                         </td>
@@ -259,6 +337,16 @@ const ManageRestaurant = () => {
           </div>
         </div>
       </div>
+      <DetailRest
+        className={`${!openForm ? 'hidden' : 'block animation-form'}  max-w-[720px] z-[100] w-full px-5 text-left py-10 fixed mt-[70px]  left-[50%] -translate-x-[50%] bg-[#FFFFFF] text-[#212B36] shadow-[0_0_2px_0_(rgba(145,158,171,0.08),0_12px_24px_-4px_(rgba(145,158,171,0.08))]`}
+        restaurant={restaurant}
+        setOpenForm={setOpenForm}
+        openForm={openForm}
+        handleActive={handleActive}
+        handleInActive={handleInActive}
+        handleDeny={handleDeny}
+      />
+      <div className={`fixed ${openForm ? 'inset-0' : ''} bg-black opacity-20 z-10`}></div>
     </LoadingOverlay>
   )
 }
