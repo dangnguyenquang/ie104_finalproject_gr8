@@ -9,7 +9,7 @@ import { useTheme } from '@mui/material/styles'
 import CloseIcon from '@mui/icons-material/Close'
 import { Link } from 'react-router-dom'
 import { useState } from 'react'
-import { Typography } from '@mui/material'
+import { toast } from 'react-toastify'
 
 import { Button } from '~/components/ui/Button'
 import Logo from '~/assets/icons/logo.svg'
@@ -19,12 +19,12 @@ import { routes } from '~/configs'
 import authApi from '~/apis/auth'
 import useAuth from '~/stores/useAuth'
 
-export default function LoginModal({ className, children, disabled = false }) {
+export default function LoginModal({ className, children, disabled = false, setUserInfo }) {
   const [open, setOpen] = useState(false)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-  const { setUser } = useAuth()
+  const { setUser, login } = useAuth()
 
   const theme = useTheme()
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'))
@@ -42,7 +42,15 @@ export default function LoginModal({ className, children, disabled = false }) {
       const res = await authApi.signIn(email, password)
 
       setUser(res.user)
-    } catch (error) {}
+      login()
+
+      setUserInfo(res.user)
+      res.user
+        ? toast.success('Đăng nhập thành công!')
+        : toast.error('Tên đăng nhập hoặc mật khẩu không đúng!')
+    } catch (error) {
+      toast.error('Đã có lỗi xảy ra, thử lại sau!')
+    }
   }
 
   return (

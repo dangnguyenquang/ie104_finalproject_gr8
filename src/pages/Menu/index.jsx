@@ -11,6 +11,7 @@ import Box from '@mui/material/Box'
 import { Pagination } from '@mui/material'
 import Rating from '@mui/material/Rating'
 import Typography from '@mui/material/Typography'
+import Checkbox from '@mui/material/Checkbox'
 import authApi from '~/apis/auth'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 
@@ -18,6 +19,7 @@ const Menu = () => {
   const debounceRef = useRef(null)
   const navigate = useNavigate()
   const [page, setPage] = useState(1)
+  const [isFilterRating, setIsFilterRating] = useState(false)
 
   // lấy dữ liệu kết quả Restaurant trả về
   const [Restaurants, setRestaurants] = useState([])
@@ -35,8 +37,8 @@ const Menu = () => {
     boroughRestaurant: '',
     nameRestaurant: '',
     nameFood: '',
-    categrories: '',
-    starMedium: '5',
+    categories: '',
+    starMedium: '0',
     typeSort: 'Best seller',
   })
 
@@ -132,7 +134,7 @@ const Menu = () => {
     setSelectedCategories(categoriesArray)
     setFilterList((prevFilterList) => ({
       ...prevFilterList,
-      categrories: categoriesArray,
+      categories: categoriesArray,
       [typeSearch === 'restaurant' ? 'nameRestaurant' : 'nameFood']: search,
     }))
   }, [searchParams])
@@ -167,12 +169,12 @@ const Menu = () => {
     )
     console.log(selectedCategories)
     setFilterList((prevFilterList) => {
-      const updatedCategrories = isChecked
+      const updatedCategories = isChecked
         ? [...selectedCategories, category]
         : selectedCategories.filter((d) => d !== category)
       return {
         ...prevFilterList,
-        categrories: updatedCategrories.length > 0 ? updatedCategrories : '',
+        categories: updatedCategories.length > 0 ? updatedCategories : '',
       }
     })
   }
@@ -188,7 +190,7 @@ const Menu = () => {
   }
 
   // hook xử lý filter lọc theo số sao
-  const [countStar, setCountStar] = useState(5)
+  const [countStar, setCountStar] = useState(3)
   const handleRating = (event) => {
     setCountStar(Number(event.target.value))
     setFilterList((prevFilterList) => ({
@@ -196,6 +198,21 @@ const Menu = () => {
       starMedium: event.target.value,
     }))
   }
+
+  const handleUpdateRatingCheckbox = () => {
+    setFilterList((prevFilterList) => ({
+      ...prevFilterList,
+      starMedium: !isFilterRating ? '0' : countStar,
+    }))
+  }
+
+  const handleCheckboxChange = (event) => {
+    setIsFilterRating(event.target.checked)
+  }
+
+  useEffect(() => {
+    handleUpdateRatingCheckbox()
+  }, [isFilterRating])
 
   // Hàm cuộn lên đầu trang
   const scrollToTop = () => {
@@ -244,19 +261,44 @@ const Menu = () => {
           <div className='2xl:min-w-[300px] min-w-[210px] lg:min-w-[230px]'>
             <div className='bg-primary rounded-t-[20px] h-[95px] justify-center items-center flex gap-1'>
               <img src='../src/assets/icons/menu/filter_icon.svg' alt='' />
-              <div className='text-accent font-bold text-[20px] 2xl:text-[25px] uppercase text-center'>
+              <div className='text-accent font-bold text-[18px] 2xl:text-[25px] uppercase text-center'>
                 Bộ lọc tìm kiếm
               </div>
             </div>
-            <div className='bg-[#f0f1f2] p-5 rounded-b-[20px]'>
+            <div className='bg-[#f0f1f2] p-5 pr-4 rounded-b-[20px]'>
               <div className=''>
                 <Box>
-                  <Typography component='legend'>
-                    <div className='text-[20px] text-primaryText font-bold'>Quán có số sao từ</div>
-                  </Typography>
+                  <div className='flex justify-between items-center'>
+                    <Typography component='legend'>
+                      <div
+                        className={`text-[18px] font-bold ${!isFilterRating ? 'text-gray-400' : 'text-primaryText'}`}
+                      >
+                        Quán có số sao từ
+                      </div>
+                    </Typography>
+
+                    <Checkbox
+                      checked={isFilterRating}
+                      onChange={handleCheckboxChange}
+                      sx={{
+                        '&.Mui-checked': {
+                          color: '#7D0600',
+                        },
+                      }}
+                    />
+                  </div>
                   <div className='flex items-end'>
-                    <Rating name='simple-controlled' value={countStar} onChange={handleRating} />
-                    <div className='ml-2 text-primaryText'>trở lên</div>
+                    <Rating
+                      name='simple-controlled'
+                      value={countStar}
+                      onChange={handleRating}
+                      disabled={!isFilterRating}
+                    />
+                    <div
+                      className={`ml-2 ${!isFilterRating ? 'text-gray-400' : 'text-primaryText'}`}
+                    >
+                      trở lên
+                    </div>
                   </div>
                 </Box>
               </div>
