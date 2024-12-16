@@ -52,7 +52,14 @@ const MyRestaurant = () => {
     }))
     setIsChanged(true)
   }
-  // const [imageList, setImageList] = useState([])
+
+  // Hàm để format thời gian đúng định dạng HH:mm
+  const formatTime = (time) => {
+    if (!time) return ''
+    const [hour, minute] = time.split(':')
+    return `${hour.padStart(2, '0')}:${minute.padStart(2, '0')}`
+  }
+
   const handleSave = async () => {
     try {
       const formData = new FormData()
@@ -62,17 +69,11 @@ const MyRestaurant = () => {
       formData.append('time_open', restaurantInfo.time_open)
       formData.append('time_close', restaurantInfo.time_close)
       formData.append('address', JSON.stringify(restaurantInfo.address))
-
-      // Nếu có ảnh avatar hợp lệ
       if (avatar && typeof avatar === 'object') {
-        formData.append('avatar', avatar) // File avatar dạng binary
+        formData.append('avatar', avatar)
       }
-
-      // Tạo mảng imageList với các giá trị hợp lệ hoặc null
       images.forEach((image) => formData.append('images', image))
       formData.append('index', JSON.stringify(indexes))
-
-      // Gửi dữ liệu lên server
       const res = await RestaurantApiInstance.patchMyRestaurant(formData)
       toast.success('Cập nhật thông tin thành công!')
       setIndexes([])
@@ -89,6 +90,7 @@ const MyRestaurant = () => {
   }
 
   const [indexes, setIndexes] = useState([])
+
   const handleUploadImage = (index, file) => {
     const updatedImages = [...images]
     setIndexes((prevIndexes) => {
@@ -101,6 +103,7 @@ const MyRestaurant = () => {
     setImages(updatedImages)
     setIsChanged(true)
   }
+
   return (
     <Container maxWidth='md' className='p-5'>
       <Box display='flex' flexDirection={{ xs: 'column', sm: 'row' }} gap={4}>
@@ -138,16 +141,18 @@ const MyRestaurant = () => {
             <TextField
               label='Giờ mở cửa'
               fullWidth
-              value={restaurantInfo.time_open}
+              value={formatTime(restaurantInfo.time_open)}
               onChange={(e) => handleInputChange('time_open', e.target.value)}
               margin='normal'
+              type='time'
             />
             <TextField
               label='Giờ đóng cửa'
               fullWidth
-              value={restaurantInfo.time_close}
+              value={formatTime(restaurantInfo.time_close)}
               onChange={(e) => handleInputChange('time_close', e.target.value)}
               margin='normal'
+              type='time'
             />
           </Box>
           <TextField
