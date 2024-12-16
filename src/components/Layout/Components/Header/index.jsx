@@ -73,9 +73,9 @@ const Header = ({ toggleSidebar }) => {
           <Link to={routes.CUSTOMER_REGISTER}>
             <Button variant='outline'>Đăng ký</Button>
           </Link>
-          <LoginModal setUserInfo={(user) => setUserInfo(user)}>
-            <Button className='bg-secondary hover:bg-secondary'>Đăng nhập</Button>
-          </LoginModal>
+          <Button className='bg-secondary hover:bg-secondary'>
+            <LoginModal setUserInfo={(user) => setUserInfo(user)}>Đăng nhập</LoginModal>
+          </Button>
         </div>
       ) : (
         <div className='max-md:hidden'>

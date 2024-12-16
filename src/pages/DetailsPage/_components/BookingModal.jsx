@@ -5,11 +5,12 @@ import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
 import useMediaQuery from '@mui/material/useMediaQuery'
+import { useNavigate } from 'react-router-dom'
 import { useTheme } from '@mui/material/styles'
 import CloseIcon from '@mui/icons-material/Close'
 import { Link } from 'react-router-dom'
 import { useState } from 'react'
-import { Typography } from '@mui/material'
+import { toast } from 'react-toastify'
 
 import { Button } from '~/components/ui/Button'
 import RequiredTextField from '~/components/ui/RequiredTextField'
@@ -24,6 +25,8 @@ export default function BookingModal({
   restaurantId,
   items,
 }) {
+  const navigate = useNavigate()
+
   const [open, setOpen] = useState(false)
   const [phone, setPhone] = useState(user?.phone)
   const [address, setAddress] = useState(user?.address)
@@ -49,7 +52,12 @@ export default function BookingModal({
         phone,
         message,
       })
-    } catch (error) {}
+
+      toast.success('Đặt món thành công!')
+      navigate(routes.ORDER_TRACKING)
+    } catch (error) {
+      toast.success('Đã có lỗi xảy ra, thử lại sau!')
+    }
   }
 
   return (

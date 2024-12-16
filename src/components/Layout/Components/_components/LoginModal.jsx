@@ -9,7 +9,7 @@ import { useTheme } from '@mui/material/styles'
 import CloseIcon from '@mui/icons-material/Close'
 import { Link } from 'react-router-dom'
 import { useState } from 'react'
-import { Typography } from '@mui/material'
+import { toast } from 'react-toastify'
 
 import { Button } from '~/components/ui/Button'
 import Logo from '~/assets/icons/logo.svg'
@@ -45,7 +45,12 @@ export default function LoginModal({ className, children, disabled = false, setU
       login()
 
       setUserInfo(res.user)
-    } catch (error) {}
+      res.user
+        ? toast.success('Đăng nhập thành công!')
+        : toast.error('Tên đăng nhập hoặc mật khẩu không đúng!')
+    } catch (error) {
+      toast.error('Đã có lỗi xảy ra, thử lại sau!')
+    }
   }
 
   return (

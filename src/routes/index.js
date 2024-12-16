@@ -4,11 +4,11 @@ import Menu from '~/pages/Menu'
 import SellerRegisterForm from '~/pages/SellerRegisterForm'
 import CustomerRegisterForm from '~/pages/CustomerRegisterForm'
 
-import ourCommit from '~/pages/ourCommit'
-import privacyPolicy from '~/pages/privacyPolicy'
-import orderInstructions from '~/pages/OrderInstructions'
-import contactInstructions from '~/pages/ContactInstructions'
-import operatingPolicy from '~/pages/OperatingPolicy'
+import OurCommit from '~/pages/OurCommit'
+import PrivacyPolicy from '~/pages/PrivacyPolicy'
+import OrderInstructions from '~/pages/OrderInstructions'
+import ContactInstructions from '~/pages/ContactInstructions'
+import OperatingPolicy from '~/pages/OperatingPolicy'
 import OrderTrackingPage from '~/pages/OrderTracking'
 import DetailAccount from '~/pages/DetailAccount'
 import RestaurantDashboard from '~/pages/Restaunrant'
@@ -19,11 +19,11 @@ const publicRoutes = [
   { path: routes.HOME, component: Home },
   // { path: routes.MENU, component: Menu },
   { path: routes.ABOUTUS, component: AboutUs },
-  { path: routes.OURCOMMIT, component: ourCommit },
-  { path: routes.PRIVACYPOLICY, component: privacyPolicy },
-  { path: routes.ORDERINSTRUCTIONS, component: orderInstructions },
-  { path: routes.CONTACTINSTRUCTIONS, component: contactInstructions },
-  { path: routes.OPERATINGPOLICY, component: operatingPolicy },
+  { path: routes.OURCOMMIT, component: OurCommit },
+  { path: routes.PRIVACYPOLICY, component: PrivacyPolicy },
+  { path: routes.ORDERINSTRUCTIONS, component: OrderInstructions },
+  { path: routes.CONTACTINSTRUCTIONS, component: ContactInstructions },
+  { path: routes.OPERATINGPOLICY, component: OperatingPolicy },
   { path: routes.SELLER_REGISTER, component: SellerRegisterForm },
   { path: routes.MENU, component: CustomerRegisterForm },
   { path: routes.ORDER_TRACKING, component: OrderTrackingPage },

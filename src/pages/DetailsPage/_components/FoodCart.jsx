@@ -9,7 +9,7 @@ const FoodCart = ({ foodInfo, onIncrease, onDecrease, onChangeQuality }) => {
   const maxQuantityReached = foodInfo.quantity >= foodInfo.maxQuantity
 
   return (
-    <div className='relative w-[420px] h-[110px] px-3 py-5 flex gap-3 justify-between shadow-[0_3px_10px_rgb(0,0,0,0.2)] rounded-xl'>
+    <div className='scrollbar-hide relative w-[420px] h-[110px] px-3 py-5 flex gap-3 justify-between shadow-[0_3px_10px_rgb(0,0,0,0.2)] rounded-xl'>
       <img
         src={foodInfo.imageUrl[0].url}
         alt=''
