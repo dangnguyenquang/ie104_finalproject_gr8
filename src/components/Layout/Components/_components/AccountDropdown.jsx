@@ -11,6 +11,7 @@ import RestaurantIcon from '@mui/icons-material/Restaurant'
 import Logout from '@mui/icons-material/Logout'
 import HistoryIcon from '@mui/icons-material/History'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings'
 import { Link } from 'react-router-dom'
 import { routes } from '~/configs'
 import authApi from '~/apis/auth'
@@ -132,6 +133,17 @@ export default function AccountMenu({ user, setUserInfo }) {
                 <RestaurantIcon fontSize='small' />
               </ListItemIcon>
               Nhà hàng của tôi
+            </MenuItem>
+          </Link>
+        )}
+
+        {useCheckRole('admin') && (
+          <Link to={routes.ADMIN_MANAGEACCOUNT}>
+            <MenuItem onClick={handleClose} sx={{ paddingTop: '8px', paddingBottom: '8px' }}>
+              <ListItemIcon>
+                <AdminPanelSettingsIcon fontSize='small' />
+              </ListItemIcon>
+              Admin
             </MenuItem>
           </Link>
         )}

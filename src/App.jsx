@@ -1,5 +1,4 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import { publicRoutes, privateRoutes } from './routes'
 import { DefaultLayout } from './components/Layout'
 import RestaurantLayout from './components/Layout/RestaurantLayout'
 import { Fragment } from 'react'
@@ -63,7 +62,6 @@ function App() {
             <ProtectedRouteWrapper role={userRole} allowedRoles={['admin']} layout={Layout} />
           }
         >
-          <Route path='/v2/dashboard/admin' element={<AdminDashboard />} />
           <Route path='/v2/dashboard/admin/account' element={<ManageAccount />} />
           <Route path='/v2/dashboard/admin/restaurant' element={<ManageRestaurant />} />
           <Route path='/v2/dashboard/admin/specialty-food' element={<SpecialtyFood />} />

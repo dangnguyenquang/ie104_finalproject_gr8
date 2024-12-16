@@ -189,7 +189,7 @@ const navArrayAdmin = [
       </span>
     ),
     label: 'Manage Account',
-    navigate: 'admin/account',
+    navigate: '/v2/dashboard/admin/account',
   },
   {
     id: 'c',
@@ -245,7 +245,7 @@ const navArrayAdmin = [
       </span>
     ),
     label: 'Manage Restaurant',
-    navigate: 'admin/restaurant',
+    navigate: '/v2/dashboard/admin/restaurant',
   },
   {
     id: 'd',
@@ -313,7 +313,7 @@ const navArrayAdmin = [
       </span>
     ),
     label: 'Specialty Food',
-    navigate: 'admin/specialty-food',
+    navigate: '/v2/dashboard/admin/specialty-food',
   },
 ]
 const Nav = ({ isOpen, setOpen }) => {
