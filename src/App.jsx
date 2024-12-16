@@ -29,10 +29,10 @@ import OrderTrackingPage from '~/pages/OrderTracking'
 import DetailsPage from './pages/DetailsPage'
 import DetailAccount from './pages/DetailAccount'
 import OurCommit from './pages/OurCommitNew'
-import PrivacyPolicy from '~/pages/PrivacyPolicy'
-import OrderInstructions from '~/pages/OrderInstructions'
-import ContactInstructions from '~/pages/ContactInstructions'
-import OperatingPolicy from '~/pages/OperatingPolicy'
+import PrivacyPolicy from './pages/PrivacyPolicyNew'
+import OrderInstructions from './pages/OrderInstructionsNew'
+import ContactInstructions from './pages/ContactInstructionsNew'
+import OperatingPolicy from './pages/OperatingPolicyNew'
 
 function App() {
   const { user } = useAuth()
