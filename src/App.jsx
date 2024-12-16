@@ -28,7 +28,7 @@ import CustomerRegisterForm from '~/pages/CustomerRegisterForm'
 import OrderTrackingPage from '~/pages/OrderTracking'
 import DetailsPage from './pages/DetailsPage'
 import DetailAccount from './pages/DetailAccount'
-// import OurCommit from '~/pages/OurCommit'
+import OurCommit from '~/pages/OurCommit'
 import PrivacyPolicy from '~/pages/PrivacyPolicy'
 import OrderInstructions from '~/pages/OrderInstructions'
 import ContactInstructions from '~/pages/ContactInstructions'
@@ -51,7 +51,7 @@ function App() {
           <Route path='/order-tracking' element={<OrderTrackingPage />} />
           <Route path='/details/:id' element={<DetailsPage />} />
           <Route path='/detail-account' element={<DetailAccount />} />
-          {/* <Route path='/our-commit' element={<OurCommit />} /> */}
+          <Route path='/our-commit' element={<OurCommit />} />
           <Route path='/privacy-policy' element={<PrivacyPolicy />} />
           <Route path='/order-instructions' element={<OrderInstructions />} />
           <Route path='/contact-instructions' element={<ContactInstructions />} />
