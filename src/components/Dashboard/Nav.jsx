@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, Link, useLocation } from 'react-router-dom'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHome } from '@fortawesome/free-solid-svg-icons'
+import PersonPinIcon from '@mui/icons-material/PersonPin'
 import background from '../../assets/images/admin/background.png'
 import UseResponsive from '../../hooks/useResponsive'
 const navArrayRestaurant = [
@@ -130,7 +129,7 @@ const navArrayRestaurant = [
   },
   {
     id: 5,
-    icon: <FontAwesomeIcon icon={faHome} size='2x' color='white' />,
+    icon: <PersonPinIcon sx={{ color: 'white' }} fontSize='large' />,
     label: 'Nhà hàng của tôi',
     navigate: '/v2/dashboard/restaurant/my-restaurant',
   },

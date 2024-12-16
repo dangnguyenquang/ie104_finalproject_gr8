@@ -77,7 +77,7 @@ function App() {
           <Route path='/v2/dashboard/restaurant/manage-items' element={<ManageItems />} />
           <Route path='/v2/dashboard/restaurant/manage-orders' element={<ManageOrders />} />
           <Route path='/v2/dashboard/restaurant/send-email' element={<ManageMails />} />
-          <Route path='restaurant/my-restaurant' element={<MyRestaurant />} />
+          <Route path='/v2/dashboard/restaurant/my-restaurant' element={<MyRestaurant />} />
         </Route>
       </Routes>
       <ToastContainer />
