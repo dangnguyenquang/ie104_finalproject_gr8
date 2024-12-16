@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-export default function contactInstructions() {
+export default function ContactInstructions() {
   return (
     <div className='py-20 flex justify-center items-center'>
       <div>

@@ -8,6 +8,9 @@ import PasswordTextField from '~/components/ui/PasswordTextField'
 import EmailTextField from '~/components/ui/EmailTextField'
 import NameTextField from '~/components/ui/NameTextField'
 import authApi from '~/apis/auth'
+import { Link } from 'react-router-dom'
+import { routes } from '~/configs'
+import { useNavigate } from 'react-router-dom'
 
 const CustomerRegisterForm = () => {
   const [name, setName] = useState('')
@@ -17,6 +20,7 @@ const CustomerRegisterForm = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
+  const navigate = useNavigate()
 
   const handleCustomerRegister = async () => {
     const formData = new FormData()
@@ -35,7 +39,9 @@ const CustomerRegisterForm = () => {
 
     try {
       const res = await authApi.customerRegister(formData)
-      toast.success('Đăng ký thành công!')
+      toast.success('Đăng ký thành công, hãy đăng nhập lại!')
+
+      navigate(routes.HOME)
     } catch (error) {
       console.error(error)
       toast.error('Đã xảy ra lỗi trong quá trình đăng ký!')
@@ -51,7 +57,9 @@ const CustomerRegisterForm = () => {
 
       <div className='text-center text-primaryText my-5'>
         Bạn muốn trở thành đối tác của chúng tôi?
-        <Button variant='none'>Đăng ký trở thành người bán hàng ngay</Button>
+        <Link to={routes.SELLER_REGISTER}>
+          <Button variant='none'>Đăng ký trở thành người bán hàng ngay</Button>
+        </Link>
       </div>
 
       {/* Họ và tên */}

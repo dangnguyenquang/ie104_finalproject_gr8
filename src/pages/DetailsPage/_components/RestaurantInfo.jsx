@@ -4,13 +4,13 @@ import AccessTimeFilledIcon from '@mui/icons-material/AccessTimeFilled'
 
 const RestaurantInfo = ({ restaurantInfo }) => {
   return (
-    <div className='w-full bg-primary py-8 px-6 flex flex-col gap-5 text-white rounded-2xl bg-opacity-90'>
+    <div className='w-full bg-primary py-8 px-6 flex flex-col gap-5 text-white rounded-2xl'>
       <div className='flex justify-between items-center'>
         <h1 className='text-[30px] font-bold'>{restaurantInfo.name}</h1>
-        <div className='flex items-center justify-center text-[20px] font-medium gap-1'>
-          <p>{restaurantInfo.starMedium}/5</p>
-          <StarRateIcon className='text-yellow-400' sx={{ fontSize: '26px' }} />
-        </div>
+      </div>
+      <div className='flex items-center justify-start text-[20px] font-medium gap-1'>
+        <p>{restaurantInfo.starMedium}/5</p>
+        <StarRateIcon className='text-yellow-400' sx={{ fontSize: '26px' }} />
       </div>
       <div className='flex justify-between'>
         <p>{`${`${restaurantInfo.address.street} ${restaurantInfo.address.borough} ${restaurantInfo.address.city}`}`}</p>
@@ -26,10 +26,6 @@ const RestaurantInfo = ({ restaurantInfo }) => {
             <span>{`${restaurantInfo.time_open} - ${restaurantInfo.time_close}`}</span>
           </div>
         </div>
-
-        <p>
-          <strong>Đã bán:</strong> {restaurantInfo.quantitySolded}
-        </p>
       </div>
       <p>
         <strong>Mô tả:</strong> {restaurantInfo.description}

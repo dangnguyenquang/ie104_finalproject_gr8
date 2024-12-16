@@ -5,6 +5,8 @@ import { Chip } from '@mui/material'
 import OrderItem from './OrderItem'
 import ReviewModal from '~/components/Layout/Components/_components/ReviewModal'
 import ordersApi from '~/apis/orders'
+import { routes } from '~/configs'
+import { Link } from 'react-router-dom'
 
 const formatNumber = (number) => {
   return new Intl.NumberFormat().format(number)
@@ -98,12 +100,14 @@ const OrderCard = ({ order }) => {
           </Button>
         )}
 
-        <Button
-          variant='outline'
-          className='w-full sm:w-32 h-10 bg-[#c8c8c8] hover:bg-[#c8c8c8]/80 text-center text-primaryText text-sm font-bold leading-[28px]'
-        >
-          Quay lại
-        </Button>
+        <Link to={`${routes.DETAILS}/${order.restaurantId}`}>
+          <Button
+            variant='outline'
+            className='w-full sm:w-32 h-10 bg-[#c8c8c8] hover:bg-[#c8c8c8]/80 text-center text-primaryText text-sm font-bold leading-[28px]'
+          >
+            Quay lại quán
+          </Button>
+        </Link>
       </div>
 
       {/* Review Modal */}

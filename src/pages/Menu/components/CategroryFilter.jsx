@@ -4,7 +4,7 @@ import FormGroup from '@mui/material/FormGroup'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import Checkbox from '@mui/material/Checkbox'
 
-const Categrories = [
+const Categories = [
   'Đồ uống',
   'Thức ăn nhanh',
   'Món Á',
@@ -20,7 +20,7 @@ const CategroryFilter = ({ selectedCategories, handleSelectCategories }) => {
     <div>
       <div className='text-[20px] text-primaryText font-bold'>Danh mục món ăn</div>
       <FormGroup>
-        {Categrories.map((category, index) => (
+        {Categories.map((category, index) => (
           <FormControlLabel
             control={
               <Checkbox
