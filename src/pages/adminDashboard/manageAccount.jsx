@@ -6,6 +6,7 @@ import TablePagination from '@mui/material/TablePagination'
 import defaultAva from '../../assets/images/admin/default_acc.jpg'
 import api from '~/features/api'
 import PopupDelete from './components/PopupDelete'
+import { toast } from 'react-toastify'
 
 const ManageAccount = () => {
   const [allUsers, setAllUsers] = React.useState([])
@@ -44,7 +45,7 @@ const ManageAccount = () => {
     try {
       const res = await api.delete(`/admin/account/delete/${userId}`)
       if (res.data) {
-        alert('Tài khoản đã được xóa thành công!')
+        toast.success('Tài khoản đã được xóa thành công!')
         fetchDataAllUsers()
       }
     } catch (error) {

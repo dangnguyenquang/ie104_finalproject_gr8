@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import api from '~/features/api'
 import LoadingOverlay from 'react-loading-overlay-ts'
+import { toast } from 'react-toastify'
 
 const SpecialtyFood = () => {
   const [specialFood, setSpecialFood] = useState(null)
@@ -8,6 +9,7 @@ const SpecialtyFood = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isEditFood, setIsEditFood] = useState(false)
   const [editingFood, setEditingFood] = useState(null)
+
   const [imgFood, setImgFood] = useState(null)
   const [nameFood, setNameFood] = useState('')
 
@@ -27,15 +29,30 @@ const SpecialtyFood = () => {
     }
   }
 
+  // const openModal = (food = null) => {
+  //   console.log(food)
+  //   if (food) {
+  //     setEditingFood(food)
+  //     setNameFood(food.name)
+  //     setImgFood(food.imageUrl)
+  //   } else {
+  //     setEditingFood(null)
+  //     setNameFood('')
+  //     setImgFood('')
+  //   }
+  //   setIsModalOpen(true)
+  // }
   const openModal = (food = null) => {
     if (food) {
       setEditingFood(food)
       setNameFood(food.name)
+      setImgFood(food.imageUrl.url || '')
     } else {
       setEditingFood(null)
       setNameFood('')
+      setImgFood('')
     }
-    setImgFood(null)
+    console.log(food)
     setIsModalOpen(true)
   }
 
@@ -47,41 +64,93 @@ const SpecialtyFood = () => {
     setImgFood(e.target.files[0])
   }
 
+  // const handleSaveFood = async () => {
+  //   const formData = new FormData()
+  //   formData.append('name', nameFood)
+  //   if (imgFood) {
+  //     formData.append('image', imgFood)
+  //   }
+
+  //   try {
+  //     if (editingFood) {
+  //       await api.patch(`/admin/specialty-food/edit/${editingFood._id}`, formData)
+  //       alert('Cập nhật món ăn thành công!')
+  //     } else {
+  //       await api.post('/admin/specialty-food/create', formData)
+  //       alert('Thêm món ăn thành công!')
+  //     }
+  //     fetchAllSpecialFood()
+  //     closeModal()
+  //   } catch (error) {
+  //     console.error('Error saving food:', error)
+  //     alert(error.message || 'Đã xảy ra lỗi!')
+  //   }
+  // }
+
+  // const handleSaveFood = async () => {
+  //   const formData = new FormData();
+  //   formData.append('name', nameFood);
+  //   if (imgFood && typeof imgFood !== 'string') {
+  //     formData.append('image', imgFood);
+  //   }
+  // console.log(nameFood)
+  // console.log(imgFood)
+  //   try {
+  //     if (editingFood) {
+  //       await api.patch(`/admin/specialty-food/edit/${editingFood._id}`, formData);
+  //       alert('Cập nhật món ăn thành công!');
+  //     } else {
+  //       // Tạo món ăn mới
+  //       await api.post('/admin/specialty-food/create', formData);
+  //       alert('Thêm món ăn thành công!');
+  //     }
+  //     fetchAllSpecialFood();
+  //     closeModal();
+  //   } catch (error) {
+  //     console.error('Error saving food:', error);
+  //     alert(error.message || 'Đã xảy ra lỗi!');
+  //   }
+  // };
+
   const handleSaveFood = async () => {
     const formData = new FormData()
     formData.append('name', nameFood)
-    if (imgFood) {
+
+    // Nếu người dùng tải lên ảnh mới, thêm ảnh vào formData
+    if (imgFood && typeof imgFood !== 'string') {
       formData.append('image', imgFood)
     }
-
+    console.log(imgFood)
     try {
       if (editingFood) {
+        // Cập nhật món ăn
         await api.patch(`/admin/specialty-food/edit/${editingFood._id}`, formData)
-        alert('Cập nhật món ăn thành công!')
+        toast.success('Món ăn đã được chỉnh sửa!')
       } else {
+        // Tạo món ăn mới
         await api.post('/admin/specialty-food/create', formData)
-        alert('Thêm món ăn thành công!')
+        toast.success('Món ăn đã được thêm!')
       }
       fetchAllSpecialFood()
       closeModal()
     } catch (error) {
       console.error('Error saving food:', error)
-      alert(error.message || 'Đã xảy ra lỗi!')
+      toast.error('Không thể lưu món ăn!')
     }
   }
 
   const handleDeleteFood = async (foodID) => {
     if (!foodID) {
-      alert('Food ID is required')
+      toast.error('Không lấy được ID của món ăn')
       return
     }
     try {
       await api.delete(`/admin/specialty-food/delete/${foodID}`)
-      alert('Món ăn đã được xóa thành công!')
+      toast.success('Món ăn đã được xóa thành công!')
       fetchAllSpecialFood()
     } catch (error) {
       console.error('Error deleting food:', error)
-      alert('Đã xảy ra lỗi khi xóa món ăn')
+      toast.error('không thể xóa món ăn')
     }
   }
 
