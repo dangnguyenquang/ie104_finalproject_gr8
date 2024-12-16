@@ -4,6 +4,7 @@ const DetailOrder = ({ orders, className, openForm, setOpenForm, handleChangeSta
   const handleCloseForm = () => {
     setOpenForm(false)
   }
+  console.log(orders)
   return (
     <>
       <div className={`${className}  overflow-hidden`}>
@@ -72,13 +73,20 @@ const DetailOrder = ({ orders, className, openForm, setOpenForm, handleChangeSta
               <h2 className='text-xl font-sans font-bold mb-4'>Địa Chỉ</h2>
 
               <div className='border-[2px_solid_black] border-2 p-[5px_10px]'>
-                <h3 className='font-bold'>Name: {orders?.accountId.name}</h3>
-                <p>
-                  {orders?.deliveryAddress.street}, {orders?.deliveryAddress.borough},{' '}
-                  {orders?.deliveryAddress.city}, Việt Nam
+                {/* <h3 className='font-bold'>Name: {orders?.accountId.name}</h3> */}
+                <p className='mt-2 text-gray-700'>
+                  <strong>Tên:</strong>
+                  {orders?.accountId.name}
                 </p>
-                <span>Zip: {orders?.deliveryAddress.zip}</span>
-                <h2 className='text-md font-[300px]'>STD: {orders?.accountId.phone}</h2>
+                <p className='mt-2 text-gray-700'>
+                  <strong>Địa Chỉ:</strong>
+                  {orders?.deliveryAddress},Việt Nam.
+                </p>
+                {/* <p className="mt-2 text-gray-700"><strong>Zip: </strong>{orders?.menuItemId?.deliveryAddress.zip}</p> */}
+                <p className='mt-2 text-gray-700'>
+                  <strong>SDT: </strong>
+                  {orders?.accountId.phone}
+                </p>
               </div>
             </div>
             <div className='flex justify-end'>
