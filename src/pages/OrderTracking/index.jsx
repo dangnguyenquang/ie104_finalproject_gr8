@@ -4,7 +4,8 @@ import OrdersList from './components/OrdersList'
 import authApi from '~/apis/auth'
 import ordersApi from '~/apis/orders'
 import LoginModal from '~/components/Layout/Components/_components/LoginModal'
-
+import { io } from 'socket.io-client'
+const socket = io('http://localhost:3000')
 const OrderTrackingPage = () => {
   const tabLabels = ['Chờ xác nhận', 'Chờ vận chuyển', 'Hoàn thành', 'Đã hủy']
 
@@ -52,6 +53,14 @@ const OrderTrackingPage = () => {
     localStorage.setItem('selectedTab', newValue)
     setCurrentPage(1)
   }
+
+  useEffect(() => {
+    socket.on('updateRestaurantData', (data) => {
+      console.log('Restaurant data updated', data)
+      fetchOrders()
+    })
+    return () => socket.off('updateRestaurantData')
+  }, [])
 
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage)
