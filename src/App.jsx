@@ -3,6 +3,7 @@ import { publicRoutes, privateRoutes } from './routes'
 import { DefaultLayout } from './components/Layout'
 import RestaurantLayout from './components/Layout/RestaurantLayout'
 import { Fragment } from 'react'
+import 'react-toastify/dist/ReactToastify.css'
 import { ToastContainer } from 'react-toastify'
 import Layout from './layouts/Layout'
 import AdminDashboard from './pages/adminDashboard'
@@ -13,11 +14,6 @@ import ManageMails from './pages/restaurantDashboard/manageMails'
 import ManageAccount from './pages/adminDashboard/manageAccount'
 import ManageRestaurant from './pages/adminDashboard/manageRestaurant'
 import SpecialtyFood from './pages/adminDashboard/SpecialtyFood'
-import OurCommit from '~/pages/OurCommit'
-import PrivacyPolicy from '~/pages/PrivacyPolicy'
-import OrderInstructions from '~/pages/OrderInstructions'
-import ContactInstructions from '~/pages/ContactInstructions'
-import OperatingPolicy from '~/pages/OperatingPolicy'
 import 'react-toastify/dist/ReactToastify.min.css'
 import ScrollToTop from './ScrollToTop'
 import ProtectedRouteWrapper from './components/Layout/Components/_components/ProtectedRouteWrapper'
@@ -31,8 +27,12 @@ import SellerRegisterForm from '~/pages/SellerRegisterForm'
 import CustomerRegisterForm from '~/pages/CustomerRegisterForm'
 import OrderTrackingPage from '~/pages/OrderTracking'
 import DetailsPage from './pages/DetailsPage'
-import 'react-toastify/dist/ReactToastify.css'
 import DetailAccount from './pages/DetailAccount'
+// import OurCommit from '~/pages/OurCommit'
+import PrivacyPolicy from '~/pages/PrivacyPolicy'
+import OrderInstructions from '~/pages/OrderInstructions'
+import ContactInstructions from '~/pages/ContactInstructions'
+import OperatingPolicy from '~/pages/OperatingPolicy'
 
 function App() {
   const { user } = useAuth()
@@ -51,7 +51,7 @@ function App() {
           <Route path='/order-tracking' element={<OrderTrackingPage />} />
           <Route path='/details/:id' element={<DetailsPage />} />
           <Route path='/detail-account' element={<DetailAccount />} />
-          <Route path='/our-commit' element={<OurCommit />} />
+          {/* <Route path='/our-commit' element={<OurCommit />} /> */}
           <Route path='/privacy-policy' element={<PrivacyPolicy />} />
           <Route path='/order-instructions' element={<OrderInstructions />} />
           <Route path='/contact-instructions' element={<ContactInstructions />} />
