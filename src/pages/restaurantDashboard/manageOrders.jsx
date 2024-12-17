@@ -79,10 +79,10 @@ const ManageOrders = () => {
   return (
     <LoadingOverlay active={isLoading} spinner text='Loading...' className='h-[650px] '>
       <div className='relative mx-5 my-2 px-3 py-4'>
-        <div className='flex justify-between mb-3'>
-          <h3 className='text-3xl font-[700] font-family color-1 text-left mb-4 '>
-            Welcome Manage Orders 👋
-          </h3>
+        <div className='flex justify-between mb-7 mt-5'>
+          <h1 className='text-3xl font-bold text-[40px] text-center text-primary'>
+            QUẢN LÝ CÁC ĐƠN HÀNG
+          </h1>
         </div>
 
         <div className='bg-[#FFFFFF] text-[#212B36] shadow-[0_0_2px_0_rgba(145,158,171,0.08),0_12px_24px_-4px_rgba(145,158,171,0.08)] rounded-[16px] transition-[box-shadow_300ms_cubic-bezier(0.4,0,0.2,1)_0ms]'>
@@ -93,7 +93,7 @@ const ManageOrders = () => {
               </div>
               <input
                 className=' outline-none placeholder:text-slate-400 px-3 py-2 box-border '
-                placeholder='Search Order...'
+                placeholder='Tìm kiếm đơn hàng...'
               />
             </div>
             <div className='custom-select relative '>
@@ -101,12 +101,12 @@ const ManageOrders = () => {
                 value={status}
                 onChange={(event) => handleStatus(event)}
                 name='status'
-                className='selected capitalize'
+                className='selected'
               >
-                <option value='pending'>Pending</option>
-                <option value='in-progress'>Progress</option>
-                <option value='completed'>Completed</option>
-                <option value='canceled'>Canceled</option>
+                <option value='pending'>Đợi duyệt</option>
+                <option value='in-progress'>Đang giao</option>
+                <option value='completed'>Hoàn thành</option>
+                <option value='canceled'>Đã hủy</option>
               </select>
             </div>
           </div>
@@ -115,11 +115,11 @@ const ManageOrders = () => {
             <table className='w-full overflow-x-auto border-collapse  border-2 border-solid border-[rbg(200,200,200)] '>
               <thead className=''>
                 <tr>
-                  <th>Orderer's name</th>
-                  <th>Address</th>
-                  <th>Items</th>
-                  <th>Status</th>
-                  <th>Others</th>
+                  <th className='bg-secondary text-accent text-[20px]'>Tên người đặt</th>
+                  <th className='bg-secondary text-accent text-[20px]'>Địa chỉ</th>
+                  <th className='bg-secondary text-accent text-[20px]'>Các món ăn</th>
+                  <th className='bg-secondary text-accent text-[20px]'>Tình trạng</th>
+                  <th className='bg-secondary text-accent text-[20px]'>Khác</th>
                 </tr>
               </thead>
               <tbody>
@@ -127,23 +127,23 @@ const ManageOrders = () => {
                   orderList.map((val) => (
                     <tr key={val._id}>
                       <td>{val?.accountId?.name}</td>
-                      <td className='text-start'>
+                      <td className='text-start w-80'>
                         <p>
-                          <strong>Delivery Address: </strong>
+                          <strong>Địa chỉ giao hàng: </strong>
                           {val.deliveryAddress}
                         </p>
                         <p>
-                          <strong>Phone: </strong>
+                          <strong>Số điện thoại: </strong>
                           {val?.accountId?.phone}
                         </p>
                       </td>
                       <td>
                         {val.items.length > 0 && (
-                          <table className=''>
+                          <table className='m-auto'>
                             <thead>
                               <tr>
-                                <th className='p-1'>name</th>
-                                <th className='p-1'>Quantity</th>
+                                <th className='p-2 w-[230px]'>Món ăn</th>
+                                <th className='p-2'>Số lượng</th>
                               </tr>
                             </thead>
                             <tbody>
@@ -162,15 +162,15 @@ const ManageOrders = () => {
                           <select
                             id={val._id}
                             onChange={(event) => handleChangeStatus(event)}
-                            className={`rounded-sm font-bold p-[1px_2px] border-none outline-none ${
-                              val.status === 'pending' ? 'bg-[#ffc107]' : 'bg-[#0D6EFD]'
+                            className={`rounded-[10px] font-bold p-2  outline-none text-white ${
+                              val.status === 'pending' ? 'bg-[#ffc107]' : 'bg-green-500'
                             }`}
                           >
-                            {val.status === 'pending' && <option value='pending'>Pending</option>}
-                            {val.status === 'pending' && <option value='canceled'>Canceled</option>}
-                            <option value='in-progress'>In-progress</option>
+                            {val.status === 'pending' && <option value='pending'>Đợi duyệt</option>}
+                            {val.status === 'pending' && <option value='canceled'>Đã hủy</option>}
+                            <option value='in-progress'>Đang xử lý</option>
                             {val.status === 'in-progress' && (
-                              <option value='completed'>Completed</option>
+                              <option value='completed'>Hoàn thành</option>
                             )}
                           </select>
                         ) : (
@@ -179,10 +179,10 @@ const ManageOrders = () => {
                       </td>
                       <td>
                         <button
-                          className=' bg-green-400 rounded-sm  p-[2px_5px] '
+                          className=' bg-blue-400 rounded-[10px]  p-2 text-white'
                           onClick={() => handleForm(val)}
                         >
-                          Detail
+                          Xem chi tiết
                         </button>
                       </td>
                     </tr>
@@ -190,7 +190,7 @@ const ManageOrders = () => {
                 ) : (
                   <tr>
                     <td colSpan='5' className='text-center'>
-                      No items found
+                      Chưa có đơn hàng nào.
                     </td>
                   </tr>
                 )}
