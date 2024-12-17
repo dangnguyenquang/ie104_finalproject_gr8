@@ -18,7 +18,7 @@ const FoodCard = ({ image, rating, restaurant, name, address, price, id, restaur
             }}
           />
           <div className='absolute top-2 right-2 flex items-center justify-center text-[15px] font-medium gap-1 px-[5px] py-[3px] rounded-3xl min-w-[70px] bg-white bg-opacity-80 shadow-md'>
-            <p>{rating}/5</p>
+            <p>{rating.toFixed(1)}/5</p>
             <StarRateIcon className='text-yellow-500' sx={{ fontSize: '18px' }} />
           </div>
           <div className='absolute inset-0 bottom-2 flex justify-center items-end'>
