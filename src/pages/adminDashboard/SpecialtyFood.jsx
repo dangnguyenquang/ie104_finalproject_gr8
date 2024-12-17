@@ -2,12 +2,11 @@ import React, { useState, useEffect } from 'react'
 import api from '~/features/api'
 import LoadingOverlay from 'react-loading-overlay-ts'
 import { toast } from 'react-toastify'
-
+import AddCircleIcon from '@mui/icons-material/AddCircle'
 const SpecialtyFood = () => {
   const [specialFood, setSpecialFood] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [isEditFood, setIsEditFood] = useState(false)
   const [editingFood, setEditingFood] = useState(null)
 
   const [imgFood, setImgFood] = useState(null)
@@ -64,70 +63,17 @@ const SpecialtyFood = () => {
     setImgFood(e.target.files[0])
   }
 
-  // const handleSaveFood = async () => {
-  //   const formData = new FormData()
-  //   formData.append('name', nameFood)
-  //   if (imgFood) {
-  //     formData.append('image', imgFood)
-  //   }
-
-  //   try {
-  //     if (editingFood) {
-  //       await api.patch(`/admin/specialty-food/edit/${editingFood._id}`, formData)
-  //       alert('Cập nhật món ăn thành công!')
-  //     } else {
-  //       await api.post('/admin/specialty-food/create', formData)
-  //       alert('Thêm món ăn thành công!')
-  //     }
-  //     fetchAllSpecialFood()
-  //     closeModal()
-  //   } catch (error) {
-  //     console.error('Error saving food:', error)
-  //     alert(error.message || 'Đã xảy ra lỗi!')
-  //   }
-  // }
-
-  // const handleSaveFood = async () => {
-  //   const formData = new FormData();
-  //   formData.append('name', nameFood);
-  //   if (imgFood && typeof imgFood !== 'string') {
-  //     formData.append('image', imgFood);
-  //   }
-  // console.log(nameFood)
-  // console.log(imgFood)
-  //   try {
-  //     if (editingFood) {
-  //       await api.patch(`/admin/specialty-food/edit/${editingFood._id}`, formData);
-  //       alert('Cập nhật món ăn thành công!');
-  //     } else {
-  //       // Tạo món ăn mới
-  //       await api.post('/admin/specialty-food/create', formData);
-  //       alert('Thêm món ăn thành công!');
-  //     }
-  //     fetchAllSpecialFood();
-  //     closeModal();
-  //   } catch (error) {
-  //     console.error('Error saving food:', error);
-  //     alert(error.message || 'Đã xảy ra lỗi!');
-  //   }
-  // };
-
   const handleSaveFood = async () => {
     const formData = new FormData()
     formData.append('name', nameFood)
-
-    // Nếu người dùng tải lên ảnh mới, thêm ảnh vào formData
     if (imgFood && typeof imgFood !== 'string') {
       formData.append('image', imgFood)
     }
-    console.log(imgFood)
     try {
       if (editingFood) {
-        // Cập nhật món ăn
         await api.patch(`/admin/specialty-food/edit/${editingFood._id}`, formData)
         toast.success('Món ăn đã được chỉnh sửa!')
       } else {
-        // Tạo món ăn mới
         await api.post('/admin/specialty-food/create', formData)
         toast.success('Món ăn đã được thêm!')
       }
@@ -167,10 +113,10 @@ const SpecialtyFood = () => {
               QUẢN LÝ MÓN ĂN ĐẶC SẢN
             </h1>
             <button
-              className='px-2 py-2 text-white bg-green-500 rounded'
+              className='px-2 py-2 text-white bg-green-500 rounded '
               onClick={() => openModal()}
             >
-              Thêm món đặc sản
+              <AddCircleIcon /> Thêm món đặc sản
             </button>
           </div>
           <table className='w-full border-2 mt-10'>
@@ -199,16 +145,16 @@ const SpecialtyFood = () => {
                     <td>{item.name}</td>
                     <td>
                       <button
-                        className='px-2 py-1 bg-green-500 text-white rounded'
+                        className='inline-flex items-center gap-1 px-3 py-2 bg-blue-400 text-white rounded-lg shadow hover:bg-blue-400 transition-all duration-300 ml-3'
                         onClick={() => openModal(item)}
                       >
-                        Chỉnh sửa
+                        <i className='bx bx-edit mr-1'></i>Chỉnh sửa
                       </button>
                       <button
-                        className='px-2 py-1 bg-red-700 text-white rounded ml-2'
+                        className='inline-flex items-center gap-1 px-3 py-2 bg-red-700 text-white rounded-lg shadow hover:bg-red-500 transition-all duration-300 ml-3'
                         onClick={() => handleDeleteFood(item._id)}
                       >
-                        Xóa
+                        <i className='bx bx-trash mr-1'></i>Xóa
                       </button>
                     </td>
                   </tr>

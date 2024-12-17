@@ -25,7 +25,7 @@ export default function PopupDelete({ handleDeleteAccount, userId }) {
   return (
     <>
       <button className='bg-red-500 text-white px-4 py-2 rounded' onClick={handleClickOpen}>
-        Xóa tài khoản
+        <i className='bx bx-trash'></i> Xóa tài khoản
       </button>
       <Dialog
         open={open}

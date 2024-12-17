@@ -8,6 +8,7 @@ import {
   SuccessfulNotification,
   FailedNotification,
 } from '../../components/common/Notification.jsx'
+import AddCircleIcon from '@mui/icons-material/AddCircle'
 
 const ManageItems = () => {
   const dispatch = useDispatch()
@@ -95,31 +96,26 @@ const ManageItems = () => {
       }}
     >
       <div className='relative mx-5 my-2 px-3 py-4'>
-        <div className='mb-3'>
-          <h1 className="text-4xl font-medium font-['Oswald'] text-center text-primary uppercase">
-            Quản lý món ăn
+        <div className='flex justify-between items-center mt-2 mb-7'>
+          <h1 className='text-3xl font-bold text-[40px] text-center text-primary'>
+            QUẢN LÝ CÁC MÓN ĂN
           </h1>
-        </div>
-        <div className='flex justify-between items-center mb-4'>
-          <button
-            onClick={handleCreateItem}
-            className='bg-blue-600 text-white font-bold rounded-md px-4 py-2'
-          >
+          <button onClick={handleCreateItem} className='px-2 py-2 text-white bg-green-500 rounded'>
+            <AddCircleIcon />
             Thêm món mới
           </button>
         </div>
-
         <div className='bg-white shadow-md rounded-lg p-6'>
           <table className='w-full border-separate border-spacing-0'>
             <thead>
               <tr className='bg-gray-200'>
-                <th className='p-4 text-center'>Hình ảnh</th>
-                <th className='p-4 text-center'>Tên món</th>
-                <th className='p-4 text-center'>Loại</th>
-                <th className='p-4 text-center'>Giá</th>
-                <th className='p-4 text-center'>Số lượng</th>
-                <th className='p-4 text-center'>Giảm giá</th>
-                <th className='p-4 text-center'>Hành động</th>
+                <th className='bg-secondary text-accent text-[20px]'>Hình ảnh</th>
+                <th className='bg-secondary text-accent text-[20px]'>Tên món</th>
+                <th className='bg-secondary text-accent text-[20px]'>Loại</th>
+                <th className='bg-secondary text-accent text-[20px]'>Giá</th>
+                <th className='bg-secondary text-accent text-[20px]'>Số lượng</th>
+                <th className='bg-secondary text-accent text-[20px]'>Giảm giá</th>
+                <th className='bg-secondary text-accent text-[20px]'>Hành động</th>
               </tr>
             </thead>
             <tbody>
@@ -140,7 +136,7 @@ const ManageItems = () => {
                     <td className='p-4'>{item.discount}</td>
                     <td className='p-4 text-center align-middle'>
                       <button
-                        className='inline-flex items-center gap-1 px-3 py-2 bg-yellow-400 text-white rounded-lg shadow hover:bg-yellow-500 transition-all duration-300'
+                        className='inline-flex items-center gap-1 px-3 py-2 bg-blue-400 text-white rounded-lg shadow hover:bg-yellow-500 transition-all duration-300'
                         onClick={() => {
                           setCurrentEditedId(item._id)
                           setRawData(item)
@@ -151,7 +147,7 @@ const ManageItems = () => {
                         <i className='bx bx-edit'></i> Sửa
                       </button>
                       <button
-                        className='inline-flex items-center gap-1 px-3 py-2 bg-red-400 text-white rounded-lg shadow hover:bg-red-500 transition-all duration-300 ml-3'
+                        className='inline-flex items-center gap-1 px-3 py-2 bg-red-700 text-white rounded-lg shadow hover:bg-red-500 transition-all duration-300 ml-3'
                         onClick={() => handleDeleteItem(item._id)}
                       >
                         <i className='bx bx-trash'></i> Xóa
@@ -162,7 +158,7 @@ const ManageItems = () => {
               ) : (
                 <tr>
                   <td colSpan='7' className='text-center p-4'>
-                    Không có món nào
+                    Không có món nào.
                   </td>
                 </tr>
               )}

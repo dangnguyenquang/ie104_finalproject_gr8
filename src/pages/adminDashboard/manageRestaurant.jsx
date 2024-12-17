@@ -123,8 +123,8 @@ const ManageRestaurant = () => {
     <LoadingOverlay active={isLoading} spinner Text='Loading ...' className='h-[650px]'>
       <div className='relative mx-5 my-2 px-3 py-4'>
         <div className='mb-3'>
-          <h3 className='text-3xl font-[700] font-family color-1 text-left mb-4 '>
-            Manage Restaurant 👋
+          <h3 className='font-family color-1 text-left mb-4 up text-[40px]  text-primary font-bold'>
+            QUẢN LÝ NHÀ HÀNG
           </h3>
         </div>
         <div className='flex items-center gap-10 mb-5'>
@@ -176,21 +176,21 @@ const ManageRestaurant = () => {
               </div>
               <input
                 className=' outline-none placeholder:text-slate-400 px-3 py-2 box-border '
-                placeholder='Search Restaurant...'
+                placeholder='Tìm kiếm nhà hàng...'
               />
             </div>
             <button className='border-2 border-orange-500 text-orange-500 rounded-sm px-3 py-1'>
-              Apply
+              Áp dụng
             </button>
           </div>
           <div className='px-6 pb-6'>
             <table className='w-full border-2 border-collapse border-solid border-[rbg(200,200,200)]'>
               <thead>
                 <tr>
-                  <th>Restaurant Name</th>
-                  <th>Phone</th>
-                  <th>Status</th>
-                  <th>Handle</th>
+                  <th className='bg-secondary text-accent text-[20px]'>Tên nhà hàng</th>
+                  <th className='bg-secondary text-accent text-[20px]'>Số điện thoại</th>
+                  <th className='bg-secondary text-accent text-[20px]'>Trạng thái</th>
+                  <th className='bg-secondary text-accent text-[20px]'>Xử lý</th>
                 </tr>
               </thead>
               <tbody>

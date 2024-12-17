@@ -31,7 +31,7 @@ const navArrayRestaurant = [
         </svg>
       </span>
     ),
-    label: 'Dashboard',
+    label: 'Doanh thu',
     navigate: '/v2/dashboard/restaurant',
   },
   {
@@ -67,7 +67,7 @@ const navArrayRestaurant = [
         </svg>
       </span>
     ),
-    label: 'Manage Items',
+    label: 'Quản lý món ăn',
     navigate: '/v2/dashboard/restaurant/manage-items',
   },
   {
@@ -99,7 +99,7 @@ const navArrayRestaurant = [
         </svg>
       </span>
     ),
-    label: 'Manange Orders',
+    label: 'Quản lý đơn hàng',
     navigate: '/v2/dashboard/restaurant/manage-orders',
   },
   {
@@ -124,7 +124,7 @@ const navArrayRestaurant = [
         </svg>
       </span>
     ),
-    label: 'Send Email',
+    label: 'Quản lý Email',
     navigate: '/v2/dashboard/restaurant/send-email',
   },
   {
@@ -195,7 +195,7 @@ const navArrayAdmin = [
         </svg>
       </span>
     ),
-    label: 'Manage Account',
+    label: 'Quản lý người dùng',
     navigate: '/v2/dashboard/admin/account',
   },
   {
@@ -251,7 +251,7 @@ const navArrayAdmin = [
         </svg>
       </span>
     ),
-    label: 'Manage Restaurant',
+    label: 'Quản lý nhà hàng',
     navigate: '/v2/dashboard/admin/restaurant',
   },
   {
@@ -319,7 +319,7 @@ const navArrayAdmin = [
         </svg>
       </span>
     ),
-    label: 'Specialty Food',
+    label: 'Các món đặc sản',
     navigate: '/v2/dashboard/admin/specialty-food',
   },
 ]
