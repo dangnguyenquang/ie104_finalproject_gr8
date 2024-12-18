@@ -6,7 +6,11 @@ import { ToastContainer } from 'react-toastify'
 import TablePagination from '@mui/material/TablePagination'
 import hero from '../../assets/hero.png'
 import DetailRest from '~/components/Dashboard/commom/DetailRest'
-import { fetchRestaurants, updateRestaurant } from '../../features/manageRestaurant-slice'
+import {
+  fetchRestaurants,
+  updateRestaurant,
+  liveSearchRestaurant,
+} from '../../features/manageRestaurant-slice'
 import {
   FailedAccess,
   SuccessfulNotification,
@@ -32,9 +36,14 @@ const ManageRestaurant = () => {
     setRestaurant(val)
     setOpenForm(!openForm)
   }
+  const seachRestaurant = async (event) => {
+    console.log('test', event.target.value)
+    let title = event.target.value
+    dispatch(liveSearchRestaurant({ keyword: title, status, skipPage, rowsPerPage }))
+  }
   // handle page change
   const handleChangePage = (event, newPage) => {
-    console.log(newPage, 'thực sự nhớ em')
+    // console.log(newPage, 'thực sự nhớ em')
     setSkipPage(newPage)
   }
   // handle rows per page change
@@ -175,6 +184,7 @@ const ManageRestaurant = () => {
                 <i className='bx bx-search-alt-2 text-2xl'></i>
               </div>
               <input
+                onChange={(event) => seachRestaurant(event)}
                 className=' outline-none placeholder:text-slate-400 px-3 py-2 box-border '
                 placeholder='Tìm kiếm nhà hàng...'
               />

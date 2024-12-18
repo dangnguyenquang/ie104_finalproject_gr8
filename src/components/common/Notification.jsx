@@ -8,7 +8,9 @@ export const SuccessfulNotification = (name) => {
     toast.success(`${name} thành công!`)
   }
 }
-
+export const newOderNotify = () => {
+  return toast.success('Bạn có một Order mới đang chờ duyệt.')
+}
 // Thông báo thất bại
 export const FailedNotification = (name) => {
   return toast.error(`${name} thất bại!`)
