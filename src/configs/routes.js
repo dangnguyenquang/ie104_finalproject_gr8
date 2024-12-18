@@ -16,4 +16,6 @@ export const routes = {
 
   RESTAURANT_DASHBOARD: '/v2/dashboard/restaurant',
   ADMIN_MANAGEACCOUNT: '/v2/dashboard/admin/account',
+  OTPCODE: '/otp-code',
+  CHANGEPASSWORD: '/change-password',
 }

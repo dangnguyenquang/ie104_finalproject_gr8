@@ -14,6 +14,8 @@ import MyRestaurant from './pages/restaurantDashboard/myrestaurant'
 import ManageAccount from './pages/adminDashboard/manageAccount'
 import ManageRestaurant from './pages/adminDashboard/manageRestaurant'
 import SpecialtyFood from './pages/adminDashboard/SpecialtyFood'
+import OTPCode from './pages/OTPCode'
+import ChangePassword from './pages/ChangePassword'
 import 'react-toastify/dist/ReactToastify.min.css'
 import ScrollToTop from './ScrollToTop'
 import ProtectedRouteWrapper from './components/Layout/Components/_components/ProtectedRouteWrapper'
@@ -56,6 +58,8 @@ function App() {
           <Route path='/order-instructions' element={<OrderInstructions />} />
           <Route path='/contact-instructions' element={<ContactInstructions />} />
           <Route path='/operating-policy' element={<OperatingPolicy />} />
+          <Route path='/otp-code' element={<OTPCode />} />
+          <Route path='/change-password' element={<ChangePassword />} />
         </Route>
 
         <Route

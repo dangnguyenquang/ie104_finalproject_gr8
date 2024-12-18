@@ -3,6 +3,12 @@ import { useNavigate, Link, useLocation } from 'react-router-dom'
 import PersonPinIcon from '@mui/icons-material/PersonPin'
 import background from '../../assets/images/admin/background.png'
 import UseResponsive from '../../hooks/useResponsive'
+import useAuth from '~/stores/useAuth'
+import LogoutModal from '../Layout/Components/_components/LogoutModal'
+import { Button } from '../ui/Button'
+import { Avatar } from '@mui/material'
+import { routes } from '~/configs'
+
 const navArrayRestaurant = [
   {
     id: 1,
@@ -324,6 +330,9 @@ const navArrayAdmin = [
   },
 ]
 const Nav = ({ isOpen, setOpen }) => {
+  const { user } = useAuth()
+  const navigate = useNavigate()
+
   const location = useLocation()
   const [navArray, setNavArray] = useState(() => {
     if (location.pathname.includes('dashboard/admin')) {
@@ -332,6 +341,7 @@ const Nav = ({ isOpen, setOpen }) => {
       return navArrayRestaurant
     }
   })
+
   const [selecteNav, setSelecteNav] = useState(() => {
     if (location.pathname.includes('dashboard/restaurant/manage-items')) {
       return 2
@@ -380,9 +390,14 @@ const Nav = ({ isOpen, setOpen }) => {
       >
         {/* Navigation dashboard */}
         <div className='w-full flex flex-col'>
-          <div className='flex items-center gap-1 rounded-md my-6 mx-5 px-5 py-4 bg-white'>
-            <i className='bx bx-user-circle text-3xl'></i>
-            <label className='font-medium'>your name</label>
+          <div className='flex items-center rounded-md my-6 mx-5 px-5 py-4 bg-white text-primaryText'>
+            <div className='flex gap-3 justify-start'>
+              <Avatar sx={{ width: 32, height: 32 }} src={user?.avatar?.url} alt='avatar' />
+              <div className='flex-col gap-2 text-sm justify-start'>
+                <p className='font-bold text-[18px]'>{user?.username}</p>
+                <p>{user?.email}</p>
+              </div>
+            </div>
           </div>
           <nav className='flex flex-col mx-5 my-6 gap-y-3'>
             {/* <a id="1" aria-label={dash} onClick={(e)=>handleMark(e)} className='flex items-center gap-2 px-5 py-2 round-sm hover:bg-[rgba(145,158,171,0.12)]'  >
@@ -421,6 +436,19 @@ const Nav = ({ isOpen, setOpen }) => {
                   </label>
                 </Link>
               ))}
+
+            <div className='mt-[335px] mx-auto flex flex-col gap-2 w-[200px]'>
+              <Button
+                variant='outline'
+                className='border-primary text-primary w-full'
+                onClick={() => navigate(routes.HOME)}
+              >
+                Về trang chủ
+              </Button>
+              <LogoutModal>
+                <Button className='mt-auto w-full'>Đăng xuất</Button>
+              </LogoutModal>
+            </div>
           </nav>
         </div>
       </div>

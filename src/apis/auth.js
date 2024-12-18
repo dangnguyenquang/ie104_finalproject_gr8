@@ -10,7 +10,34 @@ class AuthApi {
       })
       return res
     } catch (error) {
-      console.log(error)
+      throw new Error('Có lỗi xảy ra')
+    }
+  }
+
+  async getOTP(email) {
+    try {
+      const res = await httpClient.post(authEndpoint.getotp, { email })
+      return res
+    } catch (error) {
+      throw new Error('Có lỗi xảy ra')
+    }
+  }
+
+  async verifyOTP(email, otp) {
+    try {
+      const res = await httpClient.post(authEndpoint.verifyotp, { email, otp })
+      return res
+    } catch (error) {
+      throw new Error('Có lỗi xảy ra')
+    }
+  }
+
+  async forgotPassword(newPassword, otp) {
+    try {
+      const res = await httpClient.patch(authEndpoint.forgotpassword, { newPassword, otp })
+      return res
+    } catch (error) {
+      throw new Error('Có lỗi xảy ra')
     }
   }
 
@@ -19,7 +46,7 @@ class AuthApi {
       const res = await httpClient.get(authEndpoint.signout)
       return res.user
     } catch (error) {
-      console.log(error)
+      throw new Error('Có lỗi xảy ra')
     }
   }
 
