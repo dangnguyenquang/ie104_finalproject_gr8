@@ -3,7 +3,7 @@ import TextField from '@mui/material/TextField'
 
 const DisabledTextField = ({ value, label, className }) => {
   return (
-    <div className={`mx-auto max-w-[500px] my-5 ${className}`}>
+    <div className={`mx-auto w-full sm:max-w-[300px] md:max-w-[500px] my-5 ${className}`}>
       <TextField
         label={label}
         sx={{

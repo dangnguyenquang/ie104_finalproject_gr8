@@ -77,7 +77,7 @@ function PasswordTextField({
   const toggleShowConfirmPassword = () => setShowConfirmPassword((prev) => !prev)
 
   return (
-    <div className={`mx-auto max-w-[500px] my-5 ${className}`}>
+    <div className={`mx-auto w-full sm:max-w-[300px] md:max-w-[500px] my-5 ${className}`}>
       <TextField
         sx={{
           margin: 'auto',

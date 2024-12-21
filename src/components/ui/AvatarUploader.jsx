@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Button } from '@mui/material'
 import PhotoCameraIcon from '@mui/icons-material/PhotoCamera'
 
@@ -12,26 +12,26 @@ const AvatarUploader = ({ currentAvatar, onAvatarChange }) => {
       setAvatar(imageUrl)
       onAvatarChange(file)
     }
-    console.log('ava change: ', avatar)
   }
+
   return (
     <div className='flex flex-col items-center'>
-      {/* Hiển thị avatar */}
-      <div className='mb-4'>
+      {/* Avatar Display */}
+      <div className='mb-4 flex justify-center'>
         {avatar ? (
           <img
             src={avatar}
             alt='Avatar'
-            className='w-40 h-40 rounded-full object-cover border border-gray-300'
+            className='w-24 h-24 sm:w-28 sm:h-28 md:w-36 md:h-36 lg:w-40 lg:h-40 rounded-full object-cover border border-gray-300'
           />
         ) : (
-          <div className='w-40 h-40 rounded-full bg-gray-200 flex items-center justify-center'>
+          <div className='w-24 h-24 sm:w-28 sm:h-28 md:w-36 md:h-36 lg:w-40 lg:h-40 rounded-full bg-gray-200 flex items-center justify-center'>
             <span className='text-gray-500'>Chưa có ảnh</span>
           </div>
         )}
       </div>
 
-      {/* Nút chọn ảnh */}
+      {/* Button */}
       <input
         type='file'
         accept='image/*'
