@@ -9,7 +9,7 @@ const DetailOrder = ({ orders, className, openForm, setOpenForm, handleChangeSta
     <>
       <div className={`${className}  overflow-hidden`}>
         <div className='flex justify-between mb-5 -mt-4'>
-          <div className='text-2xl font-mono font-bold'>Detail Orders</div>
+          <h3 className=' font-bold text-[30px] text-center  text-secondary'>Chi tiết đơn hàng</h3>
           <div className='cursor-pointer' onClick={() => handleCloseForm()}>
             <i className='bx bx-x text-2xl -mt-3'></i>
           </div>
@@ -17,12 +17,12 @@ const DetailOrder = ({ orders, className, openForm, setOpenForm, handleChangeSta
         <div className='w-full h-[calc(100vh-200px)] overflow-y-auto'>
           <div className='flex flex-col gap-3'>
             <table className='w-full border-collapse'>
-              <thead className='hidden'>
+              <thead>
                 <tr>
-                  <th>image</th>
-                  <th>name</th>
-                  <th>price</th>
-                  <th>quantity</th>
+                  <th className='bg-secondary text-accent text-center'>Ảnh</th>
+                  <th className='bg-secondary text-accent text-center'>Tên món ăn</th>
+                  <th className='bg-secondary text-accent text-center'>Giá</th>
+                  <th className='bg-secondary text-accent text-center'>Số lượng</th>
                 </tr>
               </thead>
               <tbody>
@@ -98,15 +98,15 @@ const DetailOrder = ({ orders, className, openForm, setOpenForm, handleChangeSta
                     onClick={(event) => handleChangeStatus(event)}
                     className='bg-[#F7F7F7] rounded-sm p-2'
                   >
-                    CANCEL
+                    Hủy
                   </button>
                   <button
                     id={orders?._id}
                     value='in-progress'
                     onClick={(event) => handleChangeStatus(event)}
-                    className='bg-[#0D6EFD] rounded-sm p-2'
+                    className='bg-blue-400 rounded-sm p-2 text-white'
                   >
-                    In-Progress
+                    Đang giao
                   </button>
                 </div>
               ) : orders?.status === 'in-progress' ? (
@@ -115,15 +115,19 @@ const DetailOrder = ({ orders, className, openForm, setOpenForm, handleChangeSta
                     id={orders?._id}
                     value='completed'
                     onClick={(event) => handleChangeStatus(event)}
-                    className='bg-[#28a745] rounded-sm p-2'
+                    className='bg-green-700 text-white rounded-sm p-2'
                   >
-                    Completed
+                    Hoàn thành
                   </button>
                 </div>
               ) : (
                 <span className='bg-[#F7F7F7] text-lg font-[300] rounded-sm p-2 '>
-                  <strong className='font-semibold'>Status: </strong>
-                  {orders?.status}
+                  <strong className='font-semibold'>Trạng thái hiện tại: </strong>
+                  {orders?.status === 'completed'
+                    ? 'Hoàn thành'
+                    : orders?.status === 'canceled'
+                      ? 'Đã hủy'
+                      : null}
                 </span>
               )}
             </div>
