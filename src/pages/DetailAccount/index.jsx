@@ -73,7 +73,6 @@ const DetailAccount = () => {
       toast.success('Đổi mật khẩu thành công!')
       setOldPassword('')
       setNewPassword('')
-      setConfirmPassword('')
     } catch (error) {
       toast.error(error.message || 'Có lỗi xảy ra khi đổi mật khẩu.')
       console.error('Error changing password:', error)
