@@ -22,7 +22,7 @@ const FoodCard = ({ image, rating, restaurant, name, address, price, id, restaur
             <StarRateIcon className='text-yellow-500' sx={{ fontSize: '18px' }} />
           </div>
           <div className='absolute inset-0 bottom-2 flex justify-center items-end'>
-            <div className='text-center mx-auto text-sm md:text-[15px] font-medium px-[15px] py-[3px] rounded-3xl w-fit  max-w-[200px] bg-white bg-opacity-80 shadow-md'>
+            <div className='text-center mx-auto text-sm md:text-[15px] font-medium px-[15px] py-[3px] rounded-3xl w-fit max-w-[200px] bg-white bg-opacity-80 shadow-md'>
               {truncateStringToWords(restaurant)}
             </div>
           </div>

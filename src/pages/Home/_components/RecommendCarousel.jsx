@@ -14,20 +14,18 @@ const PrevArrow = (props) => {
       onClick={onClick}
       style={{
         ...style,
-        left: '-65px', // Tăng khoảng cách từ nút prev đến item carousel
+        left: '-45px', // Giảm khoảng cách từ nút prev đến item carousel
         zIndex: 1,
         backgroundColor: 'rgba(0, 0, 0, 0.5)', // Nền mờ màu đen
         borderRadius: '50%', // Viền tròn
-        padding: '30px', // Khoảng cách bên trong để nút tròn lớn hơn
-        paddingLeft: '38px', // Đảm bảo nút prev tròn cân đối
-        paddingRight: '24px',
+        padding: '20px', // Khoảng cách bên trong để nút tròn lớn hơn
         cursor: 'pointer',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
       }}
     >
-      <ArrowBackIos style={{ color: 'white', fontSize: '40px' }} />
+      <ArrowBackIos style={{ color: 'white', fontSize: '30px' }} />
     </div>
   )
 }
@@ -41,19 +39,18 @@ const NextArrow = (props) => {
       onClick={onClick}
       style={{
         ...style,
-        right: '-65px', // Tăng khoảng cách từ nút next đến item carousel
+        right: '-45px', // Giảm khoảng cách từ nút next đến item carousel
         zIndex: 1,
         backgroundColor: 'rgba(0, 0, 0, 0.5)', // Nền mờ màu đen
         borderRadius: '50%', // Viền tròn
-        padding: '30px', // Khoảng cách bên trong để nút tròn lớn hơn
-        paddingLeft: '33px', // Đảm bảo nút next tròn cân đối
+        padding: '20px', // Khoảng cách bên trong để nút tròn lớn hơn
         cursor: 'pointer',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
       }}
     >
-      <ArrowForwardIos style={{ color: 'white', fontSize: '40px' }} />
+      <ArrowForwardIos style={{ color: 'white', fontSize: '30px' }} />
     </div>
   )
 }
@@ -68,7 +65,6 @@ const RecommendCarousel = ({ restaurants }) => {
     autoplay: true,
     autoplaySpeed: 3000,
     pauseOnHover: true,
-    // centerMode: true,
     nextArrow: <NextArrow />, // Custom Next Arrow
     prevArrow: <PrevArrow />, // Custom Previous Arrow
     responsive: [
@@ -79,7 +75,7 @@ const RecommendCarousel = ({ restaurants }) => {
           slidesToScroll: 1,
           infinite: true,
           dots: true,
-          centerPadding: '100px',
+          centerPadding: '50px',
         },
       },
       {
@@ -89,15 +85,17 @@ const RecommendCarousel = ({ restaurants }) => {
           slidesToScroll: 1,
           initialSlide: 2,
           centerMode: true,
+          centerPadding: '30px',
         },
       },
       {
         breakpoint: 700,
         settings: {
-          slidesToShow: 2,
+          slidesToShow: 1,
           slidesToScroll: 1,
-          initialSlide: 2,
-          centerMode: false,
+          initialSlide: 1,
+          centerMode: true,
+          centerPadding: '20px',
         },
       },
     ],
@@ -107,7 +105,7 @@ const RecommendCarousel = ({ restaurants }) => {
     <div className='mx-auto max-w-[1190px] relative'>
       <Slider {...settings}>
         {restaurants.map((restaurant, index) => (
-          <div className='py-5' key={index}>
+          <div className='px-2' key={index}>
             <RestaurantCard
               image={restaurant.imageUrl[0].url}
               rating={restaurant.starMedium}

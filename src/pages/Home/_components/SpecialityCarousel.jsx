@@ -15,7 +15,7 @@ const SpecialityCarousel = ({ SpecialityFoods }) => {
     autoplay: true,
     autoplaySpeed: 3000,
     pauseOnHover: true,
-    centerMode: true, // Kích hoạt chế độ trung tâm
+    centerMode: true,
     centerPadding: '20px',
     responsive: [
       {
@@ -42,6 +42,7 @@ const SpecialityCarousel = ({ SpecialityFoods }) => {
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
+          centerPadding: '20px',
         },
       },
     ],
@@ -53,11 +54,11 @@ const SpecialityCarousel = ({ SpecialityFoods }) => {
         {SpecialityFoods &&
           SpecialityFoods.map((food, index) => (
             <Link key={index} to={`${routes.MENU}?search=${food.name}&type=food`}>
-              <div key={food.name}>
+              <div key={food.name} className='px-2'>
                 <img
                   src={food.imageUrl.url}
                   alt={`Image ${food.name}`}
-                  className='w-[210px] h-[339px] lg:w-[272px] lg:h-[381px] object-cover rounded-xl'
+                  className='w-full h-[339px] lg:h-[381px] object-cover rounded-xl'
                 />
               </div>
             </Link>
