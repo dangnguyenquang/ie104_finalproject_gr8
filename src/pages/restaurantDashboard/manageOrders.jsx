@@ -141,7 +141,7 @@ const ManageOrders = () => {
                   orderList.map((val) => (
                     <tr key={val._id}>
                       <td>{val?.accountId?.name}</td>
-                      <td className='text-start w-80'>
+                      <td className='text-start w-60'>
                         <p>
                           <strong>Địa chỉ giao hàng: </strong>
                           {val.deliveryAddress}
@@ -177,18 +177,24 @@ const ManageOrders = () => {
                             id={val._id}
                             onChange={(event) => handleChangeStatus(event)}
                             className={`rounded-[10px] font-bold p-2  outline-none text-white ${
-                              val.status === 'pending' ? 'bg-[#ffc107]' : 'bg-green-500'
+                              val.status === 'pending' ? 'bg-[#ffc107]' : 'bg-blue-500'
                             }`}
                           >
                             {val.status === 'pending' && <option value='pending'>Đợi duyệt</option>}
                             {val.status === 'pending' && <option value='canceled'>Đã hủy</option>}
-                            <option value='in-progress'>Đang xử lý</option>
+                            <option value='in-progress'>Đang giao</option>
                             {val.status === 'in-progress' && (
                               <option value='completed'>Hoàn thành</option>
                             )}
                           </select>
+                        ) : val.status === 'completed' ? (
+                          <option className='text-green-700 font-bold' value='completed'>
+                            Hoàn thành
+                          </option>
                         ) : (
-                          val.status
+                          <option className='text-red-700 font-bold' value='canceled'>
+                            Đã hủy
+                          </option>
                         )}
                       </td>
                       <td>
