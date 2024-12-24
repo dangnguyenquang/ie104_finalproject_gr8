@@ -60,6 +60,7 @@ class AuthApi {
       return { msg: res.msg }
     } catch (error) {
       return { error: error.message || 'Đã xảy ra lỗi trong quá trình đăng ký' }
+      throw new Error('Có lỗi xảy ra')
     }
   }
 
@@ -73,6 +74,7 @@ class AuthApi {
       return { msg: res.msg }
     } catch (error) {
       return { error: error.message || 'Đã xảy ra lỗi trong quá trình đăng ký' }
+      throw new Error('Có lỗi xảy ra')
     }
   }
 
@@ -82,6 +84,7 @@ class AuthApi {
       return res
     } catch (error) {
       console.log(error)
+      throw new Error('Có lỗi xảy ra')
     }
   }
 }

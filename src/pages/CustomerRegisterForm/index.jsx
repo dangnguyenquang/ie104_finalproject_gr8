@@ -22,7 +22,27 @@ const CustomerRegisterForm = () => {
   const [confirmPassword, setConfirmPassword] = useState('')
   const navigate = useNavigate()
 
+  const isValidEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    return emailRegex.test(email)
+  }
+
+  const isValidPhone = (phone) => {
+    const phoneRegex = /^[0-9]{10,11}$/
+    return phoneRegex.test(phone)
+  }
+
   const handleCustomerRegister = async () => {
+    if (!isValidEmail(email)) {
+      toast.error('Email không hợp lệ. Vui lòng nhập đúng định dạng email.')
+      return
+    }
+
+    if (!isValidPhone(phone)) {
+      toast.error('Số điện thoại không hợp lệ. Vui lòng nhập số có 10-11 chữ số.')
+      return
+    }
+
     const formData = new FormData()
 
     const infoCustomer = {
@@ -50,7 +70,6 @@ const CustomerRegisterForm = () => {
 
   return (
     <div className='w-full justify-center p-4'>
-      {/* Đăng kí tài khoản */}
       <div className="block text-center text-primary text-4xl sm:text-6xl font-medium font-['Oswald'] uppercase leading-none sm:leading-[100px] my-10">
         Đăng kí tài khoản
       </div>
