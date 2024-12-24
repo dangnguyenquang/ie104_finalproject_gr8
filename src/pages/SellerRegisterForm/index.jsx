@@ -177,7 +177,7 @@ const SellerRegisterForm = () => {
         handleChange={(e) => setRestaurantPhone(e.target.value)}
       />
 
-      <div className='flex justify-between gap-4 mx-auto w-[500px] my-5'>
+      <div className='flex justify-between gap-4 mx-auto w-[500px] my-5 items-center'>
         <DisabledTextField value='TP. Hồ Chí Minh' />
         <CustomSelect
           id='area'

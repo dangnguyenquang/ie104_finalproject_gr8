@@ -16,7 +16,7 @@ const FoodDetails = ({ food, onClick, disabled = false }) => {
         <div className='flex justify-between'>
           <h2 className='text-[22px] font-bold text-primary'>{food.title}</h2>
           <div className='flex items-center justify-center text-[15px] font-medium gap-1'>
-            <p>{food.starMedium}/5</p>
+            <p>{food.starMedium.toFixed(1)}/5</p>
             <StarRateIcon className='text-yellow-400' sx={{ fontSize: '20px' }} />
           </div>
         </div>

@@ -12,6 +12,8 @@ import DetailsApiInstance from '~/apis/details'
 import BookingModal from './_components/BookingModal'
 import useAuth from '~/stores/useAuth'
 import LoginModal from '~/components/Layout/Components/_components/LoginModal'
+import ReviewList from './_components/ReviewList.jsx'
+import homeBackground from '~/assets/images/home/home-bg.png'
 
 const DetailsPage = () => {
   const { user, isAuth } = useAuth()
@@ -206,6 +208,8 @@ const DetailsPage = () => {
           </div>
         </div>
       )}
+
+      {data && <ReviewList reviews={data?.listComment} />}
     </div>
   )
 }

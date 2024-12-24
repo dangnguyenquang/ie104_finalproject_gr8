@@ -9,7 +9,7 @@ const RestaurantInfo = ({ restaurantInfo }) => {
         <h1 className='text-[30px] font-bold'>{restaurantInfo.name}</h1>
       </div>
       <div className='flex items-center justify-start text-[20px] font-medium gap-1'>
-        <p>{restaurantInfo.starMedium}/5</p>
+        <p>{restaurantInfo.starMedium.toFixed(1)}/5</p>
         <StarRateIcon className='text-yellow-400' sx={{ fontSize: '26px' }} />
       </div>
       <div className='flex justify-between'>
