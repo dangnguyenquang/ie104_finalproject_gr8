@@ -17,7 +17,6 @@ const DetailAccount = () => {
   const [isChanged, setIsChanged] = useState(false)
   const [oldPassword, setOldPassword] = useState('')
   const [newPassword, setNewPassword] = useState('')
-  const [confirmPassword, setConfirmPassword] = useState('')
 
   useEffect(() => {
     const fetchAccountInfo = async () => {
@@ -74,7 +73,6 @@ const DetailAccount = () => {
       toast.success('Đổi mật khẩu thành công!')
       setOldPassword('')
       setNewPassword('')
-      setConfirmPassword('')
     } catch (error) {
       toast.error(error.message || 'Có lỗi xảy ra khi đổi mật khẩu.')
       console.error('Error changing password:', error)
@@ -93,21 +91,21 @@ const DetailAccount = () => {
   }
 
   return (
-    <div className='flex mt-[79px]'>
-      <div className='w-1/5'>
+    <div className='flex flex-wrap mt-[79px]'>
+      <div className='w-full lg:w-1/5'>
         <SideNav selectedTab={selectedTab} onSelectTab={setSelectedTab} />
       </div>
-      <div className='flex-1'>
+      <div className='flex-1 w-full lg:w-4/5 px-4'>
         {selectedTab === 'account' && accountInfo && (
           <>
             <div className="block text-center text-primary text-4xl font-medium font-['Oswald'] uppercase leading-[100px] my-2">
               Hồ sơ của tôi
             </div>
-            <div className='grid grid-cols-3 gap-4 min-h-screen'>
+            <div className='grid grid-cols-1 lg:grid-cols-3 gap-4 min-h-screen'>
               <div className='flex flex-col items-center'>
                 <AvatarUploader currentAvatar={avatar} onAvatarChange={uploadImg} />
               </div>
-              <div className='col-span-2 w-full max-w-[500px] space-y-4'>
+              <div className='col-span-2 space-y-4'>
                 <DisabledTextField className='w-full' label='Họ và tên' value={accountInfo.name} />
                 <DisabledTextField className='w-full' label='Email' value={accountInfo.email} />
                 <DisabledTextField
