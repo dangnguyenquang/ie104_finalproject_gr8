@@ -1,8 +1,23 @@
-import React from 'react'
+import React, { useRef } from 'react'
 
 const DetailOrder = ({ orders, className, openForm, setOpenForm, handleChangeStatus }) => {
+  const printRef = useRef(null)
   const handleCloseForm = () => {
     setOpenForm(false)
+  }
+  const handlePrint = () => {
+    if (printRef.current) {
+      const printContents = printRef.current.innerHTML
+      const originalContents = document.body.innerHTML
+
+      document.body.innerHTML = printContents
+      window.print()
+      document.body.innerHTML = originalContents
+      window.location.href = 'http://localhost:5173/v2/dashboard/restaurant/manage-orders'
+      // Reload the page to restore state
+    } else {
+      console.error('printRef is not attached')
+    }
   }
   console.log(orders)
   return (
@@ -14,7 +29,7 @@ const DetailOrder = ({ orders, className, openForm, setOpenForm, handleChangeSta
             <i className='bx bx-x text-2xl -mt-3'></i>
           </div>
         </div>
-        <div className='w-full h-[calc(100vh-200px)] overflow-y-auto'>
+        <div ref={printRef} className='w-full h-[calc(100vh-200px)] overflow-y-auto'>
           <div className='flex flex-col gap-3'>
             <table className='w-full border-collapse'>
               <thead className='hidden'>
@@ -129,6 +144,21 @@ const DetailOrder = ({ orders, className, openForm, setOpenForm, handleChangeSta
             </div>
           </div>
         </div>
+        <button
+          onClick={() => handlePrint()}
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            padding: '10px 20px',
+            fontSize: '1rem',
+            backgroundColor: '#007bff',
+            color: '#fff',
+            border: 'none',
+            cursor: 'pointer',
+          }}
+        >
+          Print Bill
+        </button>
       </div>
     </>
   )

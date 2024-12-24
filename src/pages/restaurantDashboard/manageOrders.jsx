@@ -2,10 +2,16 @@ import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import LoadingOverlay from 'react-loading-overlay-ts'
 import { ToastContainer } from 'react-toastify'
-import { SuccessfulNotification, FailedNotification } from '../../components/common/Notification'
+import {
+  SuccessfulNotification,
+  FailedNotification,
+  newOderNotify,
+} from '../../components/common/Notification'
 import TablePagination from '@mui/material/TablePagination'
 import { getOrder, updateStatusOrder } from '../../features/manageOrder-slice'
 import DetailOrder from '../../components/Dashboard/commom/DetailOrder'
+import { io } from 'socket.io-client'
+const socket = io('http://localhost:3000')
 const ManageOrders = () => {
   const [status, setStatus] = useState('pending')
   const [skipPage, setSkipPage] = useState(0) //0 is the first page
@@ -28,7 +34,7 @@ const ManageOrders = () => {
   }
   // handle page change
   const handleChangePage = (event, newPage) => {
-    console.log(newPage, 'thực sự nhớ em')
+    // console.log(newPage, 'thực sự nhớ em')
     setSkipPage(newPage)
   }
   // handle rows per page change
@@ -75,6 +81,14 @@ const ManageOrders = () => {
     console.log('useeffect')
     dispatch(getOrder({ restaurantId, status, skipPage }))
   }, [dispatch, restaurantId, status, skipPage])
+  useEffect(() => {
+    socket.on('orderFood', (data) => {
+      console.log('orderFood', data)
+      dispatch(getOrder({ restaurantId, status, skipPage }))
+      newOderNotify()
+    })
+    return () => socket.off('orderFood')
+  }, [])
 
   return (
     <LoadingOverlay active={isLoading} spinner text='Loading...' className='h-[650px] '>

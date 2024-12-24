@@ -35,7 +35,20 @@ export const fetchRestaurants = createAsyncThunk(
     }
   },
 )
-
+export const liveSearchRestaurant = createAsyncThunk(
+  'admin/liveSearchRestaurant',
+  async ({ keyword, status, skipPage = 0, rowsPerPage = 5 }) => {
+    const result = await api.get('admin/restaurant/search', {
+      params: {
+        keyword,
+        status,
+        skip: skipPage,
+        limit: rowsPerPage,
+      },
+    })
+    return result?.data
+  },
+)
 export const updateRestaurant = createAsyncThunk(
   'admin/updateRestaurant',
   async ({ idRest, status_rest }) => {
@@ -64,6 +77,22 @@ const ManageRestaurantSlice = createSlice({
       })
       .addCase(fetchRestaurants.rejected, (state, action) => {
         console.log(action)
+        state.error = action.error.message
+        state.isLoading = false
+        state.checkAuth = action.payload
+      })
+      // search restaurant
+      .addCase(liveSearchRestaurant.pending, (state) => {
+        state.isLoading = true
+        state.error = null
+      })
+      .addCase(liveSearchRestaurant.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.error = null
+        state.restaurantList = action.payload?.data?.restaurants
+        state.number_row = action.payload?.data?.number_row
+      })
+      .addCase(liveSearchRestaurant.rejected, (state, action) => {
         state.error = action.error.message
         state.isLoading = false
         state.checkAuth = action.payload
